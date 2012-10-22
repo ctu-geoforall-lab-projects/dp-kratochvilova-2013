@@ -1,0 +1,66 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{a4wide}
+\usepackage{url}
+
+%opening
+\title{}
+\author{Anna Kratochvílová}
+
+\begin{document}
+
+
+\section{Temporal GRASS GIS framework}
+Temporal GRASS GIS Framework is a new extension available in GRASS 7 for manipulating spatio-temporal data.
+It enables to manage, analyze and process large amount of spatio-temporal data.
+Following the GRASS GIS modular design, the framework introduces over 30 new modules.
+Temporal modules' names starting with t./t.rast/t.vect/t.rast3d names
+comply with the GRASS modules' naming conventions.
+
+\subsection{Implementation}
+Temporal framework uses a snapshot approach (described above).
+This approach can be easily understood and is simple enough to be integrated into the layer-based GIS.
+The integration consists of two levels.
+In the first level, timestamps are assigned to the existing spatial datatypes -- raster, vector, 3D raster maps.
+The second level introduces new datatypes -- space time raster,
+vector and 3D raster datasets (refered as stdrs, stvds and str3ds).
+
+The implementation of the temporal framework is based on a temporal library and a SQL database scheme.
+The library is written in Python programming language and provides an application programming interface (API) which is used by the temporal modules,
+however the library is meant to be used not only by other modules but also within user scripts or the GRASS GUI if needed.
+Beside valid time the temporal database stores also transaction time%
+\footnote{Valid time is the time period during which a database fact is valid in the modeled reality,
+transaction time  is the time period during which a database fact is stored in the database \cite{temporalGlossary}}
+and other map and dataset metadata.
+The temporal framework supports two different database backends -- SQLite%
+\footnote{\url{http://www.sqlite.org/}} (more lightweight) and
+PostgreSQL\footnote{\url{http://www.postgresql.org/}}.
+However, GRASS GIS users usually do not have to come in contact with the underlying database backend
+as the default SQLite driver is often what they need.
+
+\subsection{Basic concepts}
+The temporal framework follows the concept of linear and discrete time.
+One can decide which time model to use -- interval time or time instances (also called point time).
+Point time is a single moment in the time dimension
+while interval is a period of time consisting of two instances -- start time instance and end time instance.
+The time interval contains the start time but not the end time:
+$$[start, end)$$
+
+Each type is suitable for different types of data.
+Consider temperature and precipitation measuring.
+While temperature is measured in a given time instance and the measured value describes the state,
+precipitation is measured over a given time period. The decision which model to choose is not always straighforward, however it appears that for many applications, interval time is a better choice \cite{pointVsInterval}.
+
+
+
+
+
+
+
+
+\newpage
+
+\bibliographystyle{ieeetr}
+\bibliography{/home/anna/Documents/DP/bibtex.bib}
+
+\end{document}
