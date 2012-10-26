@@ -1,12 +1,26 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[utf8x]{inputenc}
+\usepackage[english]{babel}
 \usepackage{a4wide}
 \usepackage{url}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{subfigure}
+
 
 %opening
 \title{}
 \author{Anna Kratochvílová}
 
+\newcommand{\intervals}[4]{%
+\begin{minipage}[c]{6cm}
+X \hspace{#1} \rule[3pt]{#2}{1mm} \\
+Y \hspace{#3} \rule[3pt]{#4}{1mm}
+ \end{minipage}
+ }
+
+ 
 \begin{document}
 
 
@@ -21,9 +35,9 @@ comply with the GRASS modules' naming conventions.
 Temporal framework uses a snapshot approach (described above).
 This approach can be easily understood and is simple enough to be integrated into the layer-based GIS.
 The integration consists of two levels.
-In the first level, timestamps are assigned to the existing spatial datatypes -- raster, vector, 3D raster maps.
+In the first level, timestamps are assigned to the existing spatial data types -- raster, vector, 3D raster maps.
 The second level introduces new datatypes -- space time raster,
-vector and 3D raster datasets (refered as stdrs, stvds and str3ds).
+vector and 3D raster datasets (referred as stdrs, stvds and str3ds).
 
 The implementation of the temporal framework is based on a temporal library and a SQL database scheme.
 The library is written in Python programming language and provides an application programming interface (API) which is used by the temporal modules,
@@ -32,7 +46,7 @@ Beside valid time the temporal database stores also transaction time%
 \footnote{Valid time is the time period during which a database fact is valid in the modeled reality,
 transaction time  is the time period during which a database fact is stored in the database \cite{temporalGlossary}}
 and other map and dataset metadata.
-The temporal framework supports two different database backends -- SQLite%
+The temporal framework supports two different database back-ends -- SQLite%
 \footnote{\url{http://www.sqlite.org/}} (more lightweight) and
 PostgreSQL\footnote{\url{http://www.postgresql.org/}}.
 However, GRASS GIS users usually do not have to come in contact with the underlying database backend
@@ -40,6 +54,11 @@ as the default SQLite driver is often what they need.
 
 \subsection{Basic concepts}
 The temporal framework follows the concept of linear and discrete time.
+To understand the basic concept of temporal framework it is necessary to explain several terms.
+The terms are explained in the context of the temporal framework, more theoretical and accurate definitions can be found in \cite{temporalGlossary}.
+
+\paragraph{Interval vs. point time}
+\label{sec:intervalVsPoint}
 One can decide which time model to use -- interval time or time instances (also called point time).
 Point time is a single moment in the time dimension
 while interval is a period of time consisting of two instances -- start time instance and end time instance.
@@ -49,7 +68,235 @@ $$[start, end)$$
 Each type is suitable for different types of data.
 Consider temperature and precipitation measuring.
 While temperature is measured in a given time instance and the measured value describes the state,
-precipitation is measured over a given time period. The decision which model to choose is not always straighforward, however it appears that for many applications, interval time is a better choice \cite{pointVsInterval}.
+precipitation is measured over a given time period. The decision which model to choose is not always
+straightforward, however it appears that for many applications,
+interval time is a better choice \cite{pointVsInterval}.
+
+\paragraph{Absolute vs. relative time}
+\label{sec:absoluteVsRelative}
+Absolute time stamp is related to a fact and it does not depend on any other facts.
+On the contrary, relative time is related to another time and
+it can be represented even by a negative number which stands for ``before".
+The temporal framework recognizes several date time formats for absolute time -- TODO.
+Relative time format consists of a number and time unit, which can be one the following: \emph{years},
+\emph{months}, \emph{days}, \emph{hours}, \emph{minutes} and \emph{seconds} (see table \ref{tab:timeFormat}).
+
+\begin{table}[h!]
+  \centering
+\setlength{\extrarowheight}{3pt}
+\begin{tabular}{|l|l|}
+\hline
+\multirow{3}{*}{Absolute time}
+ & 2001-01-05  \\ \cline{2-2}
+ & 1996-07-06 23:01:59  \\\cline{2-2}
+ & TODO  \\
+ \hline
+\multirow{2}{*}{Relative time}
+ & 1 months  \\\cline{2-2}
+ & -5 years  \\
+ \hline
+\end{tabular}
+
+  \caption{Examples of valid time formats}
+  \label{tab:timeFormat}
+\end{table}
+
+\paragraph{Temporal granularity}
+\label{sec:temporalGranularity}
+Temporal granularity is an important characteristics of every temporal dataset.
+In the context of the temporal framework, it represents the greatest common divisor
+of the temporal extents (and possible gaps) of all maps of the dataset.
+The temporal granularity can change every time there is a change in dataset maps
+(added, removed or changed time stamp).
+To understand better, see table \ref{tab:granularity} content of which is based on the output
+of one of the temporal modules (namely \emph{t.rast.list}).
+
+Example interval time dataset consists of 6 maps and
+there are also two gaps which means that at this time period no data are available.
+The column \emph{Duration} contains the number of days for each period and it can be inferred
+that the greatest common divisor is 2 months.
+\begin{table}[h!]
+  \centering
+\setlength{\extrarowheight}{3pt}
+\begin{tabular}{cccr}
+\toprule
+ Map name & Start time & End time & Duration [days]\\\midrule
+avg\_temp.01@timeseries &    2001-01-01 00:00:00  &   2001-03-01 00:00:00  &   59.0\\
+avg\_temp.02@timeseries  &  2001-03-01 00:00:00  &   2001-05-01 00:00:00   &  61.0\\
+no map (gap)    &  2001-05-01 00:00:00    & 2001-09-01 00:00:00   &  123.0\\
+avg\_temp.03@timeseries     & 2001-09-01 00:00:00   &  2001-11-01 00:00:00  &   61.0\\
+no map (gap) &   2001-11-01 00:00:00   &  2002-01-01 00:00:00  &   61.0 \\
+avg\_temp.04@timeseries  &    2002-01-01 00:00:00   &  2002-05-01 00:00:00     & 120.0 \\
+avg\_temp.05@timeseries  &      2002-05-01 00:00:00 &    2002-07-01 00:00:00 &    61.0 \\
+avg\_temp.06@timeseries &     2002-07-01 00:00:00  &   2002-09-01 00:00:00   &  62.0\\
+\bottomrule
+\end{tabular}
+
+  \caption{Example dataset}
+  \label{tab:granularity}
+\end{table}
+
+
+\paragraph{Temporal topology}
+\label{sec:temporalTopology}
+Although topology is a term widely used in the area of mathematics studying properties of space,
+this term can be used analogically for the time dimension.
+Temporal topology analyzes temporal relations between time stamps (for both interval and point time).
+There are 13 base relations between two intervals according to \cite{relationships}.
+Table \ref{tab:relationships} shows these relations (without the inverse relations).
+
+
+\begin{table}[h]
+\begin{center}
+\setlength{\extrarowheight}{10pt}
+
+% \setlength{\unitlength}{5cm}
+% \linethickness{5mm}
+\begin{tabular}{|p{6.5cm}|l|}
+
+\hline
+\intervals{0cm}{2cm}{3cm}{2cm} \vspace{5pt} &  X before Y   \\\hline
+\intervals{0cm}{2cm}{2cm}{2cm} \vspace{5pt} &  X meets Y \\\hline
+\intervals{0cm}{3cm}{2cm}{3cm} \vspace{5pt} &  X overlaps with Y  \\\hline
+\intervals{0cm}{3cm}{0cm}{5cm} \vspace{5pt} &  X starts Y  \\\hline
+\intervals{1cm}{3cm}{0cm}{5cm} \vspace{5pt} &  X during Y  \\\hline
+\intervals{2cm}{3cm}{0cm}{5cm} \vspace{5pt} &  X ends Y  \\\hline
+\intervals{0cm}{5cm}{0cm}{5cm} \vspace{5pt} &  X equal Y   \\\hline
+
+\end{tabular}
+\end{center}
+\caption{Temporal relationships according to \cite{relationships}}
+\label{tab:relationships}
+\end{table}
+
+The topology of a temporal dataset can be valid or invalid which depends on the relationship between dataset maps.
+If certain maps overlap or one is contained by the other then the dataset has invalid topology.
+As a consequence, such dataset is not accepted by certain temporal modules.
+
+\paragraph{Temporal sampling}
+\label{sec:temporalSampling}
+Temporal sampling is used to determine the state of one process during a second process.
+Temporal framework enables to sample a dataset (can have both point and interval time) by another dataset having interval time.
+There is an example of temporal sampling in figure \ref{fig:samplingExample}.
+The figure indicates that for different sampling methods (temporal relationships)
+which are provided by module \emph{t.sample}, different results are expected.
+
+In figure \ref{fig:samplingExampleReverse}, the input (sampled) dataset and the sample dataset are interchanged
+to demonstrate the reciprocity of the temporal relations. For example, the table \ref{fig:samplingTable} shows that
+there is a relation \emph{during} between intervals $Y_2$ and $X_2$, $X_3$.
+When the same datasets are interchanged the relation must remain, however it is transformed into \emph{contain}.
+The same applies for relations \emph{precede} and \emph{follow}.
+Relation \emph{equal} does not have any opposite relation and \emph{overlap} involves both cases (\emph{overlap, overlapped}).
+The opposite of the relation \emph{start} is \emph{end} which is not included in t.sample options.
+
+
+
+\begin{figure}[ht]
+\centering
+\subfigure[Space time datasets with interval time]{
+\setlength{\unitlength}{1cm}
+  \begin{tabular}{ll}
+    Sampled dataset & \framebox[3cm][c]{$X_1$}\framebox[1cm][c]{$X_2$}\framebox[2cm][c]{$X_3$}\framebox[3cm][c]{$X_4$} \\
+    & \\
+    Sample dataset & \rule{1cm}{0cm}\framebox[1cm][c]{$Y_1$}\framebox[4cm][c]{$Y_2$}\framebox[3cm][c]{$Y_3$} \\
+    & \hspace{1cm}\raisebox{3pt}{\thicklines \vector(1, 0){5}} time \\
+    & \\
+  \end{tabular}
+  \label{fig:samplingDatasets}
+}
+\subfigure[Sampling result for each temporal relationship]{
+\setlength{\extrarowheight}{3pt}
+    \begin{tabular}{c|c|c|c|c|c|c|c|}
+    & start & during & contain & overlap & equal &follow &precede\\\hline
+    $Y_1$ & --- & --- & $X_1$ & --- & ---&--- &---\\
+    $Y_2$ & $X_2$, $X_3$ & $X_2$, $X_3$ & --- & $X_1$ & ---& $X_4$&--- \\
+    $Y_3$ & $X_4$ &---  & --- & --- & $X_4$& ---&$X_3$
+    \end{tabular}
+  \label{fig:samplingTable}
+}
+\caption{Example of space time dataset sampling }
+\label{fig:samplingExample}
+\end{figure}
+
+
+\begin{figure}[ht]
+\centering
+\subfigure[Space time datasets with interval time (switched datasets from figure \ref{fig:samplingExample})]{
+\setlength{\unitlength}{1cm}
+  \begin{tabular}{ll}
+    Sampled dataset & \rule{1cm}{0cm}\framebox[1cm][c]{$Y_1$}\framebox[4cm][c]{$Y_2$}\framebox[3cm][c]{$Y_3$} \\
+    & \\
+    Sample dataset & \framebox[3cm][c]{$X_1$}\framebox[1cm][c]{$X_2$}\framebox[2cm][c]{$X_3$}\framebox[3cm][c]{$X_4$}\\
+    & \hspace{1cm}\raisebox{3pt}{\thicklines \vector(1, 0){5}} time \\
+    & \\
+  \end{tabular}
+  \label{fig:samplingDatasetsReverse}
+}
+\subfigure[Sampling result for each temporal relationship]{
+\setlength{\extrarowheight}{3pt}
+    \begin{tabular}{c|c|c|c|c|c|c|c|}
+          & start        & during & contain & overlap & equal &follow &precede\\\hline
+    $X_1$ & $Y_1$, $Y_2$ & $Y_1$  & ---     & $Y_2$   & ---   &---    &---\\
+    $X_2$ & ---          & ---    & $Y_2$   & ---     & ---   & ---   &--- \\
+    $X_3$ & ---          & ---    & $Y_2$   & ---     & ---   & $Y_3$ &--- \\
+    $X_4$ & $Y_3$        &---     & ---     & ---     & $Y_3$ & ---   &$Y_2$
+    \end{tabular}
+  \label{fig:samplingTableReverse}
+}
+\caption{Example of space time dataset sampling (switched sampled and sample dataset)}
+\label{fig:samplingExampleReverse}
+\end{figure}
+
+
+
+\subsection{Functionality}
+The temporal library provides wide functionality which is accessible either via Python API or GRASS temporal modules.
+The main capabilities of the library include:
+
+\begin{itemize}
+    \item Registration of raster, vector a 3D raster maps in datasets (called \emph{strds}, \emph{stvds}, \emph{str3ds}, respectively).
+    \item Support of absolute and relative time (only maps of one type can be in one dataset).
+    \item Support of interval and point time (can be used together in one dataset).
+    \item Metadata (number of maps, spatial, temporal extent, creation time, \ldots) of a dataset
+    are recomputed automatically after (un)registering of maps.
+    \item Computation of time granularity.
+    \item Computation of temporal topology and reporting its validity.
+    \item Temporal sampling of one dataset by another dataset or by its time granularity.
+\end{itemize}
+
+Other functionality needed for handling spatio-temporal data is provided by temporal modules.
+The integration of the framework into GRASS GIS enables the temporal framework to reuse existing
+functionality to process spatial data.
+
+Temporal modules share certain common options:
+\begin{itemize}
+  \item They allow to specify the temporal range of datasets so that only a part of a dataset can be processed.
+  \item Several modules support two possibilities of specifying the input data\,---\,directly or by providing a file.
+  \item When modules output a report or a table it is possible to change the format suitably.
+\end{itemize}
+
+The important ability of temporal framework is the interoperability
+with several powerful open-source applications for statistical computations and visualization.
+Textual ouputs of many modules are suitable for statistical environment \emph{R}\footnote{\url{www.r-project.org/}}.
+Module \emph{r3.out.netcdf} exports 3D raster to NetCDF
+format\footnote{\url{http://www.opengeospatial.org/standards/netcdf}}
+which can be then processed e.g. in \emph{Climate Data Operator (CDO)}\footnote{\url{https://code.zmaw.de/projects/cdo}}.
+The support of visualization software \emph{ParaView}\footnote{\url{http://www.paraview.org/}} is available
+through VTK format which can be exported by temporal module \emph{t.rast.out.vtk}.
+
+
+
+
+% TODO: space time voxel cubes
+
+
+
+
+
+
+
+
+
 
 
 
@@ -59,8 +306,8 @@ precipitation is measured over a given time period. The decision which model to 
 
 
 \newpage
-
+\clearpage
 \bibliographystyle{ieeetr}
-\bibliography{/home/anna/Documents/DP/bibtex.bib}
+\bibliography{./references.bib}
 
 \end{document}
