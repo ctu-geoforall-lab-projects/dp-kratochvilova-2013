@@ -7,6 +7,7 @@
 \usepackage{array}
 \usepackage{booktabs}
 \usepackage{subfigure}
+\usepackage{xspace}
 
 
 %opening
@@ -20,6 +21,9 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
  \end{minipage}
  }
 
+\newcommand{\mod}[1]{\textsl{#1}}
+\newcommand{\tf}{Temporal Framework\xspace}
+\newcommand{\at}{Animation Tool\xspace}
  
 \begin{document}
 
@@ -32,30 +36,30 @@ Temporal modules' names starting with t./t.rast/t.vect/t.rast3d names
 comply with the GRASS modules' naming conventions.
 
 \subsection{Implementation}
-Temporal framework uses a snapshot approach (described above).
+\tf uses a snapshot approach (described above).
 This approach can be easily understood and is simple enough to be integrated into the layer-based GIS.
 The integration consists of two levels.
 In the first level, timestamps are assigned to the existing spatial data types -- raster, vector, 3D raster maps.
 The second level introduces new datatypes -- space time raster,
 vector and 3D raster datasets (referred as stdrs, stvds and str3ds).
 
-The implementation of the temporal framework is based on a temporal library and a SQL database scheme.
+The implementation of the \tf is based on a temporal library and a SQL database scheme.
 The library is written in Python programming language and provides an application programming interface (API) which is used by the temporal modules,
 however the library is meant to be used not only by other modules but also within user scripts or the GRASS GUI if needed.
 Beside valid time the temporal database stores also transaction time%
 \footnote{Valid time is the time period during which a database fact is valid in the modeled reality,
 transaction time  is the time period during which a database fact is stored in the database \cite{temporalGlossary}}
 and other map and dataset metadata.
-The temporal framework supports two different database back-ends -- SQLite%
+The \tf supports two different database back-ends -- SQLite%
 \footnote{\url{http://www.sqlite.org/}} (more lightweight) and
 PostgreSQL\footnote{\url{http://www.postgresql.org/}}.
 However, GRASS GIS users usually do not have to come in contact with the underlying database backend
 as the default SQLite driver is often what they need.
 
 \subsection{Basic concepts}
-The temporal framework follows the concept of linear and discrete time.
-To understand the basic concept of temporal framework it is necessary to explain several terms.
-The terms are explained in the context of the temporal framework, more theoretical and accurate definitions can be found in \cite{temporalGlossary}.
+The \tf follows the concept of linear and discrete time.
+To understand the basic concept of the \tf it is necessary to explain several terms.
+The terms are explained in the context of the \tf , more theoretical and accurate definitions can be found in \cite{temporalGlossary}.
 
 \paragraph{Interval vs. point time}
 \label{sec:intervalVsPoint}
@@ -77,7 +81,7 @@ interval time is a better choice \cite{pointVsInterval}.
 Absolute time stamp is related to a fact and it does not depend on any other facts.
 On the contrary, relative time is related to another time and
 it can be represented even by a negative number which stands for ``before".
-The temporal framework recognizes several date time formats for absolute time -- TODO.
+The \tf recognizes several date time formats for absolute time -- TODO.
 Relative time format consists of a number and time unit, which can be one the following: \emph{years},
 \emph{months}, \emph{days}, \emph{hours}, \emph{minutes} and \emph{seconds} (see table \ref{tab:timeFormat}).
 
@@ -104,12 +108,12 @@ Relative time format consists of a number and time unit, which can be one the fo
 \paragraph{Temporal granularity}
 \label{sec:temporalGranularity}
 Temporal granularity is an important characteristics of every temporal dataset.
-In the context of the temporal framework, it represents the greatest common divisor
+In the context of the \tf , it represents the greatest common divisor
 of the temporal extents (and possible gaps) of all maps of the dataset.
 The temporal granularity can change every time there is a change in dataset maps
 (added, removed or changed time stamp).
 To understand better, see table \ref{tab:granularity} content of which is based on the output
-of one of the temporal modules (namely \emph{t.rast.list}).
+of one of the temporal modules (namely \mod{t.rast.list}).
 
 Example interval time dataset consists of 6 maps and
 there are also two gaps which means that at this time period no data are available.
@@ -176,10 +180,10 @@ As a consequence, such dataset is not accepted by certain temporal modules.
 \paragraph{Temporal sampling}
 \label{sec:temporalSampling}
 Temporal sampling is used to determine the state of one process during a second process.
-Temporal framework enables to sample a dataset (can have both point and interval time) by another dataset having interval time.
+The \tf enables to sample a dataset (can have both point and interval time) by another dataset having interval time.
 There is an example of temporal sampling in figure \ref{fig:samplingExample}.
 The figure indicates that for different sampling methods (temporal relationships)
-which are provided by module \emph{t.sample}, different results are expected.
+which are provided by module \mod{t.sample}, different results are expected.
 
 In figure \ref{fig:samplingExampleReverse}, the input (sampled) dataset and the sample dataset are interchanged
 to demonstrate the reciprocity of the temporal relations. For example, the table \ref{fig:samplingTable} shows that
@@ -187,7 +191,7 @@ there is a relation \emph{during} between intervals $Y_2$ and $X_2$, $X_3$.
 When the same datasets are interchanged the relation must remain, however it is transformed into \emph{contain}.
 The same applies for relations \emph{precede} and \emph{follow}.
 Relation \emph{equal} does not have any opposite relation and \emph{overlap} involves both cases (\emph{overlap, overlapped}).
-The opposite of the relation \emph{start} is \emph{end} which is not included in t.sample options.
+The opposite of the relation \emph{start} is \emph{end} which is not included in \mod{t.sample} options.
 
 
 
@@ -265,7 +269,7 @@ The main capabilities of the library include:
 \end{itemize}
 
 Other functionality needed for handling spatio-temporal data is provided by temporal modules.
-The integration of the framework into GRASS GIS enables the temporal framework to reuse existing
+The integration of the framework into GRASS GIS enables the \tf to reuse existing
 functionality to process spatial data.
 
 Temporal modules share certain common options:
@@ -275,19 +279,95 @@ Temporal modules share certain common options:
   \item When modules output a report or a table it is possible to change the format suitably.
 \end{itemize}
 
-The important ability of temporal framework is the interoperability
+The important ability of the \tf is the interoperability
 with several powerful open-source applications for statistical computations and visualization.
 Textual ouputs of many modules are suitable for statistical environment \emph{R}\footnote{\url{www.r-project.org/}}.
-Module \emph{r3.out.netcdf} exports 3D raster to NetCDF
+Module \mod{r3.out.netcdf} exports 3D raster to NetCDF
 format\footnote{\url{http://www.opengeospatial.org/standards/netcdf}}
 which can be then processed e.g. in \emph{Climate Data Operator (CDO)}\footnote{\url{https://code.zmaw.de/projects/cdo}}.
 The support of visualization software \emph{ParaView}\footnote{\url{http://www.paraview.org/}} is available
-through VTK format which can be exported by temporal module \emph{t.rast.out.vtk}.
+through VTK format which can be exported by temporal module \mod{t.rast.out.vtk}.
 
 
 
 
 % TODO: space time voxel cubes
+
+
+
+
+
+\section{Results}%Developed visualization tool
+
+The aim of this work was to develop new tools for better visualization of spatio-temporal data GRASS GIS.
+%TODO
+
+\subsection{Animation tool}
+As described in TODO REF animation is a natural and easily understandable way to display spatio-temporal data.
+
+Because the current animation module \mod{xganim} was very limited
+in several aspects (explained TODO REF), a new tool was developed.
+
+\subsubsection{Features}
+Beside the features of \mod{xganim} module, \at provides new possibilities
+to explore spatio-temporal data.
+
+Basic features (also existing in \mod{xganim} module):
+    \begin{description}
+      \item[More views]
+      \at can display up to 4 different synchronized animations at once.
+      Unlike the \mod{xganim} module, it is possible to add or remove each of the views separately
+      without the need to restart it.
+
+      \item[Change animation speed]
+      Unlike the \mod{xganim} module where you can only
+      slow down or speed up the animation by an unspecified coefficient, \at allows to set
+      exact duration of the frame (in milliseconds).
+
+      \item[Loops]
+      There are two methods of looping key frames.
+      The first type cycles through the key frames and when it reaches the last one it jumps back
+      to the first key frame and continues looping.
+      The second type of looping goes back through the key frames in reverse order.
+
+     \end{description}
+
+New features:
+    \begin{description}
+      \item[Interactive change of the active frame]
+      In order to better control currently displayed frame a slider control is provided.
+      By dragging the slider's knob user can select a certain frame.
+      Also it enables to inspect in detail a part of an animation
+      by repeated dragging of the knob back and forth within a few frames.
+      
+
+      \item[Support of the \tf]
+      The most important attribute of the \at is the interoperability with the \tf which involves several features.
+      The basic one is that the \at can accept space time raster dataset as an input (apart from multiple raster maps).
+      Then, the \at extracts the time stamp information from the dataset and displays it to the user.
+%       Both these cases don't use the \tf extensively,
+      In case of loading more space time datasets the \tf is used in a more sophisticated way. 
+      
+      
+      
+
+      \item[3D view animation]
+
+%       \item[Visualization of space time datasets with unequally spaced intervals]
+     \end{description}
+
+% \subsubsection{}
+
+% \paragraph{Interactive }
+
+\subsubsection{Usage}
+
+\subsubsection{Implementation}
+While \mod{xganim} was written in wxWidgets using C++ programming language...
+
+\subsubsection{Future development}
+
+
 
 
 
