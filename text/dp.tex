@@ -8,6 +8,13 @@
 \usepackage{booktabs}
 \usepackage{subfigure}
 \usepackage{xspace}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage[sorting=none,hyperref=auto]{biblatex}
+\bibliography{./references.bib}
+\usepackage[hypcap]{caption}
+\usepackage{comment}
+
+
 
 
 %opening
@@ -20,6 +27,15 @@ X \hspace{#1} \rule[3pt]{#2}{1mm} \\
 Y \hspace{#3} \rule[3pt]{#4}{1mm}
  \end{minipage}
  }
+
+\newcommand{\framedInterval}[3]{%
+\framebox[#1][c]{
+\begin{minipage}[c]{#1}
+\begin{center}
+#2\\
+\begin{small}#3\end{small}
+\end{center}
+\end{minipage}}}
 
 \newcommand{\mod}[1]{\textsl{#1}}
 \newcommand{\tf}{Temporal Framework\xspace}
@@ -342,16 +358,14 @@ New features:
       
 
       \item[Support of the \tf]
-      The most important attribute of the \at is the interoperability with the \tf which involves several features.
-      The basic one is that the \at can accept space time raster dataset as an input (apart from multiple raster maps).
-      Then, the \at extracts the time stamp information from the dataset and displays it to the user.
-%       Both these cases don't use the \tf extensively,
-      In case of loading more space time datasets the \tf is used in a more sophisticated way. 
-      
-      
+      The most important attribute of the \at is the interoperability with the \tf
+      which involves several features described in section \ref{sec:wx.animation:support}.
       
 
+
       \item[3D view animation]
+
+      \item[Export]
 
 %       \item[Visualization of space time datasets with unequally spaced intervals]
      \end{description}
@@ -359,11 +373,189 @@ New features:
 % \subsubsection{}
 
 % \paragraph{Interactive }
+\subsubsection{Support of the \tf}
+\label{sec:wx.animation:support}
+The \at supports the \tf in several ways. Certain features use the \tf in a more complex way than the others.
+
+The \at accepts space time raster dataset as an input. By the means of the \tf, it determines the maps which are then loaded.
+Apart from that, also multiple raster maps are accepted directly.
+
+However, the main difference between displaying a set of maps and a space time dataset is
+that the duration of each key frame is given by the given time stamp information.
+This is useful when data are collected in irregular intervals.
+Then, the key frames do not change e.g.\ every second but at a given moment the frame stays visible for a longer time.
+To achieve similar behavior it is necessary to add the frame multiple times, see figure \ref{fig:temporalDifference}.
+Concerning temporal data having interval time, there are cases when no data were collected or measured at all.
+The \at recognizes such cases and displays a ``no data'' sign in order to make the user aware of the gap in data.
+
+\begin{figure}[h]
+  \centering
+\framedInterval{2.5cm}{$X_1$}{(2001, 2002]}%
+\framedInterval{5cm}{$X_2$}{(2002, 2004]}%
+\framedInterval{2.5cm}{$X_3$}{(2004, 2005]}%
+
+\framedInterval{2.5cm}{$X_1$}{}%
+\framedInterval{2.5cm}{$X_2$}{}%
+\framedInterval{2.5cm}{$X_2$}{}%
+\framedInterval{2.5cm}{$X_3$}{}%
+
+\caption{Difference in animations of temporal data and non-temporal data collected at irregular intervals}
+\label{fig:temporalDifference}
+
+\end{figure}
+
+In case of loading more space time datasets the \tf enables to synchronize the animations
+even if the temporal datasets are spaced unequally.
+Figure \ref{fig:synchronizedAnim}) presents an example of such datasets and the related table
+shows the frames displayed at selected time instances.
+The concept of temporal granularity and temporal sampling is used to achieve this described behavior.
+
+
+\begin{figure}[h]
+\centering
+\begin{minipage}{10cm}
+\framedInterval{75pt}{$X_1$}{}%
+\framedInterval{25pt}{$X_2$}{}%
+\framedInterval{50pt}{$X_3$}{}%
+\framedInterval{100pt}{$X_4$}{}%
+
+\framedInterval{25pt}{$Y_1$}{}%
+\framedInterval{100pt}{$Y_2$}{}%
+\framedInterval{25pt}{$Y_3$}{}%
+\framedInterval{50pt}{$Y_4$}{}%
+
+\vspace{10pt}
+
+\hspace{-3pt}$\uparrow$\hspace{45pt}$\uparrow$\hspace{45pt}$\uparrow$\hspace{93pt}$\uparrow$
+
+\hspace{-3pt}$t_1$\hspace{45pt}$t_2$\hspace{40pt}$t_3$\hspace{90pt}$t_4$
+\end{minipage}
+
+\bigskip
+
+\begin{tabular}{lcc}
+\toprule
+Time & Animation X & Animation Y \\ \midrule
+$t_1$ & $X_1$& $Y_1$\\
+$t_2$ & $X_1$& $Y_2$\\
+$t_3$ & $X_3$& $Y_2$\\
+$t_4$ & $X_4$& ---\\\bottomrule
+\end{tabular}
+
+\caption{Synchronized animations of space time datasets $X$ and $Y$}
+\label{fig:synchronizedAnim}
+\end{figure}
+
+Datasets with interval and point time have to be distinguished.
+Displaying interval data means to display each map (frame) for the time interval given by its start and end time.
+However, point data have no end time. Therefore a different logic must be used to determine when each map should be displayed.
+The \at treats point data as interval data where the end time of one map is the start time of the following map.
+
+The time stamp information extracted from the dataset is presented to the user.
+The format is given by the \emph{GRASS Datetime Library}. % which url too put here?
+The support of other date time formats is planned.
+
 
 \subsubsection{Usage}
 
 \subsubsection{Implementation}
-While \mod{xganim} was written in wxWidgets using C++ programming language...
+While \mod{xganim} module was written in wxWidgets using C++ programming language (in GRASS 7),
+the \at is written completely in wxPython using Python so that it can be better integrated into the GRASS wxGUI.
+It uses \emph{GRASS Python Scripting Library} and \emph{GRASS Python Temporal Library}\cite{grassProgMan},
+which is the integral part of the \tf. In the following paragraphs, some of the implementation issues are described.
+
+\paragraph{Loading data}
+It is important to be aware of the fact that animation can consist of hundreds of maps.
+Unfortunately, the mechanism of loading raster data in \mod{xganim} could not be simply rewritten into Python because of performance issues.
+Therefore it was necessary to choose a different implementation.
+
+If we try to use the \mod{xganim} implementation, we encounter two main problems.
+First, when loading data, the \emph{GRASS Raster Library} functions \cite{grassProgMan} are called.
+In Python we could use ctypes to interface these methods,
+however these methods can call exit function which causes a sudden end of the program.
+This behavior is sufficient for a module but it is not suitable for a long running GUI application.
+Secondly, the image representing the raster map is created by setting the color of each pixel sequentially.
+For this kind of operation, Python is too slow comparing to C or C++.
+This problem can be alleviated by using NumPy\footnote{\url{http://numpy.scipy.org/}},
+however that makes the code less readable.
+
+One possible solution is to use the current system used by wxGUI
+where the raster maps are rendered into temporary files by module \mod{d.rast}.
+However, this method is quite slow mainly because it is necessary to write data to disk and read them afterwards.
+Therefore, this method was rejected for the time being.
+There have been efforts to improve the rendering implementation%
+\footnote{see related ticket \url{http://trac.osgeo.org/grass/ticket/1719}}
+and once it is implemented it will not be a problem to change it also in the \at.
+
+Eventually, the raster rendering is done by \mod{r.out.ppm}.
+It can send image data to standard output and
+thanks to the simplicity of the PPM format (Portable Pixmap Format%
+\footnote{\url{http://netpbm.sourceforge.net/doc/ppm.html}}),
+the data are directly (without saving to file) converted into the image displayed in the \at.
+The advantage of this solution is that the demanding computation is done inside the module, thus in C.
+Moreover, if the module fails for any reason, the application is able to handle such situation and continue.
+Still, the achieved performance is worse comparing to \mod{xganim}.
+This is probably caused by the fact that each call of the module requires not negligible amount of time.
+Table \ref{tab:comparisonTime} shows a performance comparison of the described methods.
+The time measurement was done on one computer and each number is a sample mean computed from 5 measurements.
+To make the measurement more objective, the \mod{xganim} source code was slightly
+changed by avoiding reporting messages which would slow the loading down.
+The absolute numbers are not as important, however when we compare one with another,
+we can see that the difference between the new implementation and the original one is not so significant.
+Additionally, there is one important aspect which effects the loading duration
+significantly for all implementations\,---\,the size of the map.
+If we double the size of the image, we can expect the duration to increase four times.
+
+\begin{table}[h]
+  \caption{Time needed for loading a space time raster dataset containing 224 maps (800~$\times$~347~pixels)}
+  \label{tab:comparisonTime}
+  \centering
+    \begin{tabular}{lrr}
+    \toprule
+    original xganim & 46 s & 100 \%\\
+    calling \mod{r.out.ppm} & 51 s & 111 \%\\
+    \mod{d.rast} rendering to file (wxGUI) & 67 s & 146\%\\
+    \bottomrule
+
+    \end{tabular}
+\end{table}
+
+
+
+
+\begin{comment}
+244 maps
+r.out.ppm
+51.177767992
+51.0374698639
+51.213670969
+51.17771101
+51.2618360519
+========
+51.174
+
+66.5165150166
+65.1940889359
+65.5398728848
+72.5624401569
+65.7088599205
+=====
+67.104
+
+46.050000
+46.260000
+46.260000
+46.060000
+46.110000
+========
+46.148
+\end{comment}
+
+
+\paragraph{Resizing}
+\paragraph{Temporal sampling}
+
+\paragraph{Checking compatibility of data}
 
 \subsubsection{Future development}
 
@@ -377,17 +569,8 @@ While \mod{xganim} was written in wxWidgets using C++ programming language...
 
 
 
-
-
-
-
-
-
-
-
 \newpage
 \clearpage
-\bibliographystyle{ieeetr}
-\bibliography{./references.bib}
+\printbibliography
 
 \end{document}

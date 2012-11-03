@@ -5,3 +5,4 @@
 *.pdf
 *.backup
 *.tex~
+*-blx.bib
