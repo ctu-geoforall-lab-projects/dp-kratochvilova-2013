@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{article}
+\documentclass[a4paper,12pt,draft]{book}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{a4wide}
@@ -6,15 +6,38 @@
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{booktabs}
-\usepackage{subfigure}
+\usepackage[perpage]{footmisc}
 \usepackage{xspace}
 \usepackage[colorlinks=true]{hyperref}
-\usepackage[sorting=none,hyperref=auto]{biblatex}
+\usepackage{csquotes} % biblatex warning
+\usepackage[sorting=none,hyperref=auto,maxnames=10]{biblatex}
 \bibliography{./references.bib}
-\usepackage[hypcap]{caption}
 \usepackage{comment}
+\usepackage[labelfont=bf,font=small,format=plain,indention=.5cm,width=0.8\textwidth]{caption}
+\usepackage{subcaption}
 
 
+% fancyhdr
+% accoding to http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Customising_with_fancyhdr
+\usepackage{fancyhdr}
+\setlength{\headheight}{15.2pt}
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}{}}
+
+\fancyhf{}
+\fancyhead[LE]{\textit{\leftmark}}
+\fancyhead[RO]{\textit{\rightmark}}
+
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[RE,LO]{\textit{Anna Kratochvílová, CTU in Prague, 2012}}
+
+% plain affects chapter first page
+\fancypagestyle{plain}{
+% \fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
 
 
 %opening
@@ -42,16 +65,16 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \newcommand{\at}{Animation Tool\xspace}
  
 \begin{document}
+\tableofcontents
 
-
-\section{Temporal GRASS GIS framework}
+\chapter{Temporal GRASS GIS framework}
 Temporal GRASS GIS Framework is a new extension available in GRASS 7 for manipulating spatio-temporal data.
 It enables to manage, analyze and process large amount of spatio-temporal data.
 Following the GRASS GIS modular design, the framework introduces over 30 new modules.
 Temporal modules' names starting with t./t.rast/t.vect/t.rast3d names
 comply with the GRASS modules' naming conventions.
 
-\subsection{Implementation}
+\section{Implementation}
 \tf uses a snapshot approach (described above).
 This approach can be easily understood and is simple enough to be integrated into the layer-based GIS.
 The integration consists of two levels.
@@ -72,7 +95,7 @@ PostgreSQL\footnote{\url{http://www.postgresql.org/}}.
 However, GRASS GIS users usually do not have to come in contact with the underlying database backend
 as the default SQLite driver is often what they need.
 
-\subsection{Basic concepts}
+\section{Basic concepts}
 The \tf follows the concept of linear and discrete time.
 To understand the basic concept of the \tf it is necessary to explain several terms.
 The terms are explained in the context of the \tf , more theoretical and accurate definitions can be found in \cite{temporalGlossary}.
@@ -101,8 +124,10 @@ The \tf recognizes several date time formats for absolute time -- TODO.
 Relative time format consists of a number and time unit, which can be one the following: \emph{years},
 \emph{months}, \emph{days}, \emph{hours}, \emph{minutes} and \emph{seconds} (see table \ref{tab:timeFormat}).
 
-\begin{table}[h!]
+\begin{table}[ht!]
   \centering
+\caption{Examples of valid time formats}
+\label{tab:timeFormat}
 \setlength{\extrarowheight}{3pt}
 \begin{tabular}{|l|l|}
 \hline
@@ -116,9 +141,6 @@ Relative time format consists of a number and time unit, which can be one the fo
  & -5 years  \\
  \hline
 \end{tabular}
-
-  \caption{Examples of valid time formats}
-  \label{tab:timeFormat}
 \end{table}
 
 \paragraph{Temporal granularity}
@@ -135,8 +157,10 @@ Example interval time dataset consists of 6 maps and
 there are also two gaps which means that at this time period no data are available.
 The column \emph{Duration} contains the number of days for each period and it can be inferred
 that the greatest common divisor is 2 months.
-\begin{table}[h!]
+\begin{table}[ht!]
   \centering
+  \caption{Example dataset}
+  \label{tab:granularity}
 \setlength{\extrarowheight}{3pt}
 \begin{tabular}{cccr}
 \toprule
@@ -151,9 +175,6 @@ avg\_temp.05@timeseries  &      2002-05-01 00:00:00 &    2002-07-01 00:00:00 &  
 avg\_temp.06@timeseries &     2002-07-01 00:00:00  &   2002-09-01 00:00:00   &  62.0\\
 \bottomrule
 \end{tabular}
-
-  \caption{Example dataset}
-  \label{tab:granularity}
 \end{table}
 
 
@@ -166,8 +187,10 @@ There are 13 base relations between two intervals according to \cite{relationshi
 Table \ref{tab:relationships} shows these relations (without the inverse relations).
 
 
-\begin{table}[h]
-\begin{center}
+\begin{table}[ht]
+\centering
+\caption{Temporal relationships according to \cite{relationships}}
+\label{tab:relationships}
 \setlength{\extrarowheight}{10pt}
 
 % \setlength{\unitlength}{5cm}
@@ -184,9 +207,6 @@ Table \ref{tab:relationships} shows these relations (without the inverse relatio
 \intervals{0cm}{5cm}{0cm}{5cm} \vspace{5pt} &  X equal Y   \\\hline
 
 \end{tabular}
-\end{center}
-\caption{Temporal relationships according to \cite{relationships}}
-\label{tab:relationships}
 \end{table}
 
 The topology of a temporal dataset can be valid or invalid which depends on the relationship between dataset maps.
@@ -213,27 +233,34 @@ The opposite of the relation \emph{start} is \emph{end} which is not included in
 
 \begin{figure}[ht]
 \centering
-\subfigure[Space time datasets with interval time]{
-\setlength{\unitlength}{1cm}
-  \begin{tabular}{ll}
-    Sampled dataset & \framebox[3cm][c]{$X_1$}\framebox[1cm][c]{$X_2$}\framebox[2cm][c]{$X_3$}\framebox[3cm][c]{$X_4$} \\
-    & \\
-    Sample dataset & \rule{1cm}{0cm}\framebox[1cm][c]{$Y_1$}\framebox[4cm][c]{$Y_2$}\framebox[3cm][c]{$Y_3$} \\
-    & \hspace{1cm}\raisebox{3pt}{\thicklines \vector(1, 0){5}} time \\
-    & \\
-  \end{tabular}
-  \label{fig:samplingDatasets}
-}
-\subfigure[Sampling result for each temporal relationship]{
-\setlength{\extrarowheight}{3pt}
-    \begin{tabular}{c|c|c|c|c|c|c|c|}
-    & start & during & contain & overlap & equal &follow &precede\\\hline
-    $Y_1$ & --- & --- & $X_1$ & --- & ---&--- &---\\
-    $Y_2$ & $X_2$, $X_3$ & $X_2$, $X_3$ & --- & $X_1$ & ---& $X_4$&--- \\
-    $Y_3$ & $X_4$ &---  & --- & --- & $X_4$& ---&$X_3$
-    \end{tabular}
-  \label{fig:samplingTable}
-}
+    \begin{subfigure}[ht]{\textwidth}
+    \centering
+    \setlength{\unitlength}{1cm}
+        \begin{tabular}{ll}
+            Sampled dataset & \framebox[3cm][c]{$X_1$}\framebox[1cm][c]{$X_2$}\framebox[2cm][c]{$X_3$}\framebox[3cm][c]{$X_4$} \\
+            & \\
+            Sample dataset & \rule{1cm}{0cm}\framebox[1cm][c]{$Y_1$}\framebox[4cm][c]{$Y_2$}\framebox[3cm][c]{$Y_3$} \\
+            & \hspace{1cm}\raisebox{3pt}{\thicklines \vector(1, 0){5}} time \\
+
+        \end{tabular}
+    \label{fig:samplingDatasets}
+    \caption{Space time datasets with interval time}
+    \end{subfigure}
+    
+\vspace{0.5cm}
+    \begin{subfigure}[ht]{\textwidth}
+    \centering
+    \setlength{\extrarowheight}{3pt}
+        \begin{tabular}{c|c|c|c|c|c|c|c|}
+              & start & during & contain & overlap & equal &follow &precede\\\hline
+        $Y_1$ & --- & --- & $X_1$ & --- & ---&--- &---\\
+        $Y_2$ & $X_2$, $X_3$ & $X_2$, $X_3$ & --- & $X_1$ & ---& $X_4$&--- \\
+        $Y_3$ & $X_4$ &---  & --- & --- & $X_4$& ---&$X_3$
+        \end{tabular}
+    \caption{Sampling result for each temporal relationship}
+    \label{fig:samplingTable}
+    \end{subfigure}
+
 \caption{Example of space time dataset sampling }
 \label{fig:samplingExample}
 \end{figure}
@@ -241,35 +268,41 @@ The opposite of the relation \emph{start} is \emph{end} which is not included in
 
 \begin{figure}[ht]
 \centering
-\subfigure[Space time datasets with interval time (switched datasets from figure \ref{fig:samplingExample})]{
-\setlength{\unitlength}{1cm}
-  \begin{tabular}{ll}
-    Sampled dataset & \rule{1cm}{0cm}\framebox[1cm][c]{$Y_1$}\framebox[4cm][c]{$Y_2$}\framebox[3cm][c]{$Y_3$} \\
-    & \\
-    Sample dataset & \framebox[3cm][c]{$X_1$}\framebox[1cm][c]{$X_2$}\framebox[2cm][c]{$X_3$}\framebox[3cm][c]{$X_4$}\\
-    & \hspace{1cm}\raisebox{3pt}{\thicklines \vector(1, 0){5}} time \\
-    & \\
-  \end{tabular}
-  \label{fig:samplingDatasetsReverse}
-}
-\subfigure[Sampling result for each temporal relationship]{
-\setlength{\extrarowheight}{3pt}
-    \begin{tabular}{c|c|c|c|c|c|c|c|}
-          & start        & during & contain & overlap & equal &follow &precede\\\hline
-    $X_1$ & $Y_1$, $Y_2$ & $Y_1$  & ---     & $Y_2$   & ---   &---    &---\\
-    $X_2$ & ---          & ---    & $Y_2$   & ---     & ---   & ---   &--- \\
-    $X_3$ & ---          & ---    & $Y_2$   & ---     & ---   & $Y_3$ &--- \\
-    $X_4$ & $Y_3$        &---     & ---     & ---     & $Y_3$ & ---   &$Y_2$
-    \end{tabular}
-  \label{fig:samplingTableReverse}
-}
+    \begin{subfigure}[h]{\textwidth}
+        \centering
+        \setlength{\unitlength}{1cm}
+
+        \begin{tabular}{ll}
+            Sampled dataset & \rule{1cm}{0cm}\framebox[1cm][c]{$Y_1$}\framebox[4cm][c]{$Y_2$}\framebox[3cm][c]{$Y_3$} \\
+            & \\
+            Sample dataset & \framebox[3cm][c]{$X_1$}\framebox[1cm][c]{$X_2$}\framebox[2cm][c]{$X_3$}\framebox[3cm][c]{$X_4$}\\
+            & \hspace{1cm}\raisebox{3pt}{\thicklines \vector(1, 0){5}} time \\
+        \end{tabular}
+        \label{fig:samplingDatasetsReverse}
+        \caption{Space time datasets with interval time (switched datasets from figure \ref{fig:samplingExample})}
+    \end{subfigure}
+
+\vspace{0.5cm}
+    \begin{subfigure}[h]{\textwidth}
+    \centering
+    \setlength{\extrarowheight}{3pt}
+        \begin{tabular}{c|c|c|c|c|c|c|c|}
+            & start        & during & contain & overlap & equal &follow &precede\\\hline
+        $X_1$ & $Y_1$, $Y_2$ & $Y_1$  & ---     & $Y_2$   & ---   &---    &---\\
+        $X_2$ & ---          & ---    & $Y_2$   & ---     & ---   & ---   &--- \\
+        $X_3$ & ---          & ---    & $Y_2$   & ---     & ---   & $Y_3$ &--- \\
+        $X_4$ & $Y_3$        &---     & ---     & ---     & $Y_3$ & ---   &$Y_2$
+        \end{tabular}
+    \label{fig:samplingTableReverse}
+    \caption{Sampling result for each temporal relationship}
+    \end{subfigure}
 \caption{Example of space time dataset sampling (switched sampled and sample dataset)}
 \label{fig:samplingExampleReverse}
 \end{figure}
 
 
 
-\subsection{Functionality}
+\section{Functionality}
 The temporal library provides wide functionality which is accessible either via Python API or GRASS temporal modules.
 The main capabilities of the library include:
 
@@ -313,18 +346,18 @@ through VTK format which can be exported by temporal module \mod{t.rast.out.vtk}
 
 
 
-\section{Results}%Developed visualization tool
+\chapter{Results}%Developed visualization tool
 
 The aim of this work was to develop new tools for better visualization of spatio-temporal data GRASS GIS.
 %TODO
 
-\subsection{Animation tool}
+\section{Animation tool}
 As described in TODO REF animation is a natural and easily understandable way to display spatio-temporal data.
 
 Because the current animation module \mod{xganim} was very limited
 in several aspects (explained TODO REF), a new tool was developed.
 
-\subsubsection{Features}
+\subsection{Features}
 Beside the features of \mod{xganim} module, \at provides new possibilities
 to explore spatio-temporal data.
 
@@ -364,6 +397,10 @@ New features:
 
 
       \item[3D view animation]
+      A nice feature is the ability to animate the raster maps in 3D view.
+      The raster maps can either represent a changing color of a static surface or
+      a changing surface.
+      
 
       \item[Export]
 
@@ -373,7 +410,7 @@ New features:
 % \subsubsection{}
 
 % \paragraph{Interactive }
-\subsubsection{Support of the \tf}
+\subsection{Support of the \tf}
 \label{sec:wx.animation:support}
 The \at supports the \tf in several ways. Certain features use the \tf in a more complex way than the others.
 
@@ -388,7 +425,7 @@ To achieve similar behavior it is necessary to add the frame multiple times, see
 Concerning temporal data having interval time, there are cases when no data were collected or measured at all.
 The \at recognizes such cases and displays a ``no data'' sign in order to make the user aware of the gap in data.
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \centering
 \framedInterval{2.5cm}{$X_1$}{(2001, 2002]}%
 \framedInterval{5cm}{$X_2$}{(2002, 2004]}%
@@ -411,7 +448,7 @@ shows the frames displayed at selected time instances.
 The concept of temporal granularity and temporal sampling is used to achieve this described behavior.
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \begin{minipage}{10cm}
 \framedInterval{75pt}{$X_1$}{}%
@@ -456,17 +493,18 @@ The format is given by the \emph{GRASS Datetime Library}. % which url too put he
 The support of other date time formats is planned.
 
 
-\subsubsection{Usage}
+\subsection{Usage}
 
-\subsubsection{Implementation}
+\subsection{Implementation}
 While \mod{xganim} module was written in wxWidgets using C++ programming language (in GRASS 7),
 the \at is written completely in wxPython using Python so that it can be better integrated into the GRASS wxGUI.
 It uses \emph{GRASS Python Scripting Library} and \emph{GRASS Python Temporal Library}\cite{grassProgMan},
 which is the integral part of the \tf. In the following paragraphs, some of the implementation issues are described.
 
-\paragraph{Loading data}
+\subsubsection{Loading data}
 It is important to be aware of the fact that animation can consist of hundreds of maps.
-Unfortunately, the mechanism of loading raster data in \mod{xganim} could not be simply rewritten into Python because of performance issues.
+Unfortunately, the mechanism of loading raster data in \mod{xganim} could not be simply
+rewritten into Python because of performance issues.
 Therefore it was necessary to choose a different implementation.
 
 If we try to use the \mod{xganim} implementation, we encounter two main problems.
@@ -551,13 +589,153 @@ r.out.ppm
 46.148
 \end{comment}
 
+The images are stored internally as \verb|wx.Bitmap| \cite{wxPythonDoc} objects.
+The number of bitmaps is not limited programmatically,
+however in reality it is limited by the the size of the bitmaps and available RAM.
+This is not an issue for usual animations today.
 
-\paragraph{Resizing}
-\paragraph{Temporal sampling}
+\subsubsection{Window resizing}
+Every application has to react on the change of its frame size.
+Unlike \mod{xganim}, the \at is able to resize the displayed images to fit the new frame size.
+However, the images are only rescaled, so it produces less quality images.
+On the other hand, the rescaled images are sufficient and the advantage is that
+the data do not have to be reloaded every time the user resizes the window.
+In the application status bar a warning appears to make the user aware of the fact
+that the displayed data should be reloaded.
 
-\paragraph{Checking compatibility of data}
+\subsubsection{Specifying the displayed extent}
+The displayed extent of the maps is determined by the computational region%
+\footnote{This region defines the geographic area (and resolution) in which all raster analyses are done.}.
+To change the displayed region, it is necessary to run module \mod{g.region} and then reload data.
+At this stage, any interactive zooming would be problematic.
+The best option would be to reuse the wxGUI rendering system including zooming in order to avoid code duplication.
+Unfortunately, reloading all maps in this way would be more time-consumming.
+When the wxGUI rendering system becomes faster
+it will hopefully be  possible to reuse this system completely.
 
-\subsubsection{Future development}
+
+\subsubsection{Temporal sampling}
+Displaying animation of datasets with unequally spaced intervals or instances is not a simple task.
+The \tf which supports the concept of temporal granularity and temporal sampling makes this task feasible.
+
+There are a few computations needed to display the right maps at the right moments.
+These steps are the same no matter if there are one or more space time datasets.
+The first step is to get the time granularity.
+The second step is the sampling of each dataset by the granularity using temporal relation \emph{start}.
+This way we get all needed information about the time intervals (or instances) and the names of the maps.
+The \at then puts all of this information together.
+
+Table \ref{tab:exampleOfSamplingImpl} shows the result of temporal sampling of two sample space time datasets.
+As we can see, the temporal granularity of the dataset $X$ (1 month) differs from the granularity of dataset $Y$ (2 months).
+The common granularity (1 month) is in this case easy to compute.
+This granularity is then used to sample both datasets (table \ref{tab:exampleOfSamplingImpl-2}).
+
+
+\begin{table}
+ \centering
+\caption{Example of two space time datasets $X$ and $Y$ and the their sampling by temporal granularity 1 month.}
+\label{tab:exampleOfSamplingImpl}
+\begin{subtable}{0.4\textwidth}
+    \centering
+    \caption{List of maps and valid time intervals}
+    \begin{tabular}{lll}
+    \toprule
+    $X$ & start time & end time \\
+    \midrule
+    $X_1$ & 2001-02-01 & 2001-03-01\\
+    $X_2$ & 2001-03-01 & 2001-06-01\\
+    $X_3$ & 2001-07-01 & 2001-10-01\\
+    $X_4$ & 2001-10-01 & 2001-12-01\\
+    \bottomrule
+    \end{tabular}
+
+    \vspace{20pt}
+    \begin{tabular}{lll}
+    \toprule
+    $Y$ & start time & end time \\
+    \midrule
+    $Y_1$ & 2001-01-01 & 2001-03-01\\
+    $Y_2$ & 2001-05-01 & 2001-07-01\\
+    $Y_3$ & 2001-07-01 & 2001-09-01\\
+    \bottomrule
+    \end{tabular}
+\end{subtable}
+\quad
+\begin{subtable}{0.4\textwidth}
+\centering
+\caption{Result of temporal sampling with granularity 1 month}
+\label{tab:exampleOfSamplingImpl-2}
+\begin{tabular}{llll}
+\toprule
+ $X$ & $Y$ & start time & end time \\\midrule
+--- & $Y_1$ & 2001-01-01 & 2001-02-01\\
+$X_1$& $Y_2$ & 2001-02-01 & 2001-03-01\\
+$X_2$& --- & 2001-03-01 & 2001-04-01\\
+$X_2$& --- & 2001-04-01 & 2001-05-01\\
+$X_2$& $Y_2$ & 2001-05-01 & 2001-06-01\\
+--- & $Y_2$ & 2001-06-01 & 2001-07-01\\
+$X_3$& $Y_3$ & 2001-07-01 & 2001-08-01\\
+$X_3$ &$Y_3$ & 2001-08-01 & 2001-09-01\\
+$X_3$ & --- & 2001-09-01 & 2001-10-01\\
+$X_4$& --- & 2001-10-01 & 2001-11-01\\
+$X_4$ & --- & 2001-11-01 & 2001-12-01\\
+\bottomrule
+\end{tabular}
+\end{subtable}
+
+\end{table}
+
+\subsubsection{Animation}
+Animation basically means to display a sequence of images in the given time instances.
+Crucial is to determine \emph{which} frame (map) and \emph{when} to display.
+We first discuss the \emph{when}  and then the \emph{which} question.
+
+
+The original \mod{xganim} implementation of the animation is rather primitive.
+The events are emitted when system becomes idle which the programmer is not able to affect.
+Moreover, the delay between two successive frames is done by a for loop
+and to change the speed of the animation the number of loops is increased or decreased.
+Therefore the default speed of the animation on the current computers is much more faster than it used to be ten years ago.
+
+The \at implementation uses timer events (class wx.Timer provided by wxPython) to achieve regular time intervals between two frames.
+The interval between two successive events is specified by the programmer according to what the user requires.
+In case of space time datasets animation, the user specifies how long
+should a chosen time unit\footnote{units of time supported by the \tf, section \ref{sec:absoluteVsRelative}}
+last (in milliseconds).
+
+For each dataset, there is a separate object which controls the animation.
+These animation objects receive the timer events and determine
+which frame to display according to the result of the temporal sampling explained above.
+The timer interval represents the temporal granularity of the datasets.
+Therefore, each map is displayed exactly at the right moment.
+
+When the interval of a map takes more than one temporal granularity, internally, there is no redraw.
+
+
+
+\subsubsection{Checking compatibility of data}
+During the development it was necessary to decide which data are compatible and can be animated together.
+Several combinations are possible.
+\begin{description}
+  \item[Space time dataset $\times$ multiple maps]
+  This combination is allowed granted that the number of maps matches the number of maps in the dataset.
+  Then, the animation behaves as if there was no temporal information.
+
+  \item[Space time datasets with absolute $\times$ relative time]
+  This case is not allowed because there is no obvious way to convert one type to another.
+
+  \item[Space time datasets with interval $\times$ point time]
+  This combination is allowed, however it might not behave as user expects.
+  Therefore, there is a warning to make the user aware of this fact.
+ \end{description}
+ 
+In general, it is better to use data which are fully compatible to avoid confusion.
+The \at always checks the user input and in the case it recognizes an incompatibility, it reports it to the user.
+
+
+
+
+\subsection{Future development}
 
 
 
