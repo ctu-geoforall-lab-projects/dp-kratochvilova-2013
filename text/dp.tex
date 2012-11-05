@@ -1,10 +1,11 @@
-\documentclass[a4paper,12pt,draft]{book}
+\documentclass[a4paper,12pt]{book}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{a4wide}
 \usepackage{url}
 \usepackage{multirow}
 \usepackage{array}
+\usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage[perpage]{footmisc}
 \usepackage{xspace}
@@ -14,7 +15,7 @@
 \bibliography{./references.bib}
 \usepackage{comment}
 \usepackage[labelfont=bf,font=small,format=plain,indention=.5cm,width=0.8\textwidth]{caption}
-\usepackage{subcaption}
+\usepackage[labelfont=rm]{subcaption}
 
 
 % fancyhdr
@@ -397,12 +398,43 @@ New features:
 
 
       \item[3D view animation]
-      A nice feature is the ability to animate the raster maps in 3D view.
-      The raster maps can either represent a changing color of a static surface or
-      a changing surface.
+      A nice feature is the ability to animate raster maps in 3D view.
+      As illustrated in figure \ref{fig:color_elevation_map},
+      raster maps can either represent a changing color of a static surface (\subref{fig:color_map}) or
+      a changing surface (\subref{fig:elevation_map}).
+      Apart from raster maps, also vector point and line data can be animated, too.
+      Implementation details can be found in section \ref{sec:3dViewAnimation}.
+
+\begin{figure}[ht]
+\centering
+    \begin{subfigure}[h]{\textwidth}
+    \centering
+    \includegraphics[width=0.3\textwidth]{./images/color_map1.png}
+    \includegraphics[width=0.3\textwidth]{./images/color_map2.png}
+    \includegraphics[width=0.3\textwidth]{./images/color_map3.png}
+    \caption{Change of color map (temperature)}
+    \label{fig:color_map}
+    \end{subfigure}
+    
+    \begin{subfigure}[h]{\textwidth}
+    \centering
+    \includegraphics[width=0.3\textwidth]{./images/elevation_map1.png}
+    \includegraphics[width=0.3\textwidth]{./images/elevation_map2.png}
+    \includegraphics[width=0.3\textwidth]{./images/elevation_map3.png}
+    \caption{Change of elevation map (Nags Head area)}
+    \label{fig:elevation_map}
+    \end{subfigure}
+    \caption{Example}
+    \label{fig:color_elevation_map}
+\end{figure}
+
+        
       
 
       \item[Export]
+      Animation can be exported either as a sequence of images or an animated gif.
+      %TODO: add example of ffmpeg command
+      \verb|ffmpeg -r 24 -i input_%02d.png -sameq -vcodec mpeg4 output.avi|
 
 %       \item[Visualization of space time datasets with unequally spaced intervals]
      \end{description}
@@ -609,7 +641,7 @@ The displayed extent of the maps is determined by the computational region%
 To change the displayed region, it is necessary to run module \mod{g.region} and then reload data.
 At this stage, any interactive zooming would be problematic.
 The best option would be to reuse the wxGUI rendering system including zooming in order to avoid code duplication.
-Unfortunately, reloading all maps in this way would be more time-consumming.
+Unfortunately, reloading all maps in this way would be more time-consuming.
 When the wxGUI rendering system becomes faster
 it will hopefully be  possible to reuse this system completely.
 
@@ -733,7 +765,22 @@ In general, it is better to use data which are fully compatible to avoid confusi
 The \at always checks the user input and in the case it recognizes an incompatibility, it reports it to the user.
 
 
+\subsubsection{3D view animation}
+\label{sec:3dViewAnimation}
+Images for 3D view animation must be first rendered by module \mod{r.nviz.image} \cite{grassUserMan}.
+The rendering is more time-consuming than loading raster maps for the 2D view,
+however this does not affect the speed of the animation itself.
 
+3D view animation requires to specify additional input data.
+Beside the maps (either multiple maps or space time dataset), the user is asked for a \emph{workspace file}%
+\footnote{Workspace file is XML file storing the state of the wxGUI application (e.g.\ loaded layers, displayed extent).}.
+The workspace file has to be created during a GRASS wxGUI session with active 3D view,
+so that it can provide information about the 3D view state. After parsing this file, a command for \mod{m.nviz.image}
+is created.
+Additionally, the user chooses which parameter to animate.
+Typically, it is either \emph{elevation\_map} or \emph{color\_map}
+(see the difference between figures \ref{fig:color_map} and \ref{fig:elevation_map}),
+although we can animate points or lines, too.
 
 \subsection{Future development}
 
