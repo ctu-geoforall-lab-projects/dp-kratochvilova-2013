@@ -2,7 +2,7 @@
 *.bbl
 *.blg
 *.log
-*.pdf
+dp.pdf
 *.backup
 *.tex~
 *-blx.bib

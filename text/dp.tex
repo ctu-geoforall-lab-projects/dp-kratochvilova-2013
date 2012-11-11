@@ -3,6 +3,7 @@
 \usepackage[english]{babel}
 \usepackage{a4wide}
 \usepackage{url}
+\usepackage{xcolor}
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{graphicx}
@@ -16,8 +17,10 @@
 \usepackage{comment}
 \usepackage[labelfont=bf,font=small,format=plain,indention=.5cm,width=0.8\textwidth]{caption}
 \usepackage[labelfont=rm]{subcaption}
+\usepackage{listings}
 
-
+% \renewcommand\baselinestretch{1.3}
+% \parskip=0.8ex plus 0.4ex minus 0.1 ex
 % fancyhdr
 % accoding to http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Customising_with_fancyhdr
 \usepackage{fancyhdr}
@@ -38,6 +41,18 @@
 % \fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
+}
+
+\definecolor{lightGrey}{RGB}{250,250,250}
+
+\lstdefinestyle{mybash}{
+   language=bash,
+   basicstyle={\ttfamily},
+   keywordstyle=[1]{\bfseries},
+   keywordstyle=[2]{\color{black}},
+   commentstyle={\itshape},
+   frame=lines,
+   backgroundcolor=\color{lightGrey},
 }
 
 
@@ -363,47 +378,40 @@ Beside the features of \mod{xganim} module, \at provides new possibilities
 to explore spatio-temporal data.
 
 Basic features (also existing in \mod{xganim} module):
-    \begin{description}
-      \item[More views]
-      \at can display up to 4 different synchronized animations at once.
-      Unlike the \mod{xganim} module, it is possible to add or remove each of the views separately
-      without the need to restart it.
+\paragraph{More views}
+\at can display up to 4 different synchronized animations at once.
+Unlike the \mod{xganim} module, it is possible to add or remove each of the views separately
+without the need to restart it.
+\paragraph{Change animation speed}
+Unlike the \mod{xganim} module where you can only
+slow down or speed up the animation by an unspecified coefficient, \at allows to set
+exact duration of the frame (in milliseconds).
+\paragraph{Loops}
+There are two methods of looping key frames.
+The first type cycles through the key frames and when it reaches the last one it jumps back
+to the first key frame and continues looping.
+The second type of looping goes back through the key frames in reverse order.
 
-      \item[Change animation speed]
-      Unlike the \mod{xganim} module where you can only
-      slow down or speed up the animation by an unspecified coefficient, \at allows to set
-      exact duration of the frame (in milliseconds).
-
-      \item[Loops]
-      There are two methods of looping key frames.
-      The first type cycles through the key frames and when it reaches the last one it jumps back
-      to the first key frame and continues looping.
-      The second type of looping goes back through the key frames in reverse order.
-
-     \end{description}
 
 New features:
-    \begin{description}
-      \item[Interactive change of the active frame]
-      In order to better control currently displayed frame a slider control is provided.
-      By dragging the slider's knob user can select a certain frame.
-      Also it enables to inspect in detail a part of an animation
-      by repeated dragging of the knob back and forth within a few frames.
+\paragraph{Interactive change of the active frame}
+In order to better control currently displayed frame a slider control is provided.
+By dragging the slider's knob user can select a certain frame.
+Also it enables to inspect in detail a part of an animation
+by repeated dragging of the knob back and forth within a few frames.
+      
+\paragraph{Support of the \tf}
+The most important attribute of the \at is the interoperability with the \tf
+which involves several features described in section \ref{sec:wx.animation:support}.
       
 
-      \item[Support of the \tf]
-      The most important attribute of the \at is the interoperability with the \tf
-      which involves several features described in section \ref{sec:wx.animation:support}.
-      
-
-
-      \item[3D view animation]
-      A nice feature is the ability to animate raster maps in 3D view.
-      As illustrated in figure \ref{fig:color_elevation_map},
-      raster maps can either represent a changing color of a static surface (\subref{fig:color_map}) or
-      a changing surface (\subref{fig:elevation_map}).
-      Apart from raster maps, also vector point and line data can be animated, too.
-      Implementation details can be found in section \ref{sec:3dViewAnimation}.
+\paragraph{3D view animation}
+A nice feature is the ability to animate raster maps in 3D view.
+As illustrated in figure \ref{fig:color_elevation_map},
+raster maps can either represent a changing color of a static surface (\subref{fig:color_map}) or
+a changing surface (\subref{fig:elevation_map}).
+Apart from raster maps, also vector point and line data can be animated, too.
+Implementation details can be found in section \ref{sec:3dViewAnimation}.
 
 \begin{figure}[ht]
 \centering
@@ -430,18 +438,29 @@ New features:
 
         
       
+\paragraph{Export}
+Animation can be exported either as a sequence of images or an animated gif.
+%TODO: add example of ffmpeg command
+Sequence of images can be converted to a video file in several ways.
+One of the possibilities is to call ffmpeg\footnote{\url{http://ffmpeg.org/}} with the following parameters
+      
+\begin{footnotesize}
+\begin{lstlisting}[style=mybash]
+ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
+\end{lstlisting}
+\end{footnotesize}
+      where \emph{-r} stands for frame rate (frames per second),
+      \emph{-i} for input files (requires sequential numbering of files) and
+      \emph{vcodec} determines the video encoding.
+      The export dialog provides the user with the frame rate, so that he can then create
+      a video with the same frame rate%
+      \footnote{However, not all video codecs and containers support an arbitrary frame rate.} as in the \at.
 
-      \item[Export]
-      Animation can be exported either as a sequence of images or an animated gif.
-      %TODO: add example of ffmpeg command
-      \verb|ffmpeg -r 24 -i input_%02d.png -sameq -vcodec mpeg4 output.avi|
+      A usual requirement is include some additional text, logo or time stamp in the video.
+      The \at supports all these options, moreover the number of these decorations is not limited.
+      The placement is specified as the percentage of the image size from the top left corner.
+      
 
-%       \item[Visualization of space time datasets with unequally spaced intervals]
-     \end{description}
-
-% \subsubsection{}
-
-% \paragraph{Interactive }
 \subsection{Support of the \tf}
 \label{sec:wx.animation:support}
 The \at supports the \tf in several ways. Certain features use the \tf in a more complex way than the others.
@@ -783,6 +802,104 @@ Typically, it is either \emph{elevation\_map} or \emph{color\_map}
 although we can animate points or lines, too.
 
 \subsection{Future development}
+\begin{itemize}
+  \item loading more layers
+  \item add where to determine time interval
+  \item add legend
+  \item better support of formats
+  \item 
+\end{itemize}
+
+
+
+\section{Timeline tool}
+Timeline Tool is an interactive application based on wxPython and Python plotting library matplotlib \cite{matplotlib} which allows
+the user of the \tf to visualize space time datasets' metadata, especially temporal and spatial extents.
+
+\subsection{Features}
+The main purpose of this tool is illustrated by the figure \ref{fig:timeline1}
+which is the output plot generated by the tool.
+
+The x-axis represents time and the space time datasets are located on y-axis.
+This simple plot gives an immediate overview of the datasets' temporal extent.
+
+Furthermore, it shows also other characteristics of the datasets.
+Interval and point datasets are distinguished by different symbols (points and bars)
+which is easily and intuitively understandable.
+Datasets with relative and absolute time can be recognized by different x-axis tick labels (date/time format vs. integer).
+
+Also, invalid topology of a dataset is visualized.
+Invalid topology basically means overlaying intervals or points
+which can be easily represented by using semi-transparency to draw plot.
+As a result, overlaying intervals are darker
+which allows to recognize them (see figure \ref{fig:timeline1}, red dataset topol\_abs8).
+
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[ht]{\textwidth}
+  \centering
+  \includegraphics[width=0.8\textwidth]{./images/timeline1.pdf}
+  \caption{temporal extents}
+  \label{fig:timeline1}
+  \end{subfigure}
+
+  \begin{subfigure}[ht]{\textwidth}
+  \centering
+  \includegraphics[width=0.8\textwidth]{./images/timeline3.pdf}
+  \caption{annotation}
+  \label{fig:timeline3}
+  \end{subfigure}
+%   
+\caption{Timeline Tool: 2D plot of datasets' extents}
+\label{fig:timeline}
+\end{figure}
+
+Other metadata can be displayed by clicking on the plotted dataset.
+An annotation bubble appears showing basic information about the dataset and the selected map (figure \ref{fig:timeline3}).
+It also warns about invalid topology of the dataset.
+
+
+Not only temporal extent but also spatial extent can be visualized by using matplolib extension mplot3d.
+The 3D plot is a space time cube where x- and y-axis represent the spatial part and the z-axis represents time (figure \ref{fig:timeline2}).
+
+\begin{figure}[ht!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./images/timeline2.pdf}
+  \caption{Timeline Tool: spatial and temporal extents}
+  \label{fig:timeline2}
+\end{figure}
+
+In order to better explore plotted data, the application allows to zoom,
+pan (and in the case of the 3D plot also rotate) the plot.
+This functionality is provided by matplotlib's navigation toolbar which is a great advantage both for programmers and users.
+Moreover, this toolbar offers to export figure to various raster and vector formats.
+
+\subsection{Implementation}
+To achieve nice and interactive plots integrated into wxPython application, matplotlib was chosen as a best option.
+Although matplotlib is not a required dependency for GRASS~7,
+users often have this library already installed because of its usefulness and capabilities.
+Another considered option was a wxPython module wx.lib.plot.
+Despite the advantage that it is already a part of wxPython and thus, no other dependency would be required,
+it lacks the ability to display time stamps as axis tick labels. This crucial functionality is available in matplotlib.
+
+The Timeline Tool embeds matplotlib into wxPython program by using WXAgg backend.
+This enables to integrate the figure canvas and the navigation toolbar
+which provides zooming, panning and export functionality.
+Beside this toolbar, the Timeline Tool has additional wxPython widgets to control user input.
+
+Matplotlib is a Python library which is an active project and new versions are released approximately two times a year.
+Unfortunately, this means that new versions can have different API and new functions unavailable in older versions.
+This makes it hard or even impossible to provide the same functionality for all versions.
+The Timeline Tool suffers from this problem, too.
+The 3D functionality is not available for matplotlib versions older than 1.0.0 (January 2011)
+because of slightly different API, the inability to easily combine 2D and 3D subplots in one figure
+and the lack of support for alpha drawing.
+The Timeline Tool was tested both with an older version 0.99.1 (available for Ubuntu 10.04) and the latest version 1.1.1.
+
+The 3D functionality of matplotlib is still in development and there are many known problems%
+\footnote{\url{http://matplotlib.org/mpl_toolkits/mplot3d/faq.html}}.
+These issues will be hopefully fixed in future versions of matplotlib.
+% Therefore, the Timeline Tool's 3D view is m
 
 
 
