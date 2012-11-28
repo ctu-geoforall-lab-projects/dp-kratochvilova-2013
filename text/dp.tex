@@ -79,18 +79,28 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \newcommand{\mod}[1]{\textsl{#1}}
 \newcommand{\tf}{Temporal Framework\xspace}
 \newcommand{\at}{Animation Tool\xspace}
+\newcommand{\ms}{Map Swipe\xspace}
  
 \begin{document}
 \tableofcontents
 
-\chapter{Temporal GRASS GIS framework}
+\chapter{Introduction}
+
+\chapter{Spatio-temporal data}
+\section{Visualization}
+\section{Available software}
+
+\chapter{GRASS GIS}
+
+\section{Introduction}
+\section{Temporal GRASS GIS framework}
 Temporal GRASS GIS Framework is a new extension available in GRASS 7 for manipulating spatio-temporal data.
 It enables to manage, analyze and process large amount of spatio-temporal data.
 Following the GRASS GIS modular design, the framework introduces over 30 new modules.
 Temporal modules' names starting with t./t.rast/t.vect/t.rast3d names
 comply with the GRASS modules' naming conventions.
 
-\section{Implementation}
+\subsection{Implementation}
 \tf uses a snapshot approach (described above).
 This approach can be easily understood and is simple enough to be integrated into the layer-based GIS.
 The integration consists of two levels.
@@ -111,7 +121,7 @@ PostgreSQL\footnote{\url{http://www.postgresql.org/}}.
 However, GRASS GIS users usually do not have to come in contact with the underlying database backend
 as the default SQLite driver is often what they need.
 
-\section{Basic concepts}
+\subsection{Basic concepts}
 The \tf follows the concept of linear and discrete time.
 To understand the basic concept of the \tf it is necessary to explain several terms.
 The terms are explained in the context of the \tf , more theoretical and accurate definitions can be found in \cite{temporalGlossary}.
@@ -318,7 +328,7 @@ The opposite of the relation \emph{start} is \emph{end} which is not included in
 
 
 
-\section{Functionality}
+\subsection{Functionality}
 The temporal library provides wide functionality which is accessible either via Python API or GRASS temporal modules.
 The main capabilities of the library include:
 
@@ -358,7 +368,7 @@ through VTK format which can be exported by temporal module \mod{t.rast.out.vtk}
 
 % TODO: space time voxel cubes
 
-
+\section{wxGUI}
 
 
 
@@ -545,11 +555,56 @@ The support of other date time formats is planned.
 
 
 \subsection{Usage}
+There are two ways to launch the \at.
+First option is to launch it from Layer Manager menu.
+If there are any raster maps selected in the Layer Manager, the \at will load these maps automatically.
+This simplifies the workflow of analyzing data as it is not necessary to specify maps several times.
+
+Another option, which might appear more natural to many GRASS users,
+is to launch the \at as a module from command line. By typing:
+
+\begin{small}
+\begin{lstlisting}[style=mybash]
+> g.gui.animation
+\end{lstlisting}
+\end{small}
+
+the \at is launched with no data loaded and the user is supposed to specify maps via the GUI.
+Additionally, input data can be specified directly in the command line.
+As of any other GRASS module, the parameters of \mod{g.gui.animation} command can be retrieved by typing:
+
+\begin{small}
+\begin{lstlisting}[style=mybash]
+> g.gui.animation --help
+
+Description:
+ Tool for animating a series of GRASS raster maps
+ or a space time raster dataset
+
+Usage:
+ g.gui.animation [rast=name[,name,...]] [strds=name] [--verbose]
+   [--quiet]
+
+Flags:
+ --v   Verbose module output
+ --q   Quiet module output
+
+Parameters:
+   rast   Raster maps to animate
+  strds   Space time raster dataset to animate
+\end{lstlisting}
+\end{small}
+
+The command line interface does not allow the access to complete functionality of the \at.
+The reason is that providing all functionality through command line parameters
+would result in too complicated parameters.
+Moreover, this simple interface should be sufficient for most cases.
+
 
 \subsection{Implementation}
 While \mod{xganim} module was written in wxWidgets using C++ programming language (in GRASS 7),
 the \at is written completely in wxPython using Python so that it can be better integrated into the GRASS wxGUI.
-It uses \emph{GRASS Python Scripting Library} and \emph{GRASS Python Temporal Library}\cite{grassProgMan},
+It uses \emph{GRASS Python Scripting Library} and \emph{GRASS Python Temporal Library} \cite{grassProgMan},
 which is the integral part of the \tf. In the following paragraphs, some of the implementation issues are described.
 
 \subsubsection{Loading data}
@@ -900,6 +955,82 @@ The 3D functionality of matplotlib is still in development and there are many kn
 \footnote{\url{http://matplotlib.org/mpl_toolkits/mplot3d/faq.html}}.
 These issues will be hopefully fixed in future versions of matplotlib.
 % Therefore, the Timeline Tool's 3D view is m
+
+
+\subsection{Usage}
+The Timeplot Tool can be launched as any other GRASS module.
+For displaying help, choose one of the following options:
+\begin{small}
+\begin{lstlisting}[style=mybash]
+> g.manual entry=g.gui.timeline # opens manual page in a browser
+\end{lstlisting}
+\end{small}
+
+\begin{small}
+\begin{lstlisting}[style=mybash]
+> g.gui.timeline --help
+
+Description:
+ Allows to compare temporal datasets
+ by displaying their temporal extents in a plot.
+
+Usage:
+ g.gui.timeline [-3] [inputs=name[,name,...]] [--verbose] [--quiet]
+
+Flags:
+  -3   Show also 3D plot of spatio-temporal extents
+ --v   Verbose module output
+ --q   Quiet module output
+
+Parameters:
+  inputs   Name of the input space time datasets
+
+\end{lstlisting}
+\end{small}
+
+\subsection{Future development}
+Next development will focus on the following points:
+\begin{itemize}
+  \item highlighting individual maps, which should be synchronized in 2D and 3D
+  \item support for datasets with `mixed' time (time instances and intervals together in one dataset)
+  \item user settings\,---\,colors, date formatting
+\end{itemize}
+In the future, such tool could be integrated into any application processing temporal data
+and then, it could be used as a control widget.
+
+
+
+\section{\ms}
+\ms is a tool which allows the user to interactively compare two raster maps
+of the same area by revealing different parts of the raster maps.
+It is useful for comparing raster maps from different time periods.
+Although \ms does not use the \tf, as there is no particular application for it,
+thanks to its capabilities we can regard it as an useful tool for exploring spatio-temporal data.
+
+An example of usage is presented on the manual page \cite{grassUserMan} of the \ms.
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./images/mapswipe_tsunami.jpeg}
+  \caption{Pre and post disaster images of the tsunami in Japan in 2011.
+  The upper MODIS image taken on February 26, 2011, shows the coastline under normal conditions
+  while the lower MODIS image on March 13, 2011, shows a clear view of tsunami flooding along the coastline.
+  Water, black and dark blue in these false-color images, still covers the ground as much as five kilometers
+  (three miles) from the coast. Source: Earth Observatory/NASA}
+\end{figure}
+
+
+\subsection{Features}
+Map Swipe allows to:
+\begin{itemize}
+    \item switch orientation of the swipe line (horizontal or vertical)
+    \item zooming, panning
+
+\end{itemize}
+
+    
+\subsection{Usage}
+automatically load maps when opening Map Swipe with two selected raster maps in Layer Manager
+
 
 
 
