@@ -109,7 +109,7 @@ Spatio-temporal data modeling involves defining object data types, relations and
 % Existing models to specialized, not robust enough
 In the following paragraphs, several spatio-temporal data models are described as they are presented in \cite{pelekis2004}.
 
-\paragraph{The snapshot model}
+\paragraph*{The snapshot model}
 One of the simplest field-based spatio-temporal data models is the snapshot model.
 This representation consists of a sequence of layers,
 where each layer shows a state recorded at a certain point in time.
@@ -130,17 +130,60 @@ To alleviate the problem of storing redundant data, an alternative approach,
 This approach models changes instead of states.
 The state can be retrieved by amending changes to the main state.
 In order to improve the efficiency of retrieving a distant state,
-various approaches have been suggested \cite{wang2012}.
+various approaches have been suggested \cite{wang2012},
+differing in the choice of base state or states and in the number and distribution of difference files.
 
+\paragraph*{The space-time composite data model}
+This model was suggested by Langran \cite{langran1988}. It assumes vector data representation.
+The base map in this model is gradually fragmented as the changes occur.
+Each fragment has its own attribute history represented by an ordered list of records.
+To obtain a state at a point in time, all fragments are retrieved and common spatial boundaries are dissolved.
+This model is conceptually straightforward, however the updating process may be more time consuming \cite{pelekis2004}
+comparing to other models.
+% The fragmentation requires to change identifiers each time when an old fragment is split into two new parts
 
+\paragraph*{Event-oriented models}
+According to \cite{temporalGlossary}, event ``is an instantaneous fact, i.e., something occurring at an instant''.
+The models mentioned above cannot clearly represent events.
+In order to overcome this problem, events can be represented explicitly.
+Several event-based models have been suggested by \cite{claramunt1995managing}, \cite{peuquet1995}, \cite{chen1998event}.
 
+We can explain the basic concept of event-oriented models by describing
+the raster-based approach implemented by Peuquet and Duan, called 
+\emph{Event-based Spatio Temporal Data Model} (ESTDM)  \cite{peuquet1995}.
+This model stores changes associated with each time instance in an event list.
+Every event from this list points to a list of event components,
+which describe where changes occur (using efficient data structures).
+Events are connected; every event has a pointer to the previous and the following event.
+Similarly to the concept of amendments, there is also a base map, showing an initial snapshot.
+ESTDM assumes that each event list and associated changes relate to a single thematic domain.
 
+\paragraph*{Object-oriented models}
+As object-oriented design showed promising results in the field of programming,
+there were efforts to apply its features, such as classes and instances, attributes and methods,
+inheritance and polymorphism, in spatio-temporal data model.
 
+An object-oriented approach was for the first time applied by Worboys \cite{worboys1994unified}.
+He suggested a unified spatio-temporal object (\emph{ST-complex}) which combines spatial component
+with bitemporal component (event and database time). ST-complex is a collection of \emph{ST-simplexes}
+where the spatial component represents a point, a straight line segment or a triangular area.
+Operations like union, difference, boundary or spatial and temporal projection are defined for the ST-object.
 
+Object-oriented models seem to have more advantages and less drawbacks comparing to other models.
+Pelekis \cite{pelekis2004} claims that it can ``support  all types of data handling,
+in terms of measurement, topological relationships and operations''.
 
+\paragraph{The three domains model}
+The three domains model was described by Yuan \cite{yuan1994wildfire} and it was originally applied for wildfire modeling.
+As the name suggests, the model has three domains, semantics, time, and space, which are interlinked.
+In case of wildfire modeling, semantic domain can contain names of fire events, types or fire intensity.
+The time domain describes the existence of semantic and spatial objects (like geometrical primitives, cells and volumes).
+Each domain can be handled separately in terms of database management system.
+Thanks to the splitting of the spatio-temporal information,
+this model is flexible enough to support wide range of spatio-temporal queries \cite{pelekis2004}.
+The interesting aspect is that both splitting (the case of the three domains model)
+and unifying (the case of the object-oriented model) can lead to good results.
 
-
-% snapshots - spaghetti - langran A FRAMEWORK FOR  T E M P O R AL  G E O G R A P H IC  I N F O R M A T I ON 
 \section{Visualization}
 \section{Available software}
 
