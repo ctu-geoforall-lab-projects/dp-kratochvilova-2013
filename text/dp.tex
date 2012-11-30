@@ -87,6 +87,60 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \chapter{Introduction}
 
 \chapter{Spatio-temporal data}
+The term \emph{spatial} data refers to data where each object has associated with it a location.
+Naturally, \emph{spatio-temporal} data also include a temporal coordinate.
+Spatial data have been collected, processed and visualized from the early history of mankind.
+Conversely until today, the representation and visualization of spatio-temporal data
+is problematic despite of great effort of researches all over the world.
+
+Peuquet \cite{peuquet2001} provides an overview of the development of spatio-temporal data representation.
+One of the first areas which needed to handle temporal data were banking systems,
+where storing temporal information about financial transactions is crucial.
+This encouraged the DBMS (\emph{Database Management System}) to explore the possibilities of handling
+temporal data. Simultaneously, a temporal database query language was being developed, which resulted in TSQL2 \cite{snodgrass1995}.
+There was an attempt to incorporate certain parts of this language into new SQL standard SQL:1999,
+however the TSQL2 was later critized \cite{darwen2005}.
+Recently, a new set of language extensions for temporal data support became a part of
+SQL:2011 \cite{kulkarni2012}.
+
+\subsection{Spatio-temporal data models}
+Spatio-temporal data modeling involves defining object data types, relations and operations, and ensuring database integrity
+\cite{pelekis2004}. Apart from that, data model should take into account possible spatio-temporal queries and performed analyzes.
+% Existing models to specialized, not robust enough
+In the following paragraphs, several spatio-temporal data models are described as they are presented in \cite{pelekis2004}.
+
+\paragraph{The snapshot model}
+One of the simplest field-based spatio-temporal data models is the snapshot model.
+This representation consists of a sequence of layers,
+where each layer shows a state recorded at a certain point in time.
+Hence, this model can be perceived as a 3D or 4D space-time cube \cite{peuquet2001}.
+
+
+The main drawback is the redundancy of data when there is little change between two successive states.
+Also, it is not convenient to describe changes in space through time because the model captures only states.
+Due to missing temporal structure, it is difficult to enforce integrity rules
+and resolve all possible types of queries \cite{pelekis2004}.
+It can be even compared to spaghetti model, term related to vector topology.
+On the other hand, the advantage of this model is its simplicity;
+it's implementation and usage is quite straightforward and intuitive.
+In addition, it can be easily used to extend existent layer-based GIS.
+
+To alleviate the problem of storing redundant data, an alternative approach,
+\emph{Base state with Amendments} was suggested \cite{langran1988}.
+This approach models changes instead of states.
+The state can be retrieved by amending changes to the main state.
+In order to improve the efficiency of retrieving a distant state,
+various approaches have been suggested \cite{wang2012}.
+
+
+
+
+
+
+
+
+
+% snapshots - spaghetti - langran A FRAMEWORK FOR  T E M P O R AL  G E O G R A P H IC  I N F O R M A T I ON 
 \section{Visualization}
 \section{Available software}
 
