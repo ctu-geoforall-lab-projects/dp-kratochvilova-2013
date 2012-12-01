@@ -103,6 +103,8 @@ however the TSQL2 was later critized \cite{darwen2005}.
 Recently, a new set of language extensions for temporal data support became a part of
 SQL:2011 \cite{kulkarni2012}.
 
+%%%%%%%%%%%%%%% ST models %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Spatio-temporal data models}
 The capabilities of any information system depend on the design of its data models.
 Spatio-temporal data modeling involves defining object data types,
@@ -119,9 +121,6 @@ There is quite a large number of spatio-temporal data models (\cite{pelekis2004}
 I decided to present only certain models which are frequently discussed in related literature.
 The brief description should give an idea of spatio-temporal modeling
 and it shows how spatio-temporal models vary.
-
-
-
 
 \paragraph*{The snapshot model}
 One of the simplest field-based spatio-temporal data models is the snapshot model.
@@ -157,7 +156,7 @@ comparing to other models.
 % The fragmentation requires to change identifiers each time when an old fragment is split into two new parts
 
 \paragraph*{Event-oriented models}
-According to \cite{temporalGlossary}, event ``is an instantaneous fact, i.e., something occurring at an instant''.
+According to \cite{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
 The models mentioned above cannot clearly represent events.
 In order to overcome this problem, events can be represented explicitly.
 Several event-based models have been suggested by \cite{claramunt1995managing}, \cite{peuquet1995}, \cite{chen1998event}.
@@ -186,8 +185,8 @@ where the spatial component represents a point, a straight line segment or a tri
 Operations like union, difference, boundary or spatial and temporal projection are defined for the ST-object.
 
 Object-oriented models seem to have more advantages and less drawbacks comparing to other models.
-Pelekis \cite{pelekis2004} claims that it can ``support  all types of data handling,
-in terms of measurement, topological relationships and operations''.
+Pelekis \cite{pelekis2004} claims that it can ``\emph{support  all types of data handling,
+in terms of measurement, topological relationships and operations}''.
 
 \paragraph{The three domains model}
 The three domains model was described by Yuan \cite{yuan1994wildfire} and it was originally applied for wildfire modeling.
@@ -200,7 +199,121 @@ this model is flexible enough to support wide range of spatio-temporal queries \
 The interesting aspect is that both splitting (the case of the three domains model)
 and unifying (the case of the object-oriented model) can lead to good results.
 
+%%%%%%%%%%%%%%% Visualization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Visualization}
+Visualizing the world (through geospatial data) has been a cartographic interest for many centuries.
+Current advanced software and hardware enable us to visualize geospatial data in many different ways,
+however, existing visualization and exploratory techniques often do not suffice, especially in the temporal domain.
+
+Visualization of spatio-temporal data is closely related to the term \emph{temporal map}.
+Kraak and MacEachren \cite{kraak1994visualization} define temporal maps as
+``\emph{a representation or abstraction of changes in geographical reality:
+a tool (that is visual, digital or tactile) for presenting geographical information
+whose locational and/or attribute components change over time}''.
+They distinguish three categories of maps:
+    \begin{description}
+        \item[A single static map] represents an event by means of graphic sign system\,---\,from complex point symbols,
+            temporal glyphs, to generalized trend-surface or flow-linkage maps depicting movement \cite{monmonier1990strategies}.
+
+        \item[A strip map] represents an event by ordering `state' maps chronologically (as in `comic strip' style).
+            Each map shows the state of the geographical reality at a unique time instance.
+            The number of maps is rather limited because it is not possible to display long series of images
+            due to lack of space (on paper or screen). Also, it would be too difficult to follow all these images.
+
+        \item[Animated maps] represent an event by a quick chronological sequence of static maps.
+            A typical example of animated map is shown during the weather forecast on television,
+            where it depicts changing atmosphere's conditions.
+            Fly-through animations are not considered to be temporal maps
+            as long as there is no change in the spatial component (i.e.\ landscape).
+    \end{description}
+
+MacEachren \cite{maceachren1997exploratory} suggests a concept of visualization
+where map usage is treated as a cube;
+the axes represent the user of map (private vs.\ public),
+objectives of use (revealing unknowns vs.\ presenting knowns)
+and degree of interactivity (high vs.\ low).
+One of the corners (private users, revealing unknowns and high interactivity)
+represents \emph{visualization} and the opposite one \emph{communication}.
+All maps involve both visualization (exploratory analysis leading to revealing new information)
+and communication (delivery of desired information to map user),
+however they differ in which component they underline.
+Both components are important; first the researcher need to analyze the data
+and then he explains his findings to the public.
+In the following paragraphs I will focus mostly on the exploratory use of visualization tools.
+
+In \cite{andrienko2003exploratory}, Andrienko et al.\ provide a review
+of general exploratory techniques used for analysis of spato-temporal data.
+They based the task typology on work
+%of Bertin \cite{bertin1983semiology}
+of Peuquet \cite{peuquet1994s}.
+She distinguished three view components in spatio-temporal data:
+\emph{where} (space), \emph{when} (time) and \emph{what} (object).
+This leads to three basic kinds of question:
+\begin{description}
+    \item[when + where $\rightarrow$ what:]
+        Describe the objects or set of objects (what) that are present
+        at a given location or set of locations (where)
+        at a given time or set of time (when).
+
+    \item [when + what $\rightarrow$ where:]
+        Describe the location or set of locations (where) occupied
+        by a given object or set of objects (what) at
+        a given time or set of times (when).
+
+    \item [where + what $\rightarrow$ when:]
+        Describe the times or set of times (when) that a given
+        object or set of objects (what) occupied a
+        given location or set of locations (where).
+ \end{description}
+ 
+
+\subsection{Exploratory techniques}
+Unlike paper maps, computer-based visualization tools offer many important features
+such as interactivity and dynamics which are necessary for most exploratory techniques
+like map querying or animation.
+
+\subsubsection{Querying}
+A query consists of two main parts\,---\,target and constraints \cite{andrienko2003exploratory}.
+For example, we can ask where (target) a particular object was located at a given time instance (constraint).
+A query can be specified by the user either by a machine-readable language (typically Structured Query Language)
+or via graphical user interface (possibly using Visual Query Languages \cite{catarci1997visual})
+which is usually more convenient for end-users who then tend to perform tasks faster.
+An example of dynamic query tools which constrain the query can be found
+in \cite{ahlberg1992dynamic} and \cite{hochheiser2004dynamic}.
+However, dynamic query tools usually do not allow to build a more complicated query;
+for example, when logical \emph{OR} and \emph{AND} are combined.
+
+% Often, the query constraints are specified by a mouse cursor pointing at a location on map.
+
+In case of temporal queries, specific graphical user interface
+might be needed. Figure \ref{fig:cyclical_time} shows a temporal query tool
+which enables to select arbitrary combinations of years, month, days and hours.
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{./images/cyclical_time.png}
+  \caption{Widget for temporal queries from system TEMPEST (Source:
+      \url{http://w ww.geovista.psu.edu/products/demos/edsall/Tclets072799/cyclicaltime.htm})}
+  \label{fig:cyclical_time}
+\end{figure}
+
+
+
+\subsubsection{Map iteration}
+Map iteration corresponds to the term ``strip maps'' mentioned before.
+Temporal information is presented as a juxtaposition of several maps.
+Each map represents one state of a phenomenon at an time instance.
+This technique can be used with both conventional maps and maps on computer screens.
+Also, it is applicable for all type of spatio-temporal data.
+
+\subsubsection{Map animation}
+
+
+
+
+
 \section{Available software}
 
 \chapter{GRASS GIS}
