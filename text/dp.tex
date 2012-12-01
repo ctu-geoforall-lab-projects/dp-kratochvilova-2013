@@ -103,11 +103,25 @@ however the TSQL2 was later critized \cite{darwen2005}.
 Recently, a new set of language extensions for temporal data support became a part of
 SQL:2011 \cite{kulkarni2012}.
 
-\subsection{Spatio-temporal data models}
-Spatio-temporal data modeling involves defining object data types, relations and operations, and ensuring database integrity
-\cite{pelekis2004}. Apart from that, data model should take into account possible spatio-temporal queries and performed analyzes.
-% Existing models to specialized, not robust enough
-In the following paragraphs, several spatio-temporal data models are described as they are presented in \cite{pelekis2004}.
+\section{Spatio-temporal data models}
+The capabilities of any information system depend on the design of its data models.
+Spatio-temporal data modeling involves defining object data types,
+relations and operations, and ensuring database integrity \cite{pelekis2004}.
+Apart from that, a data model should take into account possible spatio-temporal queries and performed analyzes.
+
+We have succeeded in modeling of spatial information;
+current geographical information systems use raster, vector model or the combination of both.
+Nonetheless, to model temporal information together with spatial information
+has proved to be more complicated \cite{peuquet2001}.
+
+In the following paragraphs, several spatio-temporal data models are described.
+There is quite a large number of spatio-temporal data models (\cite{pelekis2004} identifies 11 distinct models), however
+I decided to present only certain models which are frequently discussed in related literature.
+The brief description should give an idea of spatio-temporal modeling
+and it shows how spatio-temporal models vary.
+
+
+
 
 \paragraph*{The snapshot model}
 One of the simplest field-based spatio-temporal data models is the snapshot model.
@@ -149,7 +163,9 @@ In order to overcome this problem, events can be represented explicitly.
 Several event-based models have been suggested by \cite{claramunt1995managing}, \cite{peuquet1995}, \cite{chen1998event}.
 
 We can explain the basic concept of event-oriented models by describing
-the raster-based approach implemented by Peuquet and Duan, called 
+the raster-based approach implemented%
+\footnote{The actual implementation used GRASS GIS for storing base map \cite{peuquet1995}.}
+by Peuquet and Duan, called
 \emph{Event-based Spatio Temporal Data Model} (ESTDM)  \cite{peuquet1995}.
 This model stores changes associated with each time instance in an event list.
 Every event from this list points to a list of event components,
