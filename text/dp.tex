@@ -85,7 +85,7 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \tableofcontents
 
 \chapter{Introduction}
-
+% http://upload.wikimedia.org/wikipedia/commons/2/29/Minard.png
 \chapter{Spatio-temporal data}
 The term \emph{spatial} data refers to data where each object has associated with it a location.
 Naturally, \emph{spatio-temporal} data also include a temporal coordinate.
@@ -266,6 +266,15 @@ This leads to three basic kinds of question:
         object or set of objects (what) occupied a
         given location or set of locations (where).
  \end{description}
+
+For the purpose of their work, Andrienko et al. simplified this classification into two cases:
+    \begin{description}
+        \item[when $\rightarrow$ where + what:]
+            Time is given and other information (location, characteristics) has to be found out.
+        \item[where + what $\rightarrow$ when:]
+            With other types of information, time has to be discovered.
+
+     \end{description}
  
 
 \subsection{Exploratory techniques}
@@ -308,7 +317,79 @@ Each map represents one state of a phenomenon at an time instance.
 This technique can be used with both conventional maps and maps on computer screens.
 Also, it is applicable for all type of spatio-temporal data.
 
+The technique of map iteration is suitable
+for both type of tasks mentioned above.
+Change (thus `when $\rightarrow$ where + what' in terms of comparing two time moments)
+can be detected by map iteration technique by shifting the focus from one map to the other.
+
+This task can be made even easier by overlaying one map over the other providing that the upper map is semitransparent.
+This makes the changes more visible.
+However, from my own experience, such a tool should allow the user to change the transparency level dynamically
+because certain changes might be revealed easier at a different level of transparency.
+Similar approach is the fading technique.
+One map gradually disappears while the next map emerges from beneath of it.
+
+Another variation on the topic which is not mentioned in \cite{andrienko2003exploratory}
+is `swipe' technique.
+It allows the user to interactively compare two layers (typically raster)
+of the same area by revealing different parts of the maps (see for example figure \ref{fig:swipe}).
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{./images/swipe_example.png}
+  \caption{Example of `swipe' technique. Source: \url{http://sathyaprasad.appspot.com/swipe.html}}
+  \label{fig:swipe}
+\end{figure}
+
+% , where + what $\rightarrow$ when).
+
 \subsubsection{Map animation}
+Unlike map iteration, map animation is a technique which is applicable for computer screens only.
+Nonetheless, there is only a few steps from map iteration to map animation.
+Instead of displaying a series of static maps, there is a single map but its content changes.
+The changes representing an event are inferred from real movement on the map.
+Animation consists of frames\,---\,single images (maps).
+
+Animations can be useful to reveal trends and processes.
+In \cite{dibiase1992animation}, DiBiase et al.\ introduced three dynamic variables:
+\emph{duration}, \emph{rate of change}, \emph{order}.
+Three more variables were added by MacEachren \cite{maceachren2004maps}:
+\emph{frequency}, \emph{display time} and \emph{synchronization}.
+According to Kraak \cite{kraak2000visualisation}, duration and order are the most important
+dynamic variables. Duration is the time interval during which no change on the display occurs.
+Order, the succession of individual frames, together with duration can be used to
+``\emph{express an animation's narrative character}''\cite{kraak2000visualisation}.
+
+
+In \cite{kraak1997cartographic}, Kraak et al.\ deal with temporal legend for animations.
+Temporal legend is the part of the interface which does not only help to understand and interpret
+the phenomenon but it can also serve as navigation tool to control dynamically the animation.
+In order to explore spatio-temporal data, animation should offer functionality like replaying, pausing
+and going to a particular frame.
+Temporal legend can differ according to the type of displayed data.
+For example, certain kinds of data, like hourly measured temperature, have naturally perceived periodic pattern.
+For those data, clock-like legend might be more suitable.
+However it describes only the temporal location within one cycle.
+
+On the other hand, for several kinds of data linear time representation is more natural (e.g.\ erosion process)
+and for this case a slide bar, where the marker shows the current temporal location, would be a better choice.
+Both types of temporal legends could be accompanied by numerical legend (e.g.\ 23:14,  March 2012, \ldots)
+as suggested by Kraak \cite{kraak1997cartographic}.
+However, a study showed that the choice among these three types of legend has no significant effect on
+the performance, response times or correctness of results \cite{edsall1997assessing}.
+
+Another types of temporal legend for animation can try to avoid the distracting the user.
+Sound legend can signalize either the date and time or the animation frequency (by ticking).
+Another approach applicable only for certain data is based on changing the brightness of the screen
+to induce an illusion of day and night.
+
+
+
+
+
+
+
 
 
 
