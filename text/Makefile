@@ -1,6 +1,7 @@
 FILE=dp
+SVGDIR = svg_images
 
-SVGFILES = $(shell ls *.svg)
+SVGFILES = $(shell ls $(SVGDIR)/*.svg)
 SVGPDF = $(patsubst %.svg, %.pdf, $(SVGFILES))
 
 all: $(FILE).pdf
