@@ -345,22 +345,93 @@ of the same area by revealing different parts of the maps (see for example figur
 % , where + what $\rightarrow$ when).
 
 \subsubsection{Map animation}
+% consider (sub)paragraphs - dynamic vis. variables, temporal legend
 Unlike map iteration, map animation is a technique which is applicable for computer screens only.
 Nonetheless, there is only a few steps from map iteration to map animation.
 Instead of displaying a series of static maps, there is a single map but its content changes.
 The changes representing an event are inferred from real movement on the map.
 Animation consists of frames\,---\,single images (maps).
 
-Animations can be useful to reveal trends and processes.
-In \cite{dibiase1992animation}, DiBiase et al.\ introduced three dynamic variables:
+Animations can be useful to reveal trends, processes and subtle spatio-temporal patterns
+that are not evident in static representation. Dorling and Openshaw \cite{dorling1993using}
+demonstrated a power of animated maps to stimulate knowledge;
+they investigated childhood leukemia rates in northern England during twenty years.
+Thanks to the animation the previously unrecognized hot-spots (localized both in space and time) emerged
+as well as the oscillation between the rise and fall of the incidence of
+cases in Newcastle and Manchester. Since time component was not considered in previous studies,
+they failed to reveal these patterns.
+
+Animation can be used to visualize routes of moving objects \cite{andrienko2003exploratory}.
+Unlike static representations, animation can reveal details about speed, acceleration and interaction
+of the individual objects. Consider the case when the trajectories of two objects cross each other.
+Without animation we are not able to decide if the objects really met or
+if they just arrived at the same place in a different moment.
+There are three alternative approaches to visualize object movement by animation \cite{andrienko2003exploratory}:
+    \begin{description}
+        \item[Snapshot in time] The simplest approach is based on displaying the objects
+        at their location at the given time instance. This method is usually not convenient for more than one object.
+        \item[Movement history] Beside the objects, also their trajectories are displayed from the starting point.
+        When the animation ends, complete trajectories are shown. This approach prevents the user from loosing track,
+        however in case of more complicated trajectories, the situation might become too complex.
+        \item[Time window] Similarly to the previous approach, trajectories are displayed.
+        However only a part of the trajectories corresponding to the last few time units are visible,
+        like the white trails leaved behind by a plane.
+        This method solves the drawback of the `movement history' method.
+    \end{description}
+
+
+
+% \begin{figure}[ht]
+% \centering
+%     \begin{subfigure}[ht]{0.3\textwidth}
+%     \centering
+%         \includegraphics[width=\textwidth]{./images/shark_move_1.png}
+%     \label{fig:shark1}
+% %     \caption{Shark}
+%     \end{subfigure}
+%     \begin{subfigure}[ht]{0.3\textwidth}
+%     \centering
+%         \includegraphics[width=\textwidth]{./images/shark_move_2.png}
+%     \label{fig:shark2}
+% %     \caption{Shark}
+%     \end{subfigure}
+%     \begin{subfigure}[ht]{0.3\textwidth}
+%     \centering
+%         \includegraphics[width=\textwidth]{./images/shark_move_3.png}
+%     \label{fig:shark3}
+%     \end{subfigure}
+% \caption{Trajectory of a whale shark visualized in Google Earth (data source: German European School Singapore)}
+% \label{fig:shark}
+% \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In \cite{dibiase1992animation}, DiBiase et al.\ introduced three dynamic visualization variables of animation:
 \emph{duration}, \emph{rate of change}, \emph{order}.
 Three more variables were added by MacEachren \cite{maceachren2004maps}:
 \emph{frequency}, \emph{display time} and \emph{synchronization}.
 According to Kraak \cite{kraak2000visualisation}, duration and order are the most important
 dynamic variables. Duration is the time interval during which no change on the display occurs.
 Order, the succession of individual frames, together with duration can be used to
-``\emph{express an animation's narrative character}''\cite{kraak2000visualisation}.
+\emph{``express an animation's narrative character''}\cite{kraak2000visualisation}.
+Frequency is the number of identifiable states per unit of display time.
+Despite the fact that frequency is the dual of duration,
+\emph{``it is worth treating as a separate dynamic variable because \ldots
+humans react to frequency as if it were an independent variable''} \cite{kraak1994visualization}.
+Display time, also called \emph{moment of display}, refers to the time when some display change is initiated.
+According to Blok  \cite{blok2005dynamic}, synchronization and rate of change are not dynamic variables
+but effects of interaction with other dynamic variables.
 
+The last mentioned variable, synchronization, refers to the possibility to run two or more
+animations simultaneously. This might reveal synchronization of patterns between (possibly related) phenomena.
+Also it may be useful to experiment with different starting moments of animations.
+This allows to explore cause-effect relationships between phenomena, for example
+the delayed effect of precipitation on vegetation growth.
+However, it is unclear whether an analyst is able to effectively watch two or more simultaneous
+juxtaposed animations \cite{andrienko2003exploratory}. More research need to be conducted.
+Using the eye-tracking technology seems to be one possible approach
+(see for example study \cite{opach2011evaluating}).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 In \cite{kraak1997cartographic}, Kraak et al.\ deal with temporal legend for animations.
 Temporal legend is the part of the interface which does not only help to understand and interpret
@@ -384,15 +455,11 @@ Sound legend can signalize either the date and time or the animation frequency (
 Another approach applicable only for certain data is based on changing the brightness of the screen
 to induce an illusion of day and night.
 
+% about animation in public - presentation, web, education
+% TODO: add ref from Helena  - ROLE OF DYNAMIC CARTOGRAPHY IN SIMULATIONS OF LANDSCAPE PROCESSES BASED ON MULTI-VARIATE FIELDS
+% skagit.meas.ncsu.edu/~helena/gmslab/papers/listsj.html
 
-
-
-
-
-
-
-
-
+\subsubsection{Space-time cube and space-time path}
 
 
 \section{Available software}
