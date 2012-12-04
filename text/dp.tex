@@ -512,10 +512,12 @@ not all places are accessible.
 \label{fig:st-path-prism}
 \end{figure}
 
-Space-time paths are often used to analyze sociological aspects
+
+Space-time paths are naturally applied to movement data, such as public transport data \cite{transport2005visualisation}.
+Apart from that, space-time paths are often used to analyze sociological aspects
 as for example in the study focused on non-employment activities with regard to gender \cite{kwan1999gender}.
 In \cite{moore2003time}, this technique was used in sport to analyze rugby matches.
-Additionally, Kraak \cite{kraak2005visualization} suggests to use it for real-time monitoring which is possible thanks to 
+Additionally, Kraak \cite{kraak2005visualization} suggests to use it for real-time monitoring which is possible thanks to
 the boom of GNSS (Global Navigation Satellite System) technologies.
 Another discipline which may benefit from the space-time paths approach is archeology.
 Kraak \cite{kraak2005visualization} provides an example of space-time paths representing
@@ -524,8 +526,43 @@ Another study concentrated on the interaction of cultures using a combination of
 with graph theory \cite{huisman2008development}.
 
 
+
+% understand An Evaluation of Space Time Cube Representation of Spatiotemporal Patterns
+
 % GNSS influenced makes collecting
 
+
+
+Space-time cube concept is suitable not only to represent moving objects
+but it can be successfully applied to events, too.
+Gatalsky et al.\ \cite{gatalsky2004interactive}
+focused on the detection of spatio-temporal patterns in event occurrences.
+In their work, events (earthquakes) are represented as circles placed vertically according to their occurrence.
+Size and color of each circle reflect the thematic characteristics of the event.
+The space-time cube is dynamically linked to a map display so that it is possible to highlight corresponding events.
+% By using this method, they were able to find grouping
+
+Another potentially large field of study is the application of space-time cube concept for voxel data.
+Mitasova et al.\ \cite{mitasova2011landscape} presents a multidimensional framework for characterization
+of land surface dynamics using time series of elevation data (LiDAR point cloud).
+Space-time cube, as one part of this framework,
+creates a voxel representation of elevation evolution with time as a third dimension.
+The evolution of contour-based features (shorelines) is studied
+by visualization of multiple isosurfaces extracted from the voxel model%
+%(\ref{fig:})
+.
+In this context, an isosurface represents a contour of given $z$-coordinate (height)
+stretched in the vertical time dimension.
+% TODO: add images of voxel schema, isosurfaces http://www.sciencedirect.com/science/article/pii/S0169555X11002935
+
+Yet another space-time cube approach is used to visualize distributions of
+geospatial time-varying data through a pictorial representation \cite{tominski20053d}, \cite{thakur20103d}.
+A base map is typically divided into regions or administrative districts.
+Above each of these parts, a 3D icon or glyph is drawn.
+In \cite{thakur20103d}, the glyph is represented by a set of disks stacked along the vertical temporal axis,
+one for each time step. The size of the disk is scaled according to maximum disk size.
+Additionally, color is used to encode data values and although it is redundant
+(the information is already in the disk size), it can help to detect outliers.
 
 
 
