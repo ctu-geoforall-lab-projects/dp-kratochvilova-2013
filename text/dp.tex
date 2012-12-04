@@ -18,6 +18,8 @@
 \usepackage[labelfont=bf,font=small,format=plain,indention=.5cm,width=0.8\textwidth]{caption}
 \usepackage[labelfont=rm]{subcaption}
 \usepackage{listings}
+\usepackage{amsmath}
+
 
 % \renewcommand\baselinestretch{1.3}
 % \parskip=0.8ex plus 0.4ex minus 0.1 ex
@@ -76,7 +78,7 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \end{center}
 \end{minipage}}}
 
-\newcommand{\mod}[1]{\textsl{#1}}
+\newcommand{\module}[1]{\textsl{#1}}
 \newcommand{\tf}{Temporal Framework\xspace}
 \newcommand{\at}{Animation Tool\xspace}
 \newcommand{\ms}{Map Swipe\xspace}
@@ -459,16 +461,48 @@ to induce an illusion of day and night.
 % TODO: add ref from Helena  - ROLE OF DYNAMIC CARTOGRAPHY IN SIMULATIONS OF LANDSCAPE PROCESSES BASED ON MULTI-VARIATE FIELDS
 % skagit.meas.ncsu.edu/~helena/gmslab/papers/listsj.html
 
-\subsubsection{Space-time cube and space-time path}
+\subsubsection{Space-time cube}
+The space-time cube is basically a 3D plot in which the spatial component (e.g.\ a geographic map)
+is plotted in the $xy$\nobreakdash-plane and the temporal domain is represented
+on the vertical $z$-axis.
+This new view on time as an additional spatial dimension was introduced in 1970 by Hägerstrand \cite{hagerstrand1970}.
+He suggested a three-dimensional diagram, the space-time cube, to study the space-time behavior of human individuals.
+In those days, creating graphics was limited to manual methods.
+Therefore creating an alternative view on the cube, which is essential for this visualization technique,
+required an arduous drawing process. Today, thanks to modern computer technologies, much better opportunities
+for visualization are provided. As a result, researchers bring back this concept and
+investigate it in order to use it as a new exploratory tool.
+
+Space-time cube is a concept which is applicable for various analyses and type of data.
+We can find several different employment of space-time cube in literature.
+The usages differ in the purpose of analysis which is then closely related
+to the type of analyzed data (vector lines, points, voxel data).
+
+The original Hägerstrand's concept was concerned with movement of objects (people).
+During day each person follows a trajectory through space and time called
+\emph{space-time path}. Figure \ref{fig:st-path} shows a simplified example
+of persons movements during a working day. The locations where people stay,
+called \emph{stations} (e.g.\ at home, at work), are represented by a vertical direction of the path.
+However in a larger scale, we could observe movement at these stations
+(people moving inside buildings). The time when people meet at a station is called \emph{activity bundle}.
+
+Figure \ref{fig:st-prism} schematically shows a \emph{space-time prism}
+which indicates the locations that can be reached in a particular time interval
+(starting and returning to the same place). In reality, it is not circular because
+not all places are accessible.
+
+
+
+
 \begin{figure}[ht]
 \centering
-    \begin{subfigure}[ht]{0.4\textwidth}
+    \begin{subfigure}[ht]{0.49\textwidth}
     \centering
         \includegraphics[width=\textwidth]{./svg_images/space-time-path.pdf}
     \caption{Space-time path}
     \label{fig:st-path}
     \end{subfigure}
-    \begin{subfigure}[ht]{0.4\textwidth}
+    \begin{subfigure}[ht]{0.49\textwidth}
     \centering
         \includegraphics[width=\textwidth]{./svg_images/space-time-prism.pdf}
     \caption{Space-time prism}
@@ -477,6 +511,23 @@ to induce an illusion of day and night.
 \caption{Space time path}
 \label{fig:st-path-prism}
 \end{figure}
+
+Space-time paths are often used to analyze sociological aspects
+as for example in the study focused on non-employment activities with regard to gender \cite{kwan1999gender}.
+In \cite{moore2003time}, this technique was used in sport to analyze rugby matches.
+Additionally, Kraak \cite{kraak2005visualization} suggests to use it for real-time monitoring which is possible thanks to 
+the boom of GNSS (Global Navigation Satellite System) technologies.
+Another discipline which may benefit from the space-time paths approach is archeology.
+Kraak \cite{kraak2005visualization} provides an example of space-time paths representing
+archeology excavations where the stations indicate the duration of the existence of settlements.
+Another study concentrated on the interaction of cultures using a combination of the space-time cube approach
+with graph theory \cite{huisman2008development}.
+
+
+% GNSS influenced makes collecting
+
+
+
 
 \section{Available software}
 
@@ -567,7 +618,7 @@ of the temporal extents (and possible gaps) of all maps of the dataset.
 The temporal granularity can change every time there is a change in dataset maps
 (added, removed or changed time stamp).
 To understand better, see table \ref{tab:granularity} content of which is based on the output
-of one of the temporal modules (namely \mod{t.rast.list}).
+of one of the temporal modules (namely \module{t.rast.list}).
 
 Example interval time dataset consists of 6 maps and
 there are also two gaps which means that at this time period no data are available.
@@ -635,7 +686,7 @@ Temporal sampling is used to determine the state of one process during a second 
 The \tf enables to sample a dataset (can have both point and interval time) by another dataset having interval time.
 There is an example of temporal sampling in figure \ref{fig:samplingExample}.
 The figure indicates that for different sampling methods (temporal relationships)
-which are provided by module \mod{t.sample}, different results are expected.
+which are provided by module \module{t.sample}, different results are expected.
 
 In figure \ref{fig:samplingExampleReverse}, the input (sampled) dataset and the sample dataset are interchanged
 to demonstrate the reciprocity of the temporal relations. For example, the table \ref{fig:samplingTable} shows that
@@ -643,7 +694,7 @@ there is a relation \emph{during} between intervals $Y_2$ and $X_2$, $X_3$.
 When the same datasets are interchanged the relation must remain, however it is transformed into \emph{contain}.
 The same applies for relations \emph{precede} and \emph{follow}.
 Relation \emph{equal} does not have any opposite relation and \emph{overlap} involves both cases (\emph{overlap, overlapped}).
-The opposite of the relation \emph{start} is \emph{end} which is not included in \mod{t.sample} options.
+The opposite of the relation \emph{start} is \emph{end} which is not included in \module{t.sample} options.
 
 
 
@@ -747,11 +798,11 @@ Temporal modules share certain common options:
 The important ability of the \tf is the interoperability
 with several powerful open-source applications for statistical computations and visualization.
 Textual ouputs of many modules are suitable for statistical environment \emph{R}\footnote{\url{www.r-project.org/}}.
-Module \mod{r3.out.netcdf} exports 3D raster to NetCDF
+Module \module{r3.out.netcdf} exports 3D raster to NetCDF
 format\footnote{\url{http://www.opengeospatial.org/standards/netcdf}}
 which can be then processed e.g. in \emph{Climate Data Operator (CDO)}\footnote{\url{https://code.zmaw.de/projects/cdo}}.
 The support of visualization software \emph{ParaView}\footnote{\url{http://www.paraview.org/}} is available
-through VTK format which can be exported by temporal module \mod{t.rast.out.vtk}.
+through VTK format which can be exported by temporal module \module{t.rast.out.vtk}.
 
 
 
@@ -770,20 +821,20 @@ The aim of this work was to develop new tools for better visualization of spatio
 \section{Animation tool}
 As described in TODO REF animation is a natural and easily understandable way to display spatio-temporal data.
 
-Because the current animation module \mod{xganim} was very limited
+Because the current animation module \module{xganim} was very limited
 in several aspects (explained TODO REF), a new tool was developed.
 
 \subsection{Features}
-Beside the features of \mod{xganim} module, \at provides new possibilities
+Beside the features of \module{xganim} module, \at provides new possibilities
 to explore spatio-temporal data.
 
-Basic features (also existing in \mod{xganim} module):
+Basic features (also existing in \module{xganim} module):
 \paragraph{More views}
 \at can display up to 4 different synchronized animations at once.
-Unlike the \mod{xganim} module, it is possible to add or remove each of the views separately
+Unlike the \module{xganim} module, it is possible to add or remove each of the views separately
 without the need to restart it.
 \paragraph{Change animation speed}
-Unlike the \mod{xganim} module where you can only
+Unlike the \module{xganim} module where you can only
 slow down or speed up the animation by an unspecified coefficient, \at allows to set
 exact duration of the frame (in milliseconds).
 \paragraph{Loops}
@@ -961,7 +1012,7 @@ is to launch the \at as a module from command line. By typing:
 
 the \at is launched with no data loaded and the user is supposed to specify maps via the GUI.
 Additionally, input data can be specified directly in the command line.
-As of any other GRASS module, the parameters of \mod{g.gui.animation} command can be retrieved by typing:
+As of any other GRASS module, the parameters of \module{g.gui.animation} command can be retrieved by typing:
 
 \begin{small}
 \begin{lstlisting}[style=mybash]
@@ -992,18 +1043,18 @@ Moreover, this simple interface should be sufficient for most cases.
 
 
 \subsection{Implementation}
-While \mod{xganim} module was written in wxWidgets using C++ programming language (in GRASS 7),
+While \module{xganim} module was written in wxWidgets using C++ programming language (in GRASS 7),
 the \at is written completely in wxPython using Python so that it can be better integrated into the GRASS wxGUI.
 It uses \emph{GRASS Python Scripting Library} and \emph{GRASS Python Temporal Library} \cite{grassProgMan},
 which is the integral part of the \tf. In the following paragraphs, some of the implementation issues are described.
 
 \subsubsection{Loading data}
 It is important to be aware of the fact that animation can consist of hundreds of maps.
-Unfortunately, the mechanism of loading raster data in \mod{xganim} could not be simply
+Unfortunately, the mechanism of loading raster data in \module{xganim} could not be simply
 rewritten into Python because of performance issues.
 Therefore it was necessary to choose a different implementation.
 
-If we try to use the \mod{xganim} implementation, we encounter two main problems.
+If we try to use the \module{xganim} implementation, we encounter two main problems.
 First, when loading data, the \emph{GRASS Raster Library} functions \cite{grassProgMan} are called.
 In Python we could use ctypes to interface these methods,
 however these methods can call exit function which causes a sudden end of the program.
@@ -1014,25 +1065,25 @@ This problem can be alleviated by using NumPy\footnote{\url{http://numpy.scipy.o
 however that makes the code less readable.
 
 One possible solution is to use the current system used by wxGUI
-where the raster maps are rendered into temporary files by module \mod{d.rast}.
+where the raster maps are rendered into temporary files by module \module{d.rast}.
 However, this method is quite slow mainly because it is necessary to write data to disk and read them afterwards.
 Therefore, this method was rejected for the time being.
 There have been efforts to improve the rendering implementation%
 \footnote{see related ticket \url{http://trac.osgeo.org/grass/ticket/1719}}
 and once it is implemented it will not be a problem to change it also in the \at.
 
-Eventually, the raster rendering is done by \mod{r.out.ppm}.
+Eventually, the raster rendering is done by \module{r.out.ppm}.
 It can send image data to standard output and
 thanks to the simplicity of the PPM format (Portable Pixmap Format%
 \footnote{\url{http://netpbm.sourceforge.net/doc/ppm.html}}),
 the data are directly (without saving to file) converted into the image displayed in the \at.
 The advantage of this solution is that the demanding computation is done inside the module, thus in C.
 Moreover, if the module fails for any reason, the application is able to handle such situation and continue.
-Still, the achieved performance is worse comparing to \mod{xganim}.
+Still, the achieved performance is worse comparing to \module{xganim}.
 This is probably caused by the fact that each call of the module requires not negligible amount of time.
 Table \ref{tab:comparisonTime} shows a performance comparison of the described methods.
 The time measurement was done on one computer and each number is a sample mean computed from 5 measurements.
-To make the measurement more objective, the \mod{xganim} source code was slightly
+To make the measurement more objective, the \module{xganim} source code was slightly
 changed by avoiding reporting messages which would slow the loading down.
 The absolute numbers are not as important, however when we compare one with another,
 we can see that the difference between the new implementation and the original one is not so significant.
@@ -1047,8 +1098,8 @@ If we double the size of the image, we can expect the duration to increase four 
     \begin{tabular}{lrr}
     \toprule
     original xganim & 46 s & 100 \%\\
-    calling \mod{r.out.ppm} & 51 s & 111 \%\\
-    \mod{d.rast} rendering to file (wxGUI) & 67 s & 146\%\\
+    calling \module{r.out.ppm} & 51 s & 111 \%\\
+    \module{d.rast} rendering to file (wxGUI) & 67 s & 146\%\\
     \bottomrule
 
     \end{tabular}
@@ -1092,7 +1143,7 @@ This is not an issue for usual animations today.
 
 \subsubsection{Window resizing}
 Every application has to react on the change of its frame size.
-Unlike \mod{xganim}, the \at is able to resize the displayed images to fit the new frame size.
+Unlike \module{xganim}, the \at is able to resize the displayed images to fit the new frame size.
 However, the images are only rescaled, so it produces less quality images.
 On the other hand, the rescaled images are sufficient and the advantage is that
 the data do not have to be reloaded every time the user resizes the window.
@@ -1102,7 +1153,7 @@ that the displayed data should be reloaded.
 \subsubsection{Specifying the displayed extent}
 The displayed extent of the maps is determined by the computational region%
 \footnote{This region defines the geographic area (and resolution) in which all raster analyses are done.}.
-To change the displayed region, it is necessary to run module \mod{g.region} and then reload data.
+To change the displayed region, it is necessary to run module \module{g.region} and then reload data.
 At this stage, any interactive zooming would be problematic.
 The best option would be to reuse the wxGUI rendering system including zooming in order to avoid code duplication.
 Unfortunately, reloading all maps in this way would be more time-consuming.
@@ -1187,7 +1238,7 @@ Crucial is to determine \emph{which} frame (map) and \emph{when} to display.
 We first discuss the \emph{when}  and then the \emph{which} question.
 
 
-The original \mod{xganim} implementation of the animation is rather primitive.
+The original \module{xganim} implementation of the animation is rather primitive.
 The events are emitted when system becomes idle which the programmer is not able to affect.
 Moreover, the delay between two successive frames is done by a for loop
 and to change the speed of the animation the number of loops is increased or decreased.
@@ -1231,7 +1282,7 @@ The \at always checks the user input and in the case it recognizes an incompatib
 
 \subsubsection{3D view animation}
 \label{sec:3dViewAnimation}
-Images for 3D view animation must be first rendered by module \mod{r.nviz.image} \cite{grassUserMan}.
+Images for 3D view animation must be first rendered by module \module{r.nviz.image} \cite{grassUserMan}.
 The rendering is more time-consuming than loading raster maps for the 2D view,
 however this does not affect the speed of the animation itself.
 
@@ -1239,7 +1290,7 @@ however this does not affect the speed of the animation itself.
 Beside the maps (either multiple maps or space time dataset), the user is asked for a \emph{workspace file}%
 \footnote{Workspace file is XML file storing the state of the wxGUI application (e.g.\ loaded layers, displayed extent).}.
 The workspace file has to be created during a GRASS wxGUI session with active 3D view,
-so that it can provide information about the 3D view state. After parsing this file, a command for \mod{m.nviz.image}
+so that it can provide information about the 3D view state. After parsing this file, a command for \module{m.nviz.image}
 is created.
 Additionally, the user chooses which parameter to animate.
 Typically, it is either \emph{elevation\_map} or \emph{color\_map}
