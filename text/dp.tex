@@ -354,6 +354,7 @@ Instead of displaying a series of static maps, there is a single map but its con
 The changes representing an event are inferred from real movement on the map.
 Animation consists of frames\,---\,single images (maps).
 
+\paragraph{Application}
 Animations can be useful to reveal trends, processes and subtle spatio-temporal patterns
 that are not evident in static representation. Dorling and Openshaw \cite{dorling1993using}
 demonstrated a power of animated maps to stimulate knowledge;
@@ -407,6 +408,7 @@ There are three alternative approaches to visualize object movement by animation
 % \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\paragraph{Dynamic visualization variables}
 In \cite{dibiase1992animation}, DiBiase et al.\ introduced three dynamic visualization variables of animation:
 \emph{duration}, \emph{rate of change}, \emph{order}.
 Three more variables were added by MacEachren \cite{maceachren2004maps}:
@@ -434,7 +436,7 @@ Using the eye-tracking technology seems to be one possible approach
 (see for example study \cite{opach2011evaluating}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+\paragraph{Temporal legend}
 In \cite{kraak1997cartographic}, Kraak et al.\ deal with temporal legend for animations.
 Temporal legend is the part of the interface which does not only help to understand and interpret
 the phenomenon but it can also serve as navigation tool to control dynamically the animation.
@@ -478,6 +480,7 @@ We can find several different employment of space-time cube in literature.
 The usages differ in the purpose of analysis which is then closely related
 to the type of analyzed data (vector lines, points, voxel data).
 
+\paragraph{Space-time path}
 The original Hägerstrand's concept was concerned with movement of objects (people).
 During day each person follows a trajectory through space and time called
 \emph{space-time path}. Figure \ref{fig:st-path} shows a simplified example
@@ -532,7 +535,7 @@ with graph theory \cite{huisman2008development}.
 % GNSS influenced makes collecting
 
 
-
+\paragraph{Event data}
 Space-time cube concept is suitable not only to represent moving objects
 but it can be successfully applied to events, too.
 Gatalsky et al.\ \cite{gatalsky2004interactive}
@@ -542,6 +545,7 @@ Size and color of each circle reflect the thematic characteristics of the event.
 The space-time cube is dynamically linked to a map display so that it is possible to highlight corresponding events.
 % By using this method, they were able to find grouping
 
+\paragraph{Voxel data}
 Another potentially large field of study is the application of space-time cube concept for voxel data.
 Mitasova et al.\ \cite{mitasova2011landscape} presents a multidimensional framework for characterization
 of land surface dynamics using time series of elevation data (LiDAR point cloud).
@@ -555,7 +559,8 @@ In this context, an isosurface represents a contour of given $z$-coordinate (hei
 stretched in the vertical time dimension.
 % TODO: add images of voxel schema, isosurfaces http://www.sciencedirect.com/science/article/pii/S0169555X11002935
 
-Yet another space-time cube approach is used to visualize distributions of
+\paragraph{3D glyphs}
+Space-time cube approach is also used to visualize distributions of
 geospatial time-varying data through a pictorial representation \cite{tominski20053d}, \cite{thakur20103d}.
 A base map is typically divided into regions or administrative districts.
 Above each of these parts, a 3D icon or glyph is drawn.
@@ -563,10 +568,88 @@ In \cite{thakur20103d}, the glyph is represented by a set of disks stacked along
 one for each time step. The size of the disk is scaled according to maximum disk size.
 Additionally, color is used to encode data values and although it is redundant
 (the information is already in the disk size), it can help to detect outliers.
+This visualization technique helps an analyst to quickly explore multiple time-varying
+quantities on a map and extract useful information.
 
 
 
-\section{Available software}
+\paragraph{}
+As illustrated in the paragraphs above, space time cube approach
+can be applied in various domains. The increased interest in this technique seems
+to be caused by rapid improvements in computer technologies as well as by simplification and speeding
+data collection process by GNSS technologies and remote sensing.
+
+Although space-time cube is a useful exploratory tool it might not always be helpful
+for novice users because of problems with its interpretation. A study \cite{kristensson2009evaluation}
+showed that novice users benefit from the space-time cube representation only when they are asked to analyze
+complex spatio-temporal patterns. In case of simpler tasks, using the space-time cube representation
+lead to higher error rate comparing with using a 2D representation.
+
+
+
+
+
+
+\section{Existing software}
+The list of GIS software on Wikipedia \cite{wiki:gislist}
+shows us that there exist many geographic information systems,
+both open source and proprietary.
+However, the number of GIS or other related applications which can handle
+spatio-temporal data is much smaller.
+This is not surprising considering the fact that GIS development started
+in the 1960s \cite{coppock1991history} while the initial efforts to model spatio-temporal
+data appeared in the 1980s and later \cite{peuquet2001}.
+
+In \cite{andrienko2003exploratory} from 2003, a partial review of existing systems is provided.
+However, it was not meant to be complete. Moreover, it contains mainly research prototypes,
+which are often very specialized and serve for academic purposes only, although their implementations
+and features can be innovative and useful.
+Since 2003, some of these projects have been renamed,
+moved to newer websites or they just disappeared or they are not maintained anymore.
+On the other hand, new tools have been developed.
+For example, we can witness the expansion of web-based applications in the recent years.
+It seems that visualizing time dimension becomes `modern'.
+
+The following list of software able to process and or visualize spatio-temporal data is not comprehensive.
+It includes only the main systems with large user base.
+Often these systems are not intended primarily for temporal data,
+but they started to provide this functionality because of the users' needs
+and also to keep up with new trends in GIS.
+
+
+\begin{itemize}
+  \item open-source software
+  \begin{itemize}
+    \item R
+    \item GRASS
+    \item GeoVISTA Software
+    \begin{itemize}
+      \item ESTAT
+      \item The Apoala project
+      \item STempo
+    \end{itemize}
+    \item web-based
+    \begin{itemize}
+      \item timemap -- Javascript library to help use online maps, including Google, OpenLayers, and Bing, with a SIMILE timeline
+      \item TimeMap -- mapping applet which generates complete interactive maps
+    \end{itemize}
+
+  \end{itemize}
+
+
+  \item proprietary software
+  \begin{itemize}
+    \item STEMgis
+    \item GeoTime
+    \item ArcGIS
+    \item Google Earth
+    %http://blogs.esri.com/esri/arcgis/2010/04/16/new-experience-and-tools-for-working-with-temporal-data/
+  \end{itemize}
+
+  
+\end{itemize}
+
+
 
 \chapter{GRASS GIS}
 
