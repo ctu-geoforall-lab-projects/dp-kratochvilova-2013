@@ -158,7 +158,7 @@ comparing to other models.
 % The fragmentation requires to change identifiers each time when an old fragment is split into two new parts
 
 \paragraph*{Event-oriented models}
-According to \cite{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
+According to \cite[p.~56]{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
 The models mentioned above cannot clearly represent events.
 In order to overcome this problem, events can be represented explicitly.
 Several event-based models have been suggested by \cite{claramunt1995managing}, \cite{peuquet1995}, \cite{chen1998event}.
@@ -187,7 +187,7 @@ where the spatial component represents a point, a straight line segment or a tri
 Operations like union, difference, boundary or spatial and temporal projection are defined for the ST-object.
 
 Object-oriented models seem to have more advantages and less drawbacks comparing to other models.
-Pelekis \cite{pelekis2004} claims that it can ``\emph{support  all types of data handling,
+Pelekis \cite[p.~27]{pelekis2004} claims that it can ``\emph{support  all types of data handling,
 in terms of measurement, topological relationships and operations}''.
 
 \paragraph{The three domains model}
@@ -416,7 +416,7 @@ Three more variables were added by MacEachren \cite{maceachren2004maps}:
 According to Kraak \cite{kraak2000visualisation}, duration and order are the most important
 dynamic variables. Duration is the time interval during which no change on the display occurs.
 Order, the succession of individual frames, together with duration can be used to
-\emph{``express an animation's narrative character''}\cite{kraak2000visualisation}.
+\emph{``express an animation's narrative character''}\cite[p.~31]{kraak2000visualisation}.
 Frequency is the number of identifiable states per unit of display time.
 Despite the fact that frequency is the dual of duration,
 \emph{``it is worth treating as a separate dynamic variable because \ldots
@@ -561,7 +561,7 @@ stretched in the vertical time dimension.
 
 \paragraph{3D glyphs}
 Space-time cube approach is also used to visualize distributions of
-geospatial time-varying data through a pictorial representation \cite{tominski20053d}, \cite{thakur20103d}.
+geospatial time-varying data through a pictorial representation \cite{tominski20053d,thakur20103d}.
 A base map is typically divided into regions or administrative districts.
 Above each of these parts, a 3D icon or glyph is drawn.
 In \cite{thakur20103d}, the glyph is represented by a set of disks stacked along the vertical temporal axis,
@@ -593,7 +593,7 @@ lead to higher error rate comparing with using a 2D representation.
 \section{Existing software}
 The list of GIS software on Wikipedia \cite{wiki:gislist}
 shows us that there exist many geographic information systems,
-both open source and proprietary.
+both open-source and proprietary.
 However, the number of GIS or other related applications which can handle
 spatio-temporal data is much smaller.
 This is not surprising considering the fact that GIS development started
@@ -652,8 +652,104 @@ and also to keep up with new trends in GIS.
 
 
 \chapter{GRASS GIS}
+\section{General overview}
+GRASS  (Geographical Resources Analysis Support System)\footnote{\url{http://grass.osgeo.org}}
+is a general purpose cross-platform open-source geographic information system (GIS)
+with raster, vector and image processing capabilities \cite{neteler2011grass}.
+It includes more than 350 modules for managing and analyzing geographical data.
+GRASS was created in the early 1980s by the Construction Engineering Research Laboratory (CERL)
+of the United States Army as a software management tool for military applications.
+Nowadays it is one of the cutting-edge projects of the Open Source Geospatial Foundation
+(OSGeo\footnote{\url{http://www.osgeo.org/}}, founded in 2006).
+Quoting Neteler and Mitasova \cite[p.~3]{grassGisApproach}:
 
-\section{Introduction}
+\begin{quote}
+The key development in recent GRASS history was the adoption of GNU GPL
+(General Public License, see http://www.gnu.org) in 1999.
+With this, GRASS embraced the Open Source philosophy,
+well known from the GNU/Linux development model, which stimulated its wide acceptance.
+\end{quote}
+
+% The adoption of the free software license changed the development process
+% of GRASS GIS with contributions to the source code becoming decentralized.
+The legal statements declared in the GPL are based on the ``four freedom'' paradigm \cite{stallman1985gnu}
+and allow the user to use the software’s full range of capabilities, and to distribute, study and improve it.
+The revision control system of GRASS GIS (namely subversion\footnote{\url{http://subversion.apache.org/}})
+allowed different institutions and individuals to contribute to the code base
+from different countries around the world.
+
+The modular software design of GRASS facilitates the introduction of new functionality.
+Moreover, its scripting capabilities enable automated processing of a large volume of data.
+Since 2008, GRASS users and developers can make use of the Python programming language \cite{van1995python}
+to introduce new features. Integration between GRASS and Python has been recently enhanced through a new,
+more ``pythonic'' API \cite{pygrass} which provides easier, more natural and consistent scripting possibilities.
+
+GRASS is a project which is actively developed and tested by users from different
+countries using different platforms.
+At this time a new stable version 6.4.3 is about to be released, however
+the developers mainly focus on GRASS 7 which has already many improvements:
+new raster, vector and image processing modules, speedup of the vector engine,
+improved portability (MS-Windows, Mac OSX), modern graphical user interface (GUI) and others.
+Not only programmers are involved, also many translators contribute to this project
+in order to make it accessible for users from non-English speaking countries.
+Also users are involved in the process of development by testing and providing feedback.
+Through the issue tracking system\footnote{\url{http://trac.osgeo.org/grass/}},
+they can report any software bug or suggest an improvement.
+
+% interoperability?
+
+\section{GRASS GIS Graphical User Interface}
+Originally, GRASS was controlled only through command line interface (CLI).
+Later, a need for graphical user interface (GUI) appeared
+which lead to the first GUI prototype called \emph{TCLTKGRASS}
+written in \emph{Tcl} programming language using \emph{Tk} graphical toolkit.
+However, during the 2000's the limitations of Tcl/Tk toolkit turned out to be
+an obstacle for further development \cite{wxGUI2008}.
+In 2006, it was decided to build a new GUI based on wxPyton\,---\, a Python wrapper
+for cross-platform GUI toolkit \emph{wxWidgets}.
+Among other benefits, Python programming language is far more popular than Tcl
+and it is also much easier to learn which enlarges the number of potential contributors.
+
+The new graphical user interface, called wxGUI, has been developed since 2006.
+It consists of three core components:
+    \begin{enumerate}
+      \item \emph{Layer Manager} allows users to launch different GRASS modules from menu,
+      manage layers. Command-line prompt, command output window and python shell
+      for scripting are integrated (figure \ref{fig:wxGUI1}).
+      \item \emph{Map Display Window(s)} provides basic tools for zooming, panning, data querying,
+      decorations (legend, north arrows, bar scale).
+      During one session, multiple Map Displays can be opened (figure \ref{fig:wxGUI1}).
+      \item \emph{module dialogs} are generated for each GRASS module from the XML interface description.
+      This approach enables to create GUI for every module while respecting its particular parameters
+      (figure \ref{fig:wxGUI2}).
+    \end{enumerate}
+
+\begin{figure}[ht!]
+\centering
+    \begin{subfigure}[ht]{\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/wxGUI_1.png}
+    \caption{Layer Manager and two Map Display Windows}
+    \label{fig:wxGUI1}
+    \end{subfigure}
+
+\vspace{10pt}
+
+    \begin{subfigure}[ht]{\textwidth}
+    \centering
+        \includegraphics[width=0.5\textwidth]{./images/wxGUI_2.png}
+    \caption{Module dialog generated for \module{d.vect}}
+    \label{fig:wxGUI2}
+    \end{subfigure}
+\caption{Core wxGUI components}
+\label{fig:wxGUI}
+\end{figure}
+
+Apart from the core components, there are additional tools available.
+These are either integrated into Layer Manager or Map Display
+(e.g.\ Vector Digitizer, 2.5D/3D visualization tool wxNviz) or they are in separate windows
+(e.g.\ Cartographic Composer, Supervised Classification Tool, Profile Analysis Tool).
+
 \section{Temporal GRASS GIS framework}
 Temporal GRASS GIS Framework is a new extension available in GRASS 7 for manipulating spatio-temporal data.
 It enables to manage, analyze and process large amount of spatio-temporal data.
@@ -928,8 +1024,6 @@ through VTK format which can be exported by temporal module \module{t.rast.out.v
 
 
 % TODO: space time voxel cubes
-
-\section{wxGUI}
 
 
 
