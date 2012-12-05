@@ -583,7 +583,7 @@ Although space-time cube is a useful exploratory tool it might not always be hel
 for novice users because of problems with its interpretation. A study \cite{kristensson2009evaluation}
 showed that novice users benefit from the space-time cube representation only when they are asked to analyze
 complex spatio-temporal patterns. In case of simpler tasks, using the space-time cube representation
-lead to higher error rate comparing with using a 2D representation.
+led to higher error rate comparing with using a 2D representation.
 
 
 
@@ -621,6 +621,8 @@ and also to keep up with new trends in GIS.
   \item open-source software
   \begin{itemize}
     \item R
+    \item PCRaster
+    \item TerraLib % http://www.terralib.org/docs/papers/TerraLib-OSBook-versionJanuary2008.pdf
     \item GRASS
     \item GeoVISTA Software
     \begin{itemize}
@@ -641,7 +643,7 @@ and also to keep up with new trends in GIS.
   \begin{itemize}
     \item STEMgis
     \item GeoTime
-    \item ArcGIS
+    \item ArcGIS -- Temporal Analyst
     \item Google Earth
     %http://blogs.esri.com/esri/arcgis/2010/04/16/new-experience-and-tools-for-working-with-temporal-data/
   \end{itemize}
@@ -701,12 +703,14 @@ they can report any software bug or suggest an improvement.
 \section{GRASS GIS Graphical User Interface}
 Originally, GRASS was controlled only through command line interface (CLI).
 Later, a need for graphical user interface (GUI) appeared
-which lead to the first GUI prototype called \emph{TCLTKGRASS}
-written in \emph{Tcl} programming language using \emph{Tk} graphical toolkit.
+which led to the first GUI prototype called \emph{TCLTKGRASS}
+written in \emph{Tcl}\footnote{\url{http://www.tcl.tk}}
+programming language using \emph{Tk} graphical toolkit.
 However, during the 2000's the limitations of Tcl/Tk toolkit turned out to be
 an obstacle for further development \cite{wxGUI2008}.
-In 2006, it was decided to build a new GUI based on wxPyton\,---\, a Python wrapper
-for cross-platform GUI toolkit \emph{wxWidgets}.
+In 2006, it was decided to build a new GUI based on
+\emph{wxPyton}\footnote{\url{http://www.wxpython.org}}\,---\, a Python wrapper
+for cross-platform GUI toolkit \emph{wxWidgets}\footnote{\url{http://www.wxwidgets.org/}}.
 Among other benefits, Python programming language is far more popular than Tcl
 and it is also much easier to learn which enlarges the number of potential contributors.
 
@@ -749,6 +753,70 @@ Apart from the core components, there are additional tools available.
 These are either integrated into Layer Manager or Map Display
 (e.g.\ Vector Digitizer, 2.5D/3D visualization tool wxNviz) or they are in separate windows
 (e.g.\ Cartographic Composer, Supervised Classification Tool, Profile Analysis Tool).
+
+\section{Temporal data support and visualization}
+The support of the temporal component of spatio-temporal data in GRASS is limited
+(considering the situation before the integration of the Temporal Framework).
+It is possible to assign a time stamp to a raster, vector or 3D-raster map using module
+\module{r.timestamp}, \module{v.timestamp} and \module{r3.timestamp}, respectively.
+These modules internally use \emph{GRASS Datetime Library} \cite{grassProgMan}.
+However, time stamps serve only for information as a part of metadata.
+
+Another module which can be used to process spatio-temporal data is \module{r.series}
+which computes aggregate values from a series of raster maps. This is useful for example
+for creating monthly average temperature maps from daily average temperature maps.
+
+\subsubsection{Visualization}
+\label{sec:grassVisualization}
+Considering the visualization of spatio-temporal data, GRASS GIS offers
+several possibilities.
+
+\paragraph{Animation} Module \module{xganim} is a tool for animating a series of raster maps.
+This tool suffers from many problems which led to the development
+of a better tool (described in section \ref{sec:animationTool}).
+
+Module \module{xganim} in GRASS 7 is written in C++ using wxWidgets graphical toolkit.
+This is inconsistent with the rest of wxGUI which is written in wxPython.
+Originally, it was a X/Motif application, however in GRASS 7 it was necessary
+to rewrite it because it was decided to leave the old display architecture.
+It is apparent from the figure \ref{fig:xganim} that the GUI lags behind modern GUI design,
+however, there are more serious problems.
+
+\begin{figure}[ht!]
+\centering
+    \begin{subfigure}[ht]{0.49\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/xganim64.png}
+    \caption{\module{xganim} in GRASS 6}
+    \label{fig:xganim6}
+    \end{subfigure}
+    \begin{subfigure}[ht]{0.49\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/xganim7.png}
+    \caption{\module{xganim} in GRASS 7}
+    \label{fig:xganim7}
+    \end{subfigure}
+\caption{Screenshot of \module{xganim} tool in different versions of GRASS}
+\label{fig:xganim}
+\end{figure}
+
+One of the problems is that the speed of the animation is very difficult to control.
+This is the result of the rather primitive implementation of the part
+responsible for changing frames at the right time.
+Frames are changed in response to emitted events.
+These events are emitted when system becomes idle which the programmer is not able to affect.
+Moreover, the delay between two successive frames is implemented as a for loop
+and to change the speed of the animation the number of loops is increased or decreased.
+Therefore the default speed of the animation on the current computers
+is much faster than it used to be ten years ago.
+
+Also, such tool should offer a way to explore raster series more interactively.
+For example, it lack a slider control (or any other similar widget)
+which enables to browse the raster maps easily and in an intuitive way.
+
+% m.nviz.image
+% st cube
+
 
 \section{Temporal GRASS GIS framework}
 Temporal GRASS GIS Framework is a new extension available in GRASS 7 for manipulating spatio-temporal data.
@@ -1033,6 +1101,7 @@ The aim of this work was to develop new tools for better visualization of spatio
 %TODO
 
 \section{Animation tool}
+\label{sec:animationTool}
 As described in TODO REF animation is a natural and easily understandable way to display spatio-temporal data.
 
 Because the current animation module \module{xganim} was very limited
@@ -1452,12 +1521,8 @@ Crucial is to determine \emph{which} frame (map) and \emph{when} to display.
 We first discuss the \emph{when}  and then the \emph{which} question.
 
 
-The original \module{xganim} implementation of the animation is rather primitive.
-The events are emitted when system becomes idle which the programmer is not able to affect.
-Moreover, the delay between two successive frames is done by a for loop
-and to change the speed of the animation the number of loops is increased or decreased.
-Therefore the default speed of the animation on the current computers is much more faster than it used to be ten years ago.
-
+The original \module{xganim} implementation of the animation is rather primitive
+as explained in \ref{sec:grassVisualization}.
 The \at implementation uses timer events (class wx.Timer provided by wxPython) to achieve regular time intervals between two frames.
 The interval between two successive events is specified by the programmer according to what the user requires.
 In case of space time datasets animation, the user specifies how long
