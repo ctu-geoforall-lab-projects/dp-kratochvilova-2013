@@ -280,6 +280,7 @@ For the purpose of their work, Andrienko et al. simplified this classification i
  
 
 \subsection{Exploratory techniques}
+\label{sec:exploratoryTechniques}
 Unlike paper maps, computer-based visualization tools offer many important features
 such as interactivity and dynamics which are necessary for most exploratory techniques
 like map querying or animation.
@@ -313,6 +314,7 @@ which enables to select arbitrary combinations of years, month, days and hours.
 
 
 \subsubsection{Map iteration}
+\label{sec:mapIteration}
 Map iteration corresponds to the term ``strip maps'' mentioned before.
 Temporal information is presented as a juxtaposition of several maps.
 Each map represents one state of a phenomenon at an time instance.
@@ -1719,47 +1721,126 @@ In the future, such tool could be integrated into any application processing tem
 and then, it could be used as a control widget.
 
 
+%%%%%%%%%%%%%%%% Map Swipe %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{\ms}
-\ms is a tool which allows the user to interactively compare two raster maps
-of the same area by revealing different parts of the raster maps.
-It is useful for comparing raster maps from different time periods.
+\ms is a tool which allows the user to interactively compare two raster maps of the same area.
+It is useful for comparing two raster maps from different time periods.
 Although \ms does not use the \tf, as there is no particular application for it,
 thanks to its capabilities we can regard it as an useful tool for exploring spatio-temporal data.
+From the perspective of exploratory techniques described in section \ref{sec:exploratoryTechniques},
+this tool is based on `map iteration' method (section \ref{sec:mapIteration}).
 
-An example of usage is presented on the manual page \cite{grassUserMan} of the \ms.
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.8\textwidth]{./images/mapswipe_tsunami.jpeg}
-  \caption{Pre and post disaster images of the tsunami in Japan in 2011.
-  The upper MODIS image taken on February 26, 2011, shows the coastline under normal conditions
-  while the lower MODIS image on March 13, 2011, shows a clear view of tsunami flooding along the coastline.
-  Water, black and dark blue in these false-color images, still covers the ground as much as five kilometers
-  (three miles) from the coast. Source: Earth Observatory/NASA}
+An example of the usage is presented in figure \ref{fig:mapswipe}
+and on the manual page \cite{grassUserMan} of the \ms tool.
+
+\begin{figure}[ht!]
+\centering
+    \begin{subfigure}[ht]{0.75\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/mapswipe_tsunami_swipe.jpeg}
+    \caption{\ms tool in `swipe' mode}
+    \label{fig:mapswipe_swipe}
+    \end{subfigure}
+    \begin{subfigure}[ht]{0.75\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/mapswipe_tsunami_mirror.jpeg}
+    \caption{\ms tool in `mirror' mode}
+    \label{fig:mapswipe_mirror}
+    \end{subfigure}
+\caption{\ms tool: Pre and post disaster images of the tsunami in Japan in 2011.
+        Source: Earth Observatory/NASA}
+\label{fig:mapswipe}
 \end{figure}
 
-
 \subsection{Features}
-Map Swipe allows to:
-\begin{itemize}
-    \item switch orientation of the swipe line (horizontal or vertical)
-    \item zooming, panning
+Map Swipe offers two different views on the raster maps.
+\begin{description}
+  \item[`Swipe' mode] is the default mode. It enables to compare two raster layers (of the same area)
+  by revealing different parts of the maps \ref{fig:mapswipe_swipe}.
+  The position of the dividing line between the two maps
+  can be controlled either by dragging the line itself or dragging the slider knob which
+  is located below the maps or beside them.
 
+  \item[`Mirror' mode] enables to explore two raster maps of the same area by
+  synchronizing the display region \ref{fig:mapswipe_mirror}. When a user zooms
+  to any of these maps, the other one is kept synchronized.
+\end{description}
+
+These two modes can be switched dynamically. Thanks to this, GRASS users can
+examine the data from different view without any other necessary steps, like loading
+the maps separately into different Map Displays.
+
+Other features include:
+\begin{itemize}
+    \item switching the orientation of the border line (horizontal or vertical)
+    \item switching the position of the maps
+    \item changing the loaded raster maps
+    \item zooming, panning, zooming to map, zooming back
+    \item save display to graphic file
+    \item text labels with the maps' names to identify currently displayed maps
+    (it is possible to move them so that they can be placed appropriately)
 \end{itemize}
 
     
 \subsection{Usage}
-automatically load maps when opening Map Swipe with two selected raster maps in Layer Manager
+\ms can be launched either from Layer Manager menu (\emph{File} $\rightarrow$ \emph{Map Swipe}) or
+as a module \module{g.gui.mapswipe}.
+In case of launching from Layer Manager with two selected raster layers,
+\ms automatically loads these layers so that the user does not have to select them again.
+
+The advantage of the \ms as a separate module is the consistency with the GRASS design based on
+separate modules. Moreover, many GRASS users prefer to use command line interface.
+Therefore, \ms defines options which maps to load.
+The complete interface is available by typing:
+
+\begin{small}
+\begin{lstlisting}[style=mybash]
+> g.gui.mapswipe --help
+
+Description:
+ Allows to interactively compare two maps by swiping.
+
+Usage:
+ g.gui.mapswipe [first=name] [second=name] [mode=value] [--verbose]
+   [--quiet]
+
+Flags:
+ --v   Verbose module output
+ --q   Quiet module output
+
+Parameters:
+   first   First (top/right) raster map
+  second   Second (bottom/left) raster map
+    mode   View mode
+           options: swipe,mirror
+           default: swipe
+            swipe: swiping the upper map layer
+                   to show the map layer below
+            mirror: synchronized maps side by side
+
+\end{lstlisting}
+\end{small}
+
+\subsection{Implementation}
+The essential and most problematic part of the implementation was the part responsible
+for the `swiping' behavior. It was necessary to achieve smooth movement of the border line
+and precise alignment of the maps. Furthermore, in order not to duplicate code providing
+e.g.\ zoom functionality, it was desirable to reuse existing classes as much as possible.
+
+Therefore, the class responsible for drawing map,
+overlays and zooming functionality (class \verb|BufferedWindow|) was subclassed.
+The \ms consists of two instances of this new class which are
+inside a wxPython widget \verb|wx.SplitterWindow|. This widget manages the layout of the windows.
+In figure \ref{fig:mapswipe_swipe}, there is a narrow light border in the middle; this border
+is actually the part of the  \verb|wx.SplitterWindow| (this part is called \emph{sash}).
+Since the goal was the described behavior, it was necessary to `pretend' that there is only one window
+where one of the map lies over the second one.
 
 
+The achieve desired behavior, 
 
-
-
-
-
-
-
-
+\subsection{Future development}
 
 
 \newpage
