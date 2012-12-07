@@ -1760,8 +1760,10 @@ Although \ms does not use the \tf, as there is no particular application for it,
 thanks to its capabilities we can regard it as an useful tool for exploring spatio-temporal data.
 From the perspective of exploratory techniques described in section \ref{sec:exploratoryTechniques},
 this tool is based on `map iteration' method (section \ref{sec:mapIteration}).
+Since the technique is generally applicable, also GRASS users who are not working with
+spatio-temporal data can make use of this tool.
 
-An example of the usage is presented in figure \ref{fig:mapswipe}
+A possible application of the \ms tool is presented in figure \ref{fig:mapswipe}
 and on the manual page \cite{grassUserMan} of the \ms tool.
 
 \begin{figure}[ht!]
@@ -1778,7 +1780,7 @@ and on the manual page \cite{grassUserMan} of the \ms tool.
     \caption{\ms tool in `mirror' mode}
     \label{fig:mapswipe_mirror}
     \end{subfigure}
-\caption{\ms tool: Pre and post disaster images of the tsunami in Japan in 2011.
+\caption{\ms tool: Pre- and post-disaster images of the tsunami in Japan in 2011.
         Source: Earth Observatory/NASA}
 \label{fig:mapswipe}
 \end{figure}
@@ -1851,6 +1853,35 @@ Parameters:
 
 \end{lstlisting}
 \end{small}
+
+The following example \cite{mapswipeWiki} can be run in the command line to test
+the \ms tool with North Carolina sample dataset%
+\footnote{download: \url{http://grass.osgeo.org/sampledata/north_carolina/nc_spm_08_grass7.tar.gz}}:
+\begin{small}
+\begin{lstlisting}[style=mybash]
+# set computation region
+g.region rast=lsat7_2002_10 -p
+
+# create RGB composites, first color-balance:
+# data from 1987
+i.landsat.rgb b=lsat5_1987_10@landsat g=lsat5_1987_20@landsat \
+r=lsat5_1987_30@landsat
+
+r.composite b=lsat5_1987_10@landsat g=lsat5_1987_20@landsat \
+r=lsat5_1987_30@landsat out=lsat5_1987.rgb
+
+# data from 2002
+i.landsat.rgb b=lsat7_2002_10 g=lsat7_2002_20 r=lsat7_2002_30
+
+r.composite b=lsat7_2002_10 g=lsat7_2002_20 r=lsat7_2002_30 \
+out=lsat7_2002.rgb
+
+# .. now load the two RGB composites into the "Map Swipe" tool.
+g.gui.mapswipe first=lsat5_1987.rgb second=lsat7_2002.rgb
+\end{lstlisting}
+\end{small}
+
+Also, a small video tutorial is available on GRASS-Wiki page \cite{mapswipeWiki}.
 
 \subsection{Implementation}
 The essential and most problematic part of the implementation was the part responsible
