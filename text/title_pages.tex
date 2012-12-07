@@ -1,0 +1,57 @@
+\begin{center}
+%napisy
+\newcommand{\napisCVUT}{Czech Technical University in Prague}
+\newcommand{\napisFS}{Faculty of Civil Engineering}
+\newcommand{\napisObor}{Branch Geoinformatics}
+\newcommand{\napisKatedra}{Department of Mapping and Cartography}
+\newcommand{\napisVedouci}{Ing. Martin Landa}
+\newcommand{\napisAutor}{Bc. Anna Kratochvílová}
+\newcommand{\napisNazevI}{Visualization of Spatio-Temporal Data}
+\newcommand{\napisNazevII}{in GRASS GIS}
+\newcommand{\napisNazevAJI}{Vizualizace časoprostorových dat}
+\newcommand{\napisNazevAJII}{v systému GRASS}
+\newcommand{\napisBakalarka}{Master thesis}
+\newcommand{\napisPraha}{Prague 2012}
+\newcommand{\napisDatum}{Prague 2012}
+%
+% prikazy
+%\newcommand{\velka}[1]{\uppercase{#1}}
+\newcommand{\velka}[1]{\textsc{#1}}
+%
+%
+\newif\ifpatitul
+\patitultrue
+
+
+% title simple
+\ifpatitul
+{\Large\velka{\napisCVUT}}\\
+\velka{\Large\napisFS}\\
+\vfill
+{\LARGE\velka{\napisBakalarka}}
+\vfill
+{\large\napisPraha\hfill\napisAutor}
+\newpage
+\fi%patitul
+
+\cleardoublepage
+
+% title complex
+{\Large\velka{\napisCVUT}}\\
+{\Large\velka{\napisFS}}\\
+{\Large\velka{\napisObor}}
+\vfill
+\includegraphics[width=3cm]{logo_cvut_black} %logo_cvut_blue
+\vfill
+{\Large\velka{\napisBakalarka}}\\
+{\Large\velka{\napisNazevI\\
+\napisNazevII}}
+{\\\bigskip\large\velka{\napisNazevAJI\\
+\napisNazevAJII}}
+\vfill
+{\large%
+Vedoucí práce: \napisVedouci\\
+\napisKatedra\\
+\bigskip
+\napisDatum\hfill\napisAutor}
+\end{center}
