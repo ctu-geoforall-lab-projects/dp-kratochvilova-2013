@@ -56,6 +56,7 @@
    keywordstyle=[2]{\color{black}},
    commentstyle={\itshape},
    frame=lines,
+   showstringspaces=false,
    backgroundcolor=\color{lightGrey},
 }
 
@@ -1710,7 +1711,7 @@ These issues will be hopefully fixed in future versions of matplotlib.
 
 
 \subsection{Usage}
-The Timeplot Tool can be launched as any other GRASS module.
+The Timeline Tool can be launched as any other GRASS module.
 For displaying help, choose one of the following options:
 \begin{small}
 \begin{lstlisting}[style=mybash]
@@ -1737,6 +1738,46 @@ Flags:
 Parameters:
   inputs   Name of the input space time datasets
 
+\end{lstlisting}
+\end{small}
+
+The following example (from the test of \module{t.register} module)
+can be run in the command line to test the Timeline Tool:
+\begin{small}
+\begin{lstlisting}[style=mybash]
+# set and print the region first using r.mapcalc
+g.region s=0 n=80 w=0 e=120 res=10 -p
+
+# create e.g. 4 raster maps with random values
+r.mapcalc --o expr="prec_1=rand(0,550)"
+r.mapcalc --o expr="prec_2=rand(0,450)"
+r.mapcalc --o expr="prec_3=rand(0,320)"
+r.mapcalc --o expr="prec_4=rand(0,510)"
+r.mapcalc --o expr="prec_5=rand(0,550)"
+r.mapcalc --o expr="prec_6=rand(0,450)"
+r.mapcalc --o expr="prec_7=rand(0,320)"
+r.mapcalc --o expr="prec_8=rand(0,510)"
+
+# create the space time raster dataset with absolute time
+t.create --o type=strds temporaltype=absolute output=precip_abs1 \
+title="A test" descr="A test"
+t.create --o type=strds temporaltype=absolute output=precip_abs2 \
+title="A test" descr="A test"
+
+# register the raster maps in the first space time dataset
+# with given start time and increment
+t.register --o -i input=precip_abs1 \
+maps=prec_1,prec_2,prec_3,prec_4 \
+start="2001-01-01" increment="1 years, 10 days"
+
+# register the raster maps in the second space time dataset
+# with given start and end time
+t.register --o -i input=precip_abs2 \
+maps=prec_5,prec_6,prec_7,prec_8 \
+start="1999-05-01" increment="2 years, 3 months"
+
+# run the timeline tool
+g.gui.timeline inputs=precip_abs1,precip_abs2
 \end{lstlisting}
 \end{small}
 
