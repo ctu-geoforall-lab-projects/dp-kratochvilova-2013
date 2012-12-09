@@ -21,7 +21,13 @@
 \usepackage{amsmath}
 \usepackage{pdfpages}
 
-\renewcommand\baselinestretch{1.3}
+\makeatletter
+\let\std@footnotetext\@footnotetext
+\usepackage[onehalfspacing]{setspace}
+\let\@footnotetext\std@footnotetext
+\makeatother
+
+% \renewcommand\baselinestretch{1.3}
 \parskip=0.8ex plus 0.4ex minus 0.1 ex
 % fancyhdr
 % accoding to http://en.wikibooks.org/wiki/LaTeX/Page_Layout#Customising_with_fancyhdr
@@ -579,6 +585,7 @@ The space-time cube is dynamically linked to a map display so that it is possibl
 % By using this method, they were able to find grouping
 
 \paragraph{Voxel data}
+\label{voxelHelena}
 Another potentially large field of study is the application of space-time cube concept for voxel data.
 Mitasova et al.\ \cite{mitasova2011landscape} presents a multidimensional framework for characterization
 of land surface dynamics using time series of elevation data (LiDAR point cloud).
@@ -804,7 +811,7 @@ for creating monthly average temperature maps from daily average temperature map
 Considering the visualization of spatio-temporal data, GRASS GIS offers
 several possibilities.
 
-\paragraph{Animation} Module \module{xganim} is a tool for animating a series of raster maps.
+\paragraph{Animation: xganim module} Module \module{xganim} is a tool for animating a series of raster maps.
 This tool suffers from many problems which led to the development
 of a better tool (described in section \ref{sec:animationTool}).
 
@@ -847,9 +854,103 @@ Also, such tool should offer a way to explore raster series more interactively.
 For example, it lack a slider control (or any other similar widget)
 which enables to browse the raster maps easily and in an intuitive way.
 
-% m.nviz.image
-% st cube
 
+\paragraph{Animation: m.nviz.image}
+Module \module{m.nviz.image} is not really an animation tool as \module{xganim} module described above,
+however it can be used to create an animation.
+The purpose of this module is to render 3D view of raster, vector or 3D raster date to an image.
+The underlying library, \emph{OGSF}, is used by both \module{m.nviz.image}
+and the interactive 3D view tool\,---\,wxNviz (mentioned below).
+Module \module{m.nviz.image} as a command line tool is ideal for scripting.
+Typically, \module{m.nviz.image} is run in a loop while one or more parameters change.
+The resulting sequence of images can be converted to an animation by an external program,
+e.g.\ \emph{ImageMagick}\footnote{\url{http://www.imagemagick.org/}} or
+\emph{FFmpeg}\footnote{\url{http://ffmpeg.org/}}.
+
+Because it is not easy to specify the optimal parameter values
+(especially view parameters) it is recommended to first find best view using interactive
+wxNviz and then use its ability to generate the command for \module{m.nviz.image} for the current state.
+This command can be than edited and used in a script.
+Follows an example of a simple Bash script which creates a video from raster series (mapset NagsHead\_series).
+
+
+\begin{small}
+\begin{lstlisting}[style=mybash]
+IMG=img
+let NUM=0
+for map in `g.mlist type=rast pattern=NH_* sep=" " --q`
+do
+    let NUM++
+    m.nviz.image elevation_map=$map format=tif output=${IMG}_$NUM \
+    zexag=4 persp=12 height=300
+done
+ffmpeg -sameq -r 5  -i ${IMG}_%d.tif output.avi
+\end{lstlisting}
+\end{small}
+
+
+
+\paragraph{Space-Time Cube: wxNviz}
+WxNviz, originally Nviz, is 2.5D/3D visualization tool which is able to render
+multiple surfaces (rasters) in 3D, display 3D vector data and voxel data (3D raster).
+There is no direct support for temporal data yet, however it can be 
+used for the visualization of space-time cube.
+
+The approach described in \ref{voxelHelena} requires to create voxel data
+where the $z$ coordinate represents time.
+This can be achieved by using \module{r.to.rast3} \cite{grassUserMan}
+which converts series of 2D raster maps to one 3D raster map as illustrated in figure \ref{fig:rtorast3}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{./images/rtorast3.png}
+  \caption{Functionality of module \module{r.to.rast3}. Source: GRASS GIS 7.0 Reference Manual \cite{grassUserMan}.}
+  \label{fig:rtorast3}
+\end{figure}
+
+In case we have vector points data (e.g.\ LiDAR data), module \module{v.vol.rst} interpolates these points into a 3D raster
+map using regularized spline tension algorithm (RST) \cite{mitasova1993interpolation,mitasova1993interpolation2}.
+
+Having the voxel data, we can visualize them in 3D view as isosurfaces
+or cross-sections. An isosurface is an analogue of an isoline in 3D.
+In the figure \ref{fig:nviz_isosurface} displaying elevation voxel data%
+\footnote{available from \url{http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip}},
+isosurface represents the change of a particular contour line in time.
+The movement of the contour is apparent from the changing shape of the isosurface.
+Also, time component can be emphasized by a color scheme which can better identify the time when changes occur.
+The same changes in elevation can be inferred from the cross-sections visualization (figure \ref{fig:nviz_slices})
+where the cross-section is an intersection of a plane with the voxel cube.
+These techniques are used by Mitasova TODO ref Visualizations of Coastal Elevation Time-series
+
+
+
+
+\begin{figure}[ht!]
+\centering
+    \begin{subfigure}[ht]{0.49\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/nviz_isosurface.jpg}
+    \caption{isosurface}
+    \label{fig:nviz_isosurface}
+    \end{subfigure}
+    \begin{subfigure}[ht]{0.49\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/nviz_slices.jpg}
+    \caption{cross-section}
+    \label{fig:nviz_slices}
+    \end{subfigure}
+\caption{Visualization of 3D raster (voxel) data of elevation with $z$ coordinate as time in GRASS GIS.
+Figure \subref{fig:nviz_isosurface} shows an evolution of a contour line ($z=10\ m$).
+A cross-section on figure \subref{fig:nviz_slices} also illustrates that the height of the middle
+part changed with time.
+Data source: mapset NagsHead\_series}
+
+\label{fig:nviz_voxel}
+\end{figure}
+
+
+
+% http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip
 
 \section{Temporal GRASS GIS framework}
 Temporal GRASS GIS Framework is a new extension available in GRASS 7 for manipulating spatio-temporal data.
