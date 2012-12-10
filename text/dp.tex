@@ -76,7 +76,16 @@ right=25mm
    backgroundcolor=\color{lightGrey},
 }
 
-
+\lstdefinestyle{python}{
+   language=python,
+   basicstyle={\ttfamily},
+   keywordstyle=[1]{\bfseries},
+   keywordstyle=[2]{\color{black}},
+   commentstyle={\itshape},
+   frame=lines,
+   showstringspaces=false,
+   backgroundcolor=\color{lightGrey},
+}
 %opening
 \title{}
 \author{Anna Kratochvílová}
@@ -2111,5 +2120,153 @@ However it would be beneficial for other wxGUI components which tackle a similar
 \phantomsection
 \addcontentsline{toc}{chapter}{\listtablename}
 \listoftables
+
+\appendix
+\chapter{Basic usage of the \tf library and modules}
+The following lines illustrate a basic usage of the \tf library and modules.
+Although the direct usage of the modules is more straightforward, using the library
+allows to process spatio-temporal data in a more sophisticated way and to create
+custom functionality not available through the modules.
+
+\subsection*{Creating a temporal dataset using library}
+The first listing demonstrates creating a new temporal dataset
+and registering maps into it (as a Python script):
+
+\begin{small}
+\begin{lstlisting}[style=python]
+# import temporal library and grass library
+import grass.temporal as tgis
+import grass.script as grass
+
+# create a few raster maps to use them later
+grass.mapcalc(exp='precip_1=rand(0,100)')
+grass.mapcalc(exp='precip_2=rand(0,200)')
+grass.mapcalc(exp='precip_3=rand(0,300)')
+grass.mapcalc(exp='precip_4=rand(0,400)')
+
+# initialize variables
+name = 'precipitation'
+
+# make sure the temporal database exists
+tgis.init()
+
+# create new space time raster dataset with absolute time
+sd = tgis.create_space_time_dataset(
+                name=name,
+                type='strds', temporaltype='absolute',
+                title="Title of my dataset",
+                descr="Description of my dataset",
+                semantic='mean')
+
+# register these raster maps in the dataset
+tgis.register_maps_in_space_time_dataset(
+        type='rast', name=name,
+        maps='precip_1,precip_2,precip_3,precip_4',
+        start='2011-01-01', increment='3 months',
+        interval=True)
+
+\end{lstlisting}
+\end{small}
+
+\subsection*{Querying a temporal dataset using library}
+The following listing shows how to query this space time raster dataset:
+\begin{small}
+\begin{lstlisting}[style=python]
+# import temporal library and grass library
+import grass.temporal as tgis
+import grass.script as grass
+
+# make sure the temporal database exists
+tgis.init()
+
+# the id of the space time raster dataset
+id = "precipitation@PERMANENT"
+
+# create the space time raster object
+ds = tgis.dataset_factory(type='strds', id=id)
+
+# check if the dataset is in the temporal database
+if ds.is_in_db() == False:
+    grass.fatal(_("Space time dataset <%s> not found") % id)
+
+# select the content of the space time raster dataset object
+# from the temporal database
+ds.select()
+
+# initiate helper variables to query the registered maps
+
+# the columns that should be selected for each map
+columns="id,name,mapset,start_time,end_time"
+
+# the optional SQL where statement: select all maps with
+# a start time later then 1 May 2011
+where="start_time > '2011-05-01'"
+
+# we order the rows by start time
+order="start_time"
+
+# the query
+rows = ds.get_registered_maps(
+        columns=columns, where=where, order=order)
+
+# check if we found any maps
+if not rows:
+    grass.fatal(_("Space time dataset <%s> is empty") % id)
+
+# simply print the map id, name, mapset and the time stamp.
+for row in rows:
+    print row["id"]
+    print row["name"]
+    print row["mapset"]
+    print row["start_time"]
+    print row["end_time"]
+
+# the output
+precip_3@PERMANENT
+precip_3
+PERMANENT
+2011-07-01 00:00:00
+2011-10-01 00:00:00
+precip_4@PERMANENT
+precip_4
+PERMANENT
+2011-10-01 00:00:00
+2012-01-01 00:00:00
+
+\end{lstlisting}
+\end{small}
+
+\subsection*{Creating a temporal dataset and its querying using modules}
+The same functionality is available through temporal modules
+which usually only wrap the library functions.
+The following listing shows how to perform the same tasks as in the previous
+listing by using temporal modules (in Bash command line):
+\begin{small}
+\begin{lstlisting}[style=python]
+# we suppose maps are already created
+
+# create new space time raster dataset with absolute time
+t.create output=precipitation semantictype=mean \
+title="Title of my dataset" \
+description="Description of my dataset"
+
+# register raster maps in the dataset
+t.register -i input=precipitation \
+maps=precip_1,precip_2,precip_3,precip_4 \
+start="2011-01-01" increment="3 months"
+
+# query temporal dataset
+t.rast.list input=precipitation \
+columns=id,name,mapset,start_time,end_time \
+where="start_time > '2011-05-01'"
+
+# output (changed formatting here to fit page)
+precip_3@PERMANENT precip_3  PERMANENT
+2011-07-01 00:00:00 2011-10-01 00:00:00
+precip_4@PERMANENT precip_4  PERMANENT
+2011-10-01 00:00:00 2012-01-01 00:00:00
+
+\end{lstlisting}
+\end{small}
 
 \end{document}
