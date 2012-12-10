@@ -398,7 +398,7 @@ of the same area by revealing different parts of the maps (see for example figur
 % , where + what $\rightarrow$ when).
 
 \subsubsection{Map animation}
-% consider (sub)paragraphs - dynamic vis. variables, temporal legend
+\label{sec:mapAnimation}
 Unlike map iteration, map animation is a technique which is applicable for computer screens only.
 Nonetheless, there is only a few steps from map iteration to map animation.
 Instead of displaying a series of static maps, there is a single map but its content changes.
@@ -1245,16 +1245,26 @@ through VTK format which can be exported by temporal module \module{t.rast.out.v
 
 
 \chapter{Results}%Developed visualization tool
+The new \tf brings new possibilities to process spatio-temporal data,
+however it is not focused on its visualization in GRASS GIS. To partially fill this `missing gap',
+three new tools have been developed which either make use of the \tf
+or help to explore spatio-temporal data generally.
 
-The aim of this work was to develop new tools for better visualization of spatio-temporal data GRASS GIS.
-%TODO
+These tools are:
+\begin{description}
+    \item[\at]for animation of raster map series or space time raster dataset, both in 2D and 2.5D.
+    \item[Timeline Tool] as a support tool for visualization of dataset's topology and other metadata.
+    \item[\ms]for a comparison of two raster maps of the same area from different time period.
+\end{description}
 
 \section{Animation tool}
 \label{sec:animationTool}
-As described in TODO REF animation is a natural and easily understandable way to display spatio-temporal data.
+As described in section \ref{sec:mapAnimation},
+animation is a natural and easily understandable way to display spatio-temporal data.
 
 Because the current animation module \module{xganim} was very limited
-in several aspects (explained TODO REF), a new tool was developed.
+in several aspects (explained in section \ref{sec:grassVisualization}),
+a new tool has been developed.
 
 \subsection{Features}
 Beside the features of \module{xganim} module, \at provides new possibilities
