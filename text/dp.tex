@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{book}
+\documentclass[a4paper,12pt,oneside]{book}
 \usepackage[utf8x]{inputenc}
 \usepackage[english]{babel}
 \usepackage{a4wide}
@@ -27,6 +27,16 @@
 \let\@footnotetext\std@footnotetext
 \makeatother
 
+\usepackage[%
+%top=40mm,
+%bottom=35mm,
+%left=40mm,
+%right=30mm
+top=40mm,
+bottom=35mm,
+left=35mm,
+right=25mm
+]{geometry}
 % \renewcommand\baselinestretch{1.3}
 \parskip=0.8ex plus 0.4ex minus 0.1 ex
 % fancyhdr
@@ -343,7 +353,8 @@ which enables to select arbitrary combinations of years, month, days and hours.
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.5\textwidth]{./images/cyclical_time.png}
-  \caption{Widget for temporal queries from system TEMPEST (Source:
+  \caption[Widget for temporal queries from system TEMPEST]
+        {Widget for temporal queries from system TEMPEST (Source:
       \url{http://w ww.geovista.psu.edu/products/demos/edsall/Tclets072799/cyclicaltime.htm})}
   \label{fig:cyclical_time}
 \end{figure}
@@ -379,7 +390,8 @@ of the same area by revealing different parts of the maps (see for example figur
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.8\textwidth]{./images/swipe_example.png}
-  \caption{Example of `swipe' technique. Source: \url{http://sathyaprasad.appspot.com/swipe.html}}
+  \caption[Example of `swipe' technique]
+  {Example of `swipe' technique. Source: \url{http://sathyaprasad.appspot.com/swipe.html}}
   \label{fig:swipe}
 \end{figure}
 
@@ -904,7 +916,8 @@ which converts series of 2D raster maps to one 3D raster map as illustrated in f
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{./images/rtorast3.png}
-  \caption{Functionality of module \module{r.to.rast3}. Source: GRASS GIS 7.0 Reference Manual \cite{grassUserMan}.}
+  \caption[Functionality of module \module{r.to.rast3}]
+  {Functionality of module \module{r.to.rast3}. Source: GRASS GIS 7.0 Reference Manual \cite{grassUserMan}.}
   \label{fig:rtorast3}
 \end{figure}
 
@@ -939,7 +952,8 @@ These techniques are used by Mitasova TODO ref Visualizations of Coastal Elevati
     \caption{cross-section}
     \label{fig:nviz_slices}
     \end{subfigure}
-\caption{Visualization of 3D raster (voxel) data of elevation with $z$ coordinate as time in GRASS GIS.
+\caption[Visualization of 3D raster (voxel) data of elevation with $z$ coordinate as time in GRASS GIS]
+{Visualization of 3D raster (voxel) data of elevation with $z$ coordinate as time in GRASS GIS.
 Figure \subref{fig:nviz_isosurface} shows an evolution of a contour line ($z=10\ m$).
 A cross-section on figure \subref{fig:nviz_slices} also illustrates that the height of the middle
 part changed with time.
@@ -953,7 +967,8 @@ Data source: mapset NagsHead\_series}
 % http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip
 
 \section{Temporal GRASS GIS framework}
-Temporal GRASS GIS Framework is a new extension available in GRASS 7 for manipulating spatio-temporal data.
+Temporal GRASS GIS Framework is a new extension available in GRASS 7
+for manipulating spatio-temporal data \cite{soerenTGRASS}.
 It enables to manage, analyze and process large amount of spatio-temporal data.
 Following the GRASS GIS modular design, the framework introduces over 30 new modules.
 Temporal modules' names starting with t./t.rast/t.vect/t.rast3d names
@@ -1922,7 +1937,8 @@ and on the manual page \cite{grassUserMan} of the \ms tool.
     \caption{\ms tool in `mirror' mode}
     \label{fig:mapswipe_mirror}
     \end{subfigure}
-\caption{\ms tool: Pre- and post-disaster images of the tsunami in Japan in 2011.
+\caption[\ms tool: Pre- and post-disaster images of the tsunami in Japan in 2011]
+        {\ms tool: Pre- and post-disaster images of the tsunami in Japan in 2011.
         Source: Earth Observatory/NASA}
 \label{fig:mapswipe}
 \end{figure}
@@ -2073,6 +2089,17 @@ However it would be beneficial for other wxGUI components which tackle a similar
 
 \newpage
 \clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\bibname}
 \printbibliography
+
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
 
 \end{document}
