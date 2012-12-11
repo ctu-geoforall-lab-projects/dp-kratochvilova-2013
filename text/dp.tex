@@ -151,19 +151,56 @@ Spatial data have been collected, processed and visualized from the early histor
 Conversely until today, the representation and visualization of spatio-temporal data
 is problematic despite of great effort of researches all over the world.
 
-Peuquet \cite{peuquet2001} provides an overview of the development of spatio-temporal data representation.
+This chapter summarizes main points about spatio-temporal data.
+First a brief overview of the historical and current research efforts is presented.
+Follows a description of several spatio-temporal data models and visualization techniques.
+The last section mention some of the software tools for handling this kind of data.
+
+
+\section{Efforts to integrate time with space}
+Peuquet \cite{peuquet2001} provides an overview of the development of spatio-temporal data representation
+and she reflects on the reasons of the still problematic situation.
+
 One of the first areas which needed to handle temporal data were banking systems,
 where storing temporal information about financial transactions is crucial.
 This encouraged the DBMS (\emph{Database Management System}) to explore the possibilities of handling
-temporal data. Simultaneously, a temporal database query language was being developed, which resulted in TSQL2 \cite{snodgrass1995}.
-There was an attempt to incorporate certain parts of this language into new SQL standard SQL:1999,
-however the TSQL2 was later critized \cite{darwen2005}.
+temporal data. Simultaneously, a temporal database query language was being developed,
+which resulted in TSQL2%
+\footnote{There was an attempt to incorporate certain parts of this language
+into new SQL standard SQL:1999, however the TSQL2 was later criticized
+\cite{darwen2005}.} \cite{snodgrass1995}.
 Recently, a new set of language extensions for temporal data support became a part of
 SQL:2011 \cite{kulkarni2012}.
 
+With the improvements in computer technologies and data capturing
+(e.g.\ remotely sensed satellite data) researchers were able to empirically
+study spatio-temporal patterns. These approaches were usually based on the
+convenient \emph{snapshot} model (described in section \ref{sec:stModels}).
+
+Since the attempts to represent time often lacked flexibility and suffered from other shortcomings,
+the need for more theoretical view on space-time representation was recognized.
+Peuquet \cite{peuquet2001} lists five areas as current research priorities:
+    \begin{description}
+      \item[The ontology of space and time]
+      deals with the space and time on an abstract level. It tries to understand
+      the concepts of linear vs.\ cyclic time, multiple times or different kinds of changes in time.
+      
+      \item[Development of efficient and robust space-time database models]
+      is further discussed in section \ref{sec:stModels}.
+      \item[Inexactness and scaling issues] refers to artificial discretization
+      of continuous phenomena and imprecision in defining both spatial and temporal boundaries.
+      \item[Graphical user interfaces]
+      present the data so that the user can explore it conveniently and obtain it in the form he or she requires.
+      \item[Indexing techniques for space-time databases] deals with optimized
+      querying spatio-temporal data stored in a database.
+     \end{description}
+
+Since these issues have not been completely solved until today we can expect that research efforts
+in this field will continue.
 %%%%%%%%%%%%%%% ST models %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Spatio-temporal data models}
+\label{sec:stModels}
 The capabilities of any information system depend on the design of its data models.
 Spatio-temporal data modeling involves defining object data types,
 relations and operations, and ensuring database integrity \cite{pelekis2004}.
@@ -300,14 +337,14 @@ Both components are important; first the researcher need to analyze the data
 and then he explains his findings to the public.
 In the following paragraphs I will focus mostly on the exploratory use of visualization tools.
 
-In \cite{andrienko2003exploratory}, Andrienko et al.\ provide a review
-of general exploratory techniques used for analysis of spato-temporal data.
+In \cite{andrienko2003exploratory}, Andrienko et al.\ provides a review
+of general exploratory techniques used for analysis of spatio-temporal data.
 They based the task typology on work
 %of Bertin \cite{bertin1983semiology}
 of Peuquet \cite{peuquet1994s}.
 She distinguished three view components in spatio-temporal data:
 \emph{where} (space), \emph{when} (time) and \emph{what} (object).
-This leads to three basic kinds of question:
+This leads to three basic kinds of questions:
 \begin{description}
     \item[when + where $\rightarrow$ what:]
         Describe the objects or set of objects (what) that are present
@@ -325,15 +362,18 @@ This leads to three basic kinds of question:
         given location or set of locations (where).
  \end{description}
 
-For the purpose of their work, Andrienko et al. simplified this classification into two cases:
-    \begin{description}
-        \item[when $\rightarrow$ where + what:]
-            Time is given and other information (location, characteristics) has to be found out.
-        \item[where + what $\rightarrow$ when:]
-            With other types of information, time has to be discovered.
-
-     \end{description}
- 
+The techniques described below differ in the fact how well they can answer these questions.
+The classification of the techniques regarding this aspect is presented in \cite{andrienko2003exploratory}.
+Here we focus on the general characteristics.
+% For the purpose of their work, Andrienko et al. simplified this classification into two cases:
+%     \begin{description}
+%         \item[when $\rightarrow$ where + what:]
+%             Time is given and other information (location, characteristics) has to be found out.
+%         \item[where + what $\rightarrow$ when:]
+%             With other types of information, time has to be discovered.
+% 
+%      \end{description}
+%  
 
 \subsection{Exploratory techniques}
 \label{sec:exploratoryTechniques}
@@ -379,9 +419,8 @@ This technique can be used with both conventional maps and maps on computer scre
 Also, it is applicable for all type of spatio-temporal data.
 
 The technique of map iteration is suitable
-for both type of tasks mentioned above.
-Change (thus `when $\rightarrow$ where + what' in terms of comparing two time moments)
-can be detected by map iteration technique by shifting the focus from one map to the other.
+for detection of a change and for finding the moment when the change occurred
+by shifting the focus from one map to the other.
 
 This task can be made even easier by overlaying one map over the other providing that the upper map is semitransparent.
 This makes the changes more visible.
@@ -404,7 +443,6 @@ of the same area by revealing different parts of the maps (see for example figur
   \label{fig:swipe}
 \end{figure}
 
-% , where + what $\rightarrow$ when).
 
 \subsubsection{Map animation}
 \label{sec:mapAnimation}
@@ -440,32 +478,36 @@ There are three alternative approaches to visualize object movement by animation
         However only a part of the trajectories corresponding to the last few time units are visible,
         like the white trails leaved behind by a plane.
         This method solves the drawback of the `movement history' method.
+        An example of such approach is in figure \ref{fig:shark}.
     \end{description}
 
 
 
-% \begin{figure}[ht]
-% \centering
-%     \begin{subfigure}[ht]{0.3\textwidth}
-%     \centering
-%         \includegraphics[width=\textwidth]{./images/shark_move_1.png}
-%     \label{fig:shark1}
-% %     \caption{Shark}
-%     \end{subfigure}
-%     \begin{subfigure}[ht]{0.3\textwidth}
-%     \centering
-%         \includegraphics[width=\textwidth]{./images/shark_move_2.png}
-%     \label{fig:shark2}
-% %     \caption{Shark}
-%     \end{subfigure}
-%     \begin{subfigure}[ht]{0.3\textwidth}
-%     \centering
-%         \includegraphics[width=\textwidth]{./images/shark_move_3.png}
-%     \label{fig:shark3}
-%     \end{subfigure}
-% \caption{Trajectory of a whale shark visualized in Google Earth (data source: German European School Singapore)}
-% \label{fig:shark}
-% \end{figure}
+\begin{figure}[ht]
+\centering
+    \begin{subfigure}[ht]{0.3\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/shark_move_1.png}
+    \label{fig:shark1}
+%     \caption{Shark}
+    \end{subfigure}
+    \begin{subfigure}[ht]{0.3\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/shark_move_2.png}
+    \label{fig:shark2}
+%     \caption{Shark}
+    \end{subfigure}
+    \begin{subfigure}[ht]{0.3\textwidth}
+    \centering
+        \includegraphics[width=\textwidth]{./images/shark_move_3.png}
+    \label{fig:shark3}
+    \end{subfigure}
+\caption{Trajectory of a whale shark visualized in Google Earth
+(data source: German European School Singapore).
+Red line symbolizes the trajectory and the yellow circles represents measurements of shark's position.
+Each picture shows the measurements from a different time interval.}
+\label{fig:shark}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Dynamic visualization variables}
@@ -752,7 +794,7 @@ countries using different platforms.
 At this time a new stable version 6.4.3 is about to be released, however
 the developers mainly focus on GRASS 7 which has already many improvements:
 new raster, vector and image processing modules, speedup of the vector engine,
-improved portability (MS-Windows, Mac OSX), modern graphical user interface (GUI) and others.
+improved portability (MS Windows, Mac OS X), modern graphical user interface (GUI) and others.
 Not only programmers are involved, also many translators contribute to this project
 in order to make it accessible for users from non-English speaking countries.
 Also users are involved in the process of development by testing and providing feedback.
