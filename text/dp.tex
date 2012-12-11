@@ -754,7 +754,20 @@ and also to keep up with new trends in GIS.
   
 \end{itemize}
 
+\paragraph{R: spacetime package}
+R software is a powerful software environment for statistical computing and graphics.
+A new package \emph{spacetime} has been added recently \cite{PebesmaR} to support spatio-temporal data.
+This package is built upon \emph{sp} package for spatial data and
+\emph{xts} package for time series data.
+The package introduces four space-time layouts (full grid, sparse grid, irregular, trajectory)
+which represent the basis of the implemented classes.
+The package handles both raster and vector types of data.
+It allows to select, manipulate, visualize data and use any other needed functionality
+available from other packages. However it's not meant as a database:
+the data are imported first, then processed and the output is saved.
 
+\paragraph{ArcGIS: Tracking Analyst}
+Temporal Analyst is an extension of ArcGIS 10 (ESRI) for storage, processing, plotting and analysis of virtually any time-releated data inside
 
 \chapter{GRASS GIS}
 \section{General overview}
@@ -944,8 +957,8 @@ let NUM=0
 for map in `g.mlist type=rast pattern=NH_* sep=" " --q`
 do
     let NUM++
-    m.nviz.image elevation_map=$map format=tif output=${IMG}_$NUM \
-    zexag=4 persp=12 height=300
+    m.nviz.image elevation_map=$map format=tif \
+    output=${IMG}_$NUM zexag=4 persp=12 height=300
 done
 ffmpeg -sameq -r 5  -i ${IMG}_%d.tif output.avi
 \end{lstlisting}
