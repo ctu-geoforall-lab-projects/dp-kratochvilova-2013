@@ -723,16 +723,9 @@ and also to keep up with new trends in GIS.
 \begin{itemize}
   \item open-source software
   \begin{itemize}
-    \item R
     \item PCRaster
     \item TerraLib % http://www.terralib.org/docs/papers/TerraLib-OSBook-versionJanuary2008.pdf
     \item GRASS
-    \item GeoVISTA Software
-    \begin{itemize}
-      \item ESTAT
-      \item The Apoala project
-      \item STempo
-    \end{itemize}
     \item web-based
     \begin{itemize}
       \item timemap -- Javascript library to help use online maps, including Google, OpenLayers, and Bing, with a SIMILE timeline
@@ -746,7 +739,6 @@ and also to keep up with new trends in GIS.
   \begin{itemize}
     \item STEMgis
     \item GeoTime
-    \item ArcGIS -- Temporal Analyst
     \item Google Earth
     %http://blogs.esri.com/esri/arcgis/2010/04/16/new-experience-and-tools-for-working-with-temporal-data/
   \end{itemize}
@@ -754,7 +746,8 @@ and also to keep up with new trends in GIS.
   
 \end{itemize}
 
-\paragraph{R: spacetime package}
+\subsection{Free and open-source software}
+\subsubsection{R: spacetime package}
 R software is a powerful software environment for statistical computing and graphics.
 A new package \emph{spacetime} has been added recently \cite{PebesmaR} to support spatio-temporal data.
 This package is built upon \emph{sp} package for spatial data and
@@ -766,8 +759,57 @@ It allows to select, manipulate, visualize data and use any other needed functio
 available from other packages. However it's not meant as a database:
 the data are imported first, then processed and the output is saved.
 
-\paragraph{ArcGIS: Tracking Analyst}
-Temporal Analyst is an extension of ArcGIS 10 (ESRI) for storage, processing, plotting and analysis of virtually any time-releated data inside
+R software is under the GNU General Public License%
+\footnote{http://www.gnu.org/licenses/gpl.html}.
+
+\subsubsection{GeoVISTA software}
+GeoVISTA Center on Penn State University is focused on the development of applications
+and toolkits that allow scientists analyze different kinds of geospatial data.
+Several applications are able to handle spatio-temporal data.
+
+\paragraph{ESTAT}
+ESTAT: The Exploratory Spatio-Temporal Analysis Toolkit%
+\footnote{\url{http://www.geovista.psu.edu/ESTAT/}},
+is developed by the GeoVISTA
+center on Pennsylvania State's University. It is written in Java and designed to support exploratory
+geographic visualization. It presents spatio-temporal multivariate data
+in a dynamically-linked environment; it includes scatterplot, bivariate choropleth map%
+\footnote{Choropleth map is a thematic map in which areas are colored
+(or patterned) proportionally to the measurement of the displayed statistical variable.
+Bivariate choropleth map is explained in \cite{leonowicz2006two}.},
+parallel coordinate plot and time series graph.
+ESTAT is used for epidemiology research but it can handle other types of data as well.
+
+ESTAT is an open-source software built upon GeoVISTA Studio development environment
+licensed under the GNU Lesser General Public License%
+\footnote{\url{http://www.gnu.org/copyleft/lesser.html}}.
+
+\paragraph{STempo}
+STempo\footnote{\url{http://www.geovista.psu.edu/stempo/}} is a software prototype aimed at
+understanding of geolocated events and their relationships.
+It enables to derive patterns at multiple spatial and temporal scales by innovative statistical procedures,
+with integrated interactive visualization.
+STempo consists of different views including a map, a timeline,
+a concept-based view represented by a tag-cloud and a table presenting data.
+These views can be used for selecting and filtering event data.
+
+STempo is an open-source software built upon Visual Inquiry Toolkit and GeoViz Toolkit
+licensed under the GNU Lesser General Public License.
+
+
+\subsection{Proprietary software}
+\subsubsection{ArcGIS: Tracking Analyst}
+Tracking Analyst is an extension for spatio-temporal data focused on vector data \cite{arcgisHelp}.
+It is designed for mapping of moving objects or objects with changing attributes.
+Tracking Analyst include exploratory tools such as animations, time window approach based on symbology,
+creating special charts and other sophisticated tools.
+Further, it supports viewing data in 3D using ArcGlobe. 
+ArcGIS itself provides data storage mechanism\,---\,the primary storage option is the geodatabase.
+
+The price of a single use license (e.i., for a single desktop computer)
+of Tracking Analyst is currently \$2,500%
+\footnote{source: \url{http://www.esri.com/software/arcgis/extensions/trackinganalyst/pricing}}.
+
 
 \chapter{GRASS GIS}
 \section{General overview}
