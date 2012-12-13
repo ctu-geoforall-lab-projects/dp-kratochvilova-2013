@@ -723,9 +723,6 @@ and also to keep up with new trends in GIS.
 \begin{itemize}
   \item open-source software
   \begin{itemize}
-    \item PCRaster
-    \item TerraLib % http://www.terralib.org/docs/papers/TerraLib-OSBook-versionJanuary2008.pdf
-    \item GRASS
     \item web-based
     \begin{itemize}
       \item timemap -- Javascript library to help use online maps, including Google, OpenLayers, and Bing, with a SIMILE timeline
@@ -737,8 +734,6 @@ and also to keep up with new trends in GIS.
 
   \item proprietary software
   \begin{itemize}
-    \item STEMgis
-    \item GeoTime
     \item Google Earth
     %http://blogs.esri.com/esri/arcgis/2010/04/16/new-experience-and-tools-for-working-with-temporal-data/
   \end{itemize}
@@ -747,6 +742,10 @@ and also to keep up with new trends in GIS.
 \end{itemize}
 
 \subsection{Free and open-source software}
+\subsubsection{GRASS GIS: Temporal Framework}
+A new GRASS GIS Temporal Framework extends significantly the capabilities of GRASS GIS
+to process spatio-temporal data. For more information see section \ref{sec:GRASSTF}.
+
 \subsubsection{R: spacetime package}
 R software is a powerful software environment for statistical computing and graphics.
 A new package \emph{spacetime} has been added recently \cite{PebesmaR} to support spatio-temporal data.
@@ -789,17 +788,54 @@ STempo\footnote{\url{http://www.geovista.psu.edu/stempo/}} is a software prototy
 understanding of geolocated events and their relationships.
 It enables to derive patterns at multiple spatial and temporal scales by innovative statistical procedures,
 with integrated interactive visualization.
-STempo consists of different views including a map, a timeline,
+STempo consists of different views including a map, a time line,
 a concept-based view represented by a tag-cloud and a table presenting data.
 These views can be used for selecting and filtering event data.
 
 STempo is an open-source software built upon Visual Inquiry Toolkit and GeoViz Toolkit
 licensed under the GNU Lesser General Public License.
 
+\subsubsection{PCRaster}
+PCRaster\footnote{\url{http://pcraster.geo.uu.nl/}}
+is a collection of software tools and libraries focused on the spatio-temporal
+environmental modeling (hydrology, ecology, etc.). It processes raster maps only.
+PCRaster allows to develop their own simulation models using scripting languages PCRcalc and Python.
+Interactive visualization component is called Aguila
+which replaced the two former components focused on visualization of raster maps
+and time series separately.
+
+PCRaster is developed mainly for research and educational purposes by
+Faculty of Geosciences at Utrecht University in the Netherlands.
+PCRaster software is partly distributed under GNU General Public License (PCRaster Open Source Tools),
+and partly under a closed source license.
+
+\subsubsection{TerraLib and TerraView}
+TerraLib\footnote{\url{http://www.terralib.org/}} is an open-source GIS software library.
+It supports large-scale applications using socio-economic
+and environmental data \cite{camara2008terralib}.
+% TerraLib extends object-relational DBMS
+% technology to support spatio-temporal models, spatial analysis, spatial data
+% mining and image databases.
+TerraLib supports the development of geographical applications
+using spatial databases, and stores data in different database management systems (DBMS)
+including MySQL and PostgreSQL. Its vector data model is compliant with Open Geospatial
+Consortium (OGC) standards. It handles different spatio-temporal data types (events,
+moving objects, modifiable objects) and allows spatial, temporal and
+attribute queries on the database. Moreover, TerraLib provides a  direct link with the
+R programming language for statistical analysis through aRT package.
+
+TerraView\footnote{\url{http://www.dpi.inpe.br/terraview_eng/index.php}}
+is an application built on the TerraLib library
+which provides functions for data conversion, display, exploratory spatial data
+analysis and spatial and non-spatial queries.
+
+TerraLib and TerraView are being developed by a development team based in Brazil
+under the GNU Lesser General Public License and GNU General Public License, respectively.
+
 
 \subsection{Proprietary software}
 \subsubsection{ArcGIS: Tracking Analyst}
-Tracking Analyst is an extension for spatio-temporal data focused on vector data \cite{arcgisHelp}.
+Tracking Analyst is an ArcGIS (ESRI) extension for spatio-temporal data focused on vector data \cite{arcgisHelp}.
 It is designed for mapping of moving objects or objects with changing attributes.
 Tracking Analyst include exploratory tools such as animations, time window approach based on symbology,
 creating special charts and other sophisticated tools.
@@ -809,6 +845,38 @@ ArcGIS itself provides data storage mechanism\,---\,the primary storage option i
 The price of a single use license (e.i., for a single desktop computer)
 of Tracking Analyst is currently \$2,500%
 \footnote{source: \url{http://www.esri.com/software/arcgis/extensions/trackinganalyst/pricing}}.
+The price of ArcGIS itself (which is not publicly available) is not included.
+
+\subsubsection{STEMgis}
+STEMgis (Discovery Software) is a temporal GIS which provides the tools to manage, visualize
+and analyze undergoing changes,
+It can be used for environmental, coastal, marine, health, crime, sales and marketing,
+agriculture and forestry applications.
+It consists from three parts: STEMgis Manager (data management), 
+STEMgis Viewer (multidimensional visualization and analysis),
+STEMgis Publicist (data publication including a freely distributable version of STEMgis FreeView).
+The full list of features, examples and animations can be found on the official home page of this software%
+\footnote{\url{http://www.discoverysoftware.co.uk/STEMgis.htm}}.
+
+STEMgis claims to be an affordable GIS: a commercial license for STEMgis is \pounds150,
+while an academic license is \pounds100.
+
+\subsubsection{GeoTime}
+GeoTime 5\footnote{\url{http://www.geotime.com/}} (Oculus)
+is data visualization and analysis software, specializing in
+the display of events over time. GeoTime provides tools
+for law enforcement analysts, including cell site analysis, mobile forensics data analysis
+and crime series analysis. It visualize data by innovative 3D Time Viewer offering a sophisticated but 
+easily understandable view on the data based on space-time path approach.
+GeoTime enables to automatically detect spatio-temporal patterns like meetings, gaps, motion and connections.
+Also it provides extensions to cooperate with ArcGIS and spreadsheet application Microsoft Excel.
+
+The GeoTime Standalone Starter Pack is priced at \$3975\footnote{source:
+\url{http://www.geotime.com/Buying-GeoTime.aspx}}.
+
+
+
+
 
 
 \chapter{GRASS GIS}
@@ -1073,6 +1141,7 @@ Data source: mapset NagsHead\_series}
 % http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip
 
 \section{Temporal GRASS GIS framework}
+\label{sec:GRASSTF}
 Temporal GRASS GIS Framework is a new extension available in GRASS 7
 for manipulating spatio-temporal data \cite{soerenTGRASS}.
 It enables to manage, analyze and process large amount of spatio-temporal data.
