@@ -141,7 +141,8 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 % \include{acknowledgement}
 
 \tableofcontents
-
+\cleardoublepage
+\pagestyle{fancy}
 \chapter{Introduction}
 % http://upload.wikimedia.org/wikipedia/commons/2/29/Minard.png
 \chapter{Spatio-temporal data}
@@ -207,7 +208,7 @@ relations and operations, and ensuring database integrity \cite{pelekis2004}.
 Apart from that, a data model should take into account possible spatio-temporal queries and performed analyzes.
 
 We have succeeded in modeling of spatial information;
-current geographical information systems use raster, vector model or the combination of both.
+current geographic information systems use raster, vector model or the combination of both.
 Nonetheless, to model temporal information together with spatial information
 has proved to be more complicated \cite{peuquet2001}.
 
@@ -297,6 +298,7 @@ and unifying (the case of the object-oriented model) can lead to good results.
 %%%%%%%%%%%%%%% Visualization %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Visualization}
+\label{sec:visualization}
 Visualizing the world (through geospatial data) has been a cartographic interest for many centuries.
 Current advanced software and hardware enable us to visualize geospatial data in many different ways,
 however, existing visualization and exploratory techniques often do not suffice, especially in the temporal domain.
@@ -502,7 +504,8 @@ There are three alternative approaches to visualize object movement by animation
         \includegraphics[width=\textwidth]{./images/shark_move_3.png}
     \label{fig:shark3}
     \end{subfigure}
-\caption{Trajectory of a whale shark visualized in Google Earth
+\caption[Trajectory of a whale shark visualized in Google Earth]
+{Trajectory of a whale shark visualized in Google Earth
 (data source: German European School Singapore).
 Red line symbolizes the trajectory and the yellow circles represents measurements of shark's position.
 Each picture shows the measurements from a different time interval.}
@@ -720,31 +723,20 @@ but they started to provide this functionality because of the users' needs
 and also to keep up with new trends in GIS.
 
 
-\begin{itemize}
-  \item open-source software
-  \begin{itemize}
-    \item web-based
-    \begin{itemize}
-      \item timemap -- Javascript library to help use online maps, including Google, OpenLayers, and Bing, with a SIMILE timeline
-      \item TimeMap -- mapping applet which generates complete interactive maps
-    \end{itemize}
-
-  \end{itemize}
-
-
-  \item proprietary software
-  \begin{itemize}
-    \item Google Earth
-    %http://blogs.esri.com/esri/arcgis/2010/04/16/new-experience-and-tools-for-working-with-temporal-data/
-  \end{itemize}
-
-  
-\end{itemize}
-
 \subsection{Free and open-source software}
 \subsubsection{GRASS GIS: Temporal Framework}
 A new GRASS GIS Temporal Framework extends significantly the capabilities of GRASS GIS
 to process spatio-temporal data. For more information see section \ref{sec:GRASSTF}.
+
+\subsubsection{QGIS: Time Manager}
+QGIS\footnote{\url{http://www.qgis.org/}} is a rapidly developing cross-platform
+geographic information system. Time Manager\footnote{\url{https://github.com/anitagraser/TimeManager/}}
+is a plugin for animating maps, currently multiple vector layers are supported.
+It allows basic animation functionality (to control the animation flow) and
+users can specify offset for each layer separately.
+
+QGIS and Time Manager are under the GNU General Public License%
+\footnote{http://www.gnu.org/licenses/gpl.html}.
 
 \subsubsection{R: spacetime package}
 R software is a powerful software environment for statistical computing and graphics.
@@ -758,8 +750,7 @@ It allows to select, manipulate, visualize data and use any other needed functio
 available from other packages. However it's not meant as a database:
 the data are imported first, then processed and the output is saved.
 
-R software is under the GNU General Public License%
-\footnote{http://www.gnu.org/licenses/gpl.html}.
+R software is under the GNU General Public License.
 
 \subsubsection{GeoVISTA software}
 GeoVISTA Center on Penn State University is focused on the development of applications
@@ -833,6 +824,49 @@ TerraLib and TerraView are being developed by a development team based in Brazil
 under the GNU Lesser General Public License and GNU General Public License, respectively.
 
 
+\subsubsection{Web-based software}
+Since many GIS-based applications are currently moving from desktops to web, it is not surprising that
+new web-based libraries and programs focused on  spatio-temporal data visualization appear.
+Web applications are mostly concerned with the `communication' corner in terms of the cube analogy
+(explained in section \ref{sec:visualization})\,---\,they try to present the information
+in an interesting and attractive way. This is connected with the fact that GUI for web application
+tends to be  far more flexible and the traditional widgets are enriched by new innovative features.
+This can help to improve the visualization of the spatio-temporal data.
+
+\paragraph{i2maps} i2maps\footnote{\url{http://ncg.nuim.ie/i2maps/docs/}} is a software environment for geocomputation.
+It consists of two libraries, one written in Javascript, and the other in Python.
+The Javascript library is used for building the interactive user interface, and is built on top of OpenLayers.
+The Python library consists of a server-based interface for linking data sources
+and spatio-temporal analysis modules to the Javascript library, and is built around the GeoDjango framework.
+i2maps provide libraries that make it easier to write software for collecting,
+processing, modeling, visualization spatio-temporal data.
+
+i2maps is distributed under an unspecified open-source license.
+
+\paragraph{\emph{Time}Map} \emph{Time}Map TMJava is a mapping applet
+which generates interactive maps. Applet can be embedded into web page
+or it can be run standalone.
+\emph{Time}Map claims to be the first web mapping applet which provides
+generalized support for temporal maps, including time-filtering and animation.
+TMJava can connect with databases which are being actively updated.
+
+\emph{Time}Map is released under the GNU General Public License.
+
+It is worth mentioning that there seems to be no activity on this project since 2008 according to
+Ohloh\footnote{\url{http://www.ohloh.net/}} statistics.
+
+\paragraph{timemap.js}
+Timemap.js\footnote{\url{http://code.google.com/p/timemap/}}
+is a Javascript library designed to help to use online maps,
+including Google, OpenLayers, and Bing, with a SIMILE time line.
+This time line widget comes from SIMILE Widgets which focus the development of data visualization web widgets.
+The timemap.js library allows to load one or more datasets in different formats (JSON, KML, or GeoRSS)
+onto both a map and a time line simultaneously.
+
+Timemap.js is licensed under the MIT License\footnote{\url{http://opensource.org/licenses/mit-license.php}}.
+
+
+
 \subsection{Proprietary software}
 \subsubsection{ArcGIS: Tracking Analyst}
 Tracking Analyst is an ArcGIS (ESRI) extension for spatio-temporal data focused on vector data \cite{arcgisHelp}.
@@ -875,6 +909,23 @@ The GeoTime Standalone Starter Pack is priced at \$3975\footnote{source:
 \url{http://www.geotime.com/Buying-GeoTime.aspx}}.
 
 
+
+\subsubsection{Google Earth}
+Google Earth is a wide-spread software for visualization and exploring places all over the world
+using a virtual globe.  It maps the Earth by the superimposition of images
+ from satellite imagery and aerial photography which are keeping up-to-date.
+Although Google Earth is a desktop application (also available on web and mobile phones) it needs
+the Internet connection to download data and display it.
+
+The native data format used to add custom data to Google Earth is the XML-based Keyhole Markup Language (KML).
+By adding time stamps to features in the KML file, time component can be visualized. KML distinguishes
+between time instances and time intervals. When time component in the data is detected,
+a time slider is enabled automatically. An interesting feature, AbstractViews, enables to automatically
+adjust the sunlight and historical imagery according to the time specified in the KML tags.
+
+Google Earth offers a free version with limited functionality and usage.
+Google Earth Pro version is licensed at \$399 per user per
+year\footnote{source: \url{http://www.google.com/earth/explore/products/desktop.html}}.
 
 
 
