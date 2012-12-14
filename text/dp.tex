@@ -20,6 +20,8 @@
 \usepackage{listings}
 \usepackage{amsmath}
 \usepackage{pdfpages}
+\usepackage{tabularx}
+\usepackage{textcomp}
 
 \makeatletter
 \let\std@footnotetext\@footnotetext
@@ -145,7 +147,48 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \pagestyle{fancy}
 \chapter{Introduction}
 % http://upload.wikimedia.org/wikipedia/commons/2/29/Minard.png
+Although the concept of time is intuitive, geographers, cartographers and other researchers have been
+struggling with it from the early beginning of the existence of maps.
+Unlike space dimension, time dimension has been ignored for a long time. For instance,
+during 1817 - 1861, the establishment of the so called ``Stable''  cadastre by the Emperor Joseph II. 
+in the whole Austrian Empire did not consider first the inevitable changes in the recorded data during the following years.
+On the other hand, in 1869 (i.e.,\ almost at the same time)
+a flow map on the subject of Napoleon's disastrous Russian campaign of 1812 was
+published by a French civil engineer Charles Joseph Minard (see appendix \ref{appdx:minard}). This map is claimed to be
+one of the best drawn historical graphics visualizing multiple variables where time is one of them.
+
+In the past, research on spatial and temporal data representation and visualization
+has mostly been conducted separately. However, during the last decades
+effective integration of the spatial and temporal components was recognized as an vital assignment
+since temporal information is necessary to better understand dynamic geographic processes
+as well as the human-environment interaction. It can help us to answer questions such as:
+How has the riverbed changed after the flood in February 24, 2005?
+Which areas of agriculture land use have changed to urban land use during the last 10 years?
+At what time of the day is the bus line overloaded and where?
+
+Nowadays, the developers of geographic information systems (GIS) are aware that
+processing of spatio-temporal data is what more and more users ask for.
+Also the users of GRASS, an open source GIS, have now the possibility to manage,
+process and analyze spatio-temporal data thanks to a new extension, the GRASS GIS \tf.
+Since the \tf is not focused on data visualization in GRASS, the goal of this work
+is to improve the spatio-temporal data visualization capabilities of GRASS GIS and in general,
+to bring the \tf closer to the users. New visualization tools providing graphical user interface
+are being developed; some of them make directly use of the \tf. These tools include tool
+for animation, interactive comparing of maps and a support tool to visualize temporal dataset's metadata.
+
+The work is organized as follows. In the next chapter \ref{chap:stdata}, I present issues connected with spatio-temporal data:
+how we can represent it, visualize and explore, which software tools are currently available?
+The following chapter \ref{chap:grass} is focused on GRASS GIS, its graphical user interface and, of course, the new \tf.
+Chapter \ref{chap:results} finally introduces the newly developed tools and present their capabilities and implementation.
+
+
+
+
+
+
+
 \chapter{Spatio-temporal data}
+\label{chap:stdata}
 The term \emph{spatial} data refers to data where each object has associated with it a location.
 Naturally, \emph{spatio-temporal} data also include a temporal coordinate.
 Spatial data have been collected, processed and visualized from the early history of mankind.
@@ -931,6 +974,7 @@ year\footnote{source: \url{http://www.google.com/earth/explore/products/desktop.
 
 
 \chapter{GRASS GIS}
+\label{chap:grass}
 \section{General overview}
 GRASS  (Geographical Resources Analysis Support System)\footnote{\url{http://grass.osgeo.org}}
 is a general purpose cross-platform open-source geographic information system (GIS)
@@ -1471,6 +1515,7 @@ through VTK format which can be exported by temporal module \module{t.rast.out.v
 
 
 \chapter{Results}%Developed visualization tool
+\label{chap:results}
 The new \tf brings new possibilities to process spatio-temporal data,
 however it is not focused on its visualization in GRASS GIS. To partially fill this `missing gap',
 three new tools have been developed which either make use of the \tf
@@ -2339,7 +2384,43 @@ However it would be beneficial for other wxGUI components which tackle a similar
 \listoftables
 
 \appendix
+\chapter{Minard’s map of Napoleon’s 1812 campaign into Russia}
+\label{appdx:minard}
+\begin{singlespace}
+\begin{center}
+\setlength{\extrarowheight}{3pt}
+ \begin{tabularx}{\linewidth}{lX}
+ Author:& Charles Joseph Minard (1781 -- 1870)\\
+ Title:& Figurative Map of the successive losses in men of the French Army in the Russian campaign 1812-1813.\\
+ Published: & 1869 in Paris \\
+ Legend:& The numbers of men present are represented by the widths of the colored zones
+ at a rate of one millimeter for every ten-thousand men; they are further written across the zones.
+ The red [now brown] designates the men who enter into Russia, the black those who leave it.
+ The information which has served to draw up the map has been extracted from
+ the works of M. M. Thiers, of Segur, of Fezensac, of Chambray, and the unpublished
+ diary of Jacob, pharmacist of the army since October 28th.
+ In order to better judge with the eye the diminution of the army,
+ I have assumed that the troops of prince Jerome and of Marshal Davoush who had been detached
+ at Minsk and Moghilev and have rejoined around Orcha and Vitebsk, had always marched with the army.\\
+ Note: & 
+The scale is shown on the center-right, in ``lieues communes de France'' (common French league)
+which is 4,444~m (2.75~miles).
+The lower portion of the graph is to be read from right to left. It shows the temperature on the army's return
+from Russia, in degrees below freezing on the Réaumur scale. (Multiply Réaumur temperatures by $1 ^1\!/\!_4$ to get Celsius,
+e.g. $-30\text{\textdegree} R = -37.5\,\text{\textcelsius}$).
+At Smolensk, the temperature was $-21$° Réaumur on November 14th.\\
+Source:& Wikipedia, The Free Encyclopedia
+\end{tabularx}
+\end{center}
+\end{singlespace}
+
+\begin{center}
+  \includegraphics[width=\textheight,angle=90]{./images/Minard.png}
+\end{center}
+
+
 \chapter{Basic usage of the \tf library and modules}
+\label{appdx:tfUsage}
 The following lines illustrate a basic usage of the \tf library and modules.
 Although the direct usage of the modules is more straightforward, using the library
 allows to process spatio-temporal data in a more sophisticated way and to create
