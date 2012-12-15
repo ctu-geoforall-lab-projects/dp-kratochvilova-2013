@@ -6,3 +6,5 @@ dp.pdf
 *.backup
 *.tex~
 *-blx.bib
+*.lof
+*.lot
