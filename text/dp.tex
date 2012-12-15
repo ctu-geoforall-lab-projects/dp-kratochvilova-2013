@@ -1041,6 +1041,7 @@ they can report any software bug or suggest an improvement.
 % interoperability?
 
 \section{GRASS GIS Graphical User Interface}
+\label{sec:grasswxgui}
 Originally, GRASS was controlled only through command line interface (CLI).
 Later, a need for graphical user interface (GUI) appeared
 which led to the first GUI prototype called \emph{TCLTKGRASS}
@@ -2384,6 +2385,59 @@ Unfortunately this generalization of layer management is not so simple
 because it requires adding, removing and changing the order of layers.
 However it would be beneficial for other wxGUI components which tackle a similar problem
 (e.g.\ Supervised Classification Tool).
+
+\section{GUI for temporal modules}
+Although the \tf is fully working from command line, it is not yet introduced in the GRASS wxGUI.
+This means that automatically generated GUI dialogs (refer to \ref{sec:grasswxgui})
+for all temporal modules work only partially because the widget for the selection of GRASS elements
+(like raster, 3D raster, vector, region, etc.) is not able to display the new temporal elements
+(space time datasets). As a consequence, user has to type the name of the dataset manually
+instead of selecting the available dataset from a list.
+
+To support the selection of temporal elements in the GUI, four new elements were
+added\,---\,strds (space time raster dataset), stvds (space time vector dataset),
+str3d (space time 3D raster dataset) and stds (space time dataset).
+Figure \ref{fig:gselect} shows the widget offering a tree view of the space time datasets
+organized according to mapsets and type of dataset.
+Originally, this widget supported only two levels of tree structure,
+for the case of stds element one more level, the dataset type, was needed.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics{./images/gselect.png}
+  \caption{Element selection widget showing space time datasets}
+  \label{fig:gselect}
+\end{figure}
+
+Apart from this problem, the auto-generated dialogs suffered from
+not well organized module options and flags. This means that all input widgets
+are together no matter what are their purposes.
+Figure \ref{fig:gselect} shows two main tabs, Required and Optional,
+where all options are located by default.
+Since many temporal modules have no required parameters, tab Optional
+contains all parameters. This can be avoided by specifying
+custom `guisection' in the header of temporal module's main file
+where the options and flags are described. This way, several modules
+were changed by arranging the options and flags into different sections, represented
+by the individual tabs (e.g.\ Input, Formatting), which makes the
+GUI easier to use.
+
+Other corrections were done to improve the appearance of the GUI. For example,
+see the improvement in figure \ref{fig:forms}.
+\begin{figure}[h!]
+  \centering
+  \includegraphics{./images/forms.png}
+  \caption[A cutout of \module{t.list} dialog window]
+  {A cutout of a dialog window of t.list module:
+  the upper part shows the option appearance before and the bottom part after the correction.
+  (Not all check boxes are visible in the upper part.)}
+  \label{fig:forms}
+\end{figure}
+
+
+All these problems are related to the GUI only and the behavior of the \tf
+remains untouched. 
+
 
 
 
