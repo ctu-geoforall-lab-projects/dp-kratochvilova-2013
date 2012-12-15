@@ -242,7 +242,7 @@ Peuquet \cite{peuquet2001} lists five areas as current research priorities:
 
 Since these issues have not been completely solved until today we can expect that research efforts
 in this field will continue.
-%%%%%%%%%%%%%%% ST models %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% ST models %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Spatio-temporal data models}
 \label{sec:stModels}
@@ -262,11 +262,18 @@ I decided to present only certain models which are frequently discussed in relat
 The brief description should give an idea of spatio-temporal modeling
 and it shows how spatio-temporal models vary.
 
-\paragraph*{The snapshot model}
+\subsubsection{The snapshot model}
 One of the simplest field-based spatio-temporal data models is the snapshot model.
 This representation consists of a sequence of layers,
-where each layer shows a state recorded at a certain point in time.
-Hence, this model can be perceived as a 3D or 4D space-time cube \cite{peuquet2001}.
+where each layer shows a state recorded at a certain point in time (see figure \ref{fig:snapshot_model}).
+Hence, this model can be perceived as a 3D or 4D space-time cube \cite{peuquet2001}, for explanation of space-time cube refer to section \ref{sec:stcube}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{./svg_images/snapshot_model.pdf}
+  \caption{An illustration of snap-shot model}
+  \label{fig:snapshot_model}
+\end{figure}
 
 
 The main drawback is the redundancy of data when there is little change between two successive states.
@@ -286,7 +293,7 @@ In order to improve the efficiency of retrieving a distant state,
 various approaches have been suggested \cite{wang2012},
 differing in the choice of base state or states and in the number and distribution of difference files.
 
-\paragraph*{The space-time composite data model}
+\subsubsection{The space-time composite data model}
 This model was suggested by Langran \cite{langran1988}. It assumes vector data representation.
 The base map in this model is gradually fragmented as the changes occur.
 Each fragment has its own attribute history represented by an ordered list of records.
@@ -295,7 +302,7 @@ This model is conceptually straightforward, however the updating process may be 
 comparing to other models.
 % The fragmentation requires to change identifiers each time when an old fragment is split into two new parts
 
-\paragraph*{Event-oriented models}
+\subsubsection{Event-oriented models}
 According to \cite[p.~56]{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
 The models mentioned above cannot clearly represent events.
 In order to overcome this problem, events can be represented explicitly.
@@ -313,7 +320,7 @@ Events are connected; every event has a pointer to the previous and the followin
 Similarly to the concept of amendments, there is also a base map, showing an initial snapshot.
 ESTDM assumes that each event list and associated changes relate to a single thematic domain.
 
-\paragraph*{Object-oriented models}
+\subsubsection{Object-oriented models}
 As object-oriented design showed promising results in the field of programming,
 there were efforts to apply its features, such as classes and instances, attributes and methods,
 inheritance and polymorphism, in spatio-temporal data model.
@@ -328,11 +335,13 @@ Object-oriented models seem to have more advantages and less drawbacks comparing
 Pelekis \cite[p.~27]{pelekis2004} claims that it can ``\emph{support  all types of data handling,
 in terms of measurement, topological relationships and operations}''.
 
-\paragraph{The three domains model}
-The three domains model was described by Yuan \cite{yuan1994wildfire} and it was originally applied for wildfire modeling.
+\subsubsection{The three domains model}
+The three domains model was described by Yuan \cite{yuan1994wildfire}
+and it was originally applied for wildfire modeling.
 As the name suggests, the model has three domains, semantics, time, and space, which are interlinked.
 In case of wildfire modeling, semantic domain can contain names of fire events, types or fire intensity.
-The time domain describes the existence of semantic and spatial objects (like geometrical primitives, cells and volumes).
+The time domain describes the existence of semantic and spatial objects
+(like geometrical primitives, cells and volumes).
 Each domain can be handled separately in terms of database management system.
 Thanks to the splitting of the spatio-temporal information,
 this model is flexible enough to support wide range of spatio-temporal queries \cite{pelekis2004}.
@@ -613,9 +622,18 @@ to induce an illusion of day and night.
 % skagit.meas.ncsu.edu/~helena/gmslab/papers/listsj.html
 
 \subsubsection{Space-time cube}
+\label{sec:stcube}
 The space-time cube is basically a 3D plot in which the spatial component (e.g.\ a geographic map)
 is plotted in the $xy$\nobreakdash-plane and the temporal domain is represented
-on the vertical $z$-axis.
+on the vertical $z$-axis (see figure \ref{fig:stcube_cut}).
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{./svg_images/snapshot_cut.pdf}
+  \caption{An illustration of space-time cube}
+  \label{fig:stcube_cut}
+\end{figure}
+
 This new view on time as an additional spatial dimension was introduced in 1970 by Hägerstrand \cite{hagerstrand1970}.
 He suggested a three-dimensional diagram, the space-time cube, to study the space-time behavior of human individuals.
 In those days, creating graphics was limited to manual methods.
