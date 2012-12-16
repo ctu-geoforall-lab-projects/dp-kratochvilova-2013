@@ -118,7 +118,7 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
     unicode=true,
     pdftitle={Visualization of Spatio-Temporal Data in GRASS GIS},
     pdfsubject={Master thesis: Visualization of Spatio-Temporal Data in GRASS GIS},
-    pdfauthor={Anna Kratochvílová},
+    pdfauthor={Anna Kratochv\'{\i}lov\'{a}},
     pdfkeywords={GRASS} {GIS} {visualization} {spatio-temporal data},
     colorlinks=false,
 %     pdfborder={0 0 0 0},
@@ -233,8 +233,8 @@ Peuquet \cite{peuquet2001} lists five areas as current research priorities:
       deals with the space and time on an abstract level. It tries to understand
       the concepts of linear vs.\ cyclic time, multiple times or different kinds of changes in time.
       
-      \item[Development of efficient and robust space-time database models]
-      is further discussed in section \ref{sec:stModels}.
+      \item[The development of efficient and robust space-time database models]
+      is \newline further discussed in section \ref{sec:stModels}.
       \item[Inexactness and scaling issues] refers to artificial discretization
       of continuous phenomena and imprecision in defining both spatial and temporal boundaries.
       \item[Graphical user interfaces]
@@ -306,7 +306,7 @@ comparing to other models.
 % The fragmentation requires to change identifiers each time when an old fragment is split into two new parts
 
 \subsubsection{Event-oriented models}
-According to \cite[p.~56]{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
+According to Dyreson et al.\ \cite[p.~56]{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
 The models mentioned above cannot clearly represent events.
 In order to overcome this problem, events can be represented explicitly.
 Several event-based models have been suggested by \cite{claramunt1995managing}, \cite{peuquet1995}, \cite{chen1998event}.
@@ -395,7 +395,7 @@ Both components are important; first the researcher need to analyze the data
 and then he explains his findings to the public.
 In the following paragraphs I will focus mostly on the exploratory use of visualization tools.
 
-In \cite{andrienko2003exploratory}, Andrienko et al.\ provides a review
+Andrienko et al.\ \cite{andrienko2003exploratory} provides a review
 of general exploratory techniques used for analysis of spatio-temporal data.
 They based the task typology on work
 %of Bertin \cite{bertin1983semiology}
@@ -421,7 +421,8 @@ This leads to three basic kinds of questions:
  \end{description}
 
 The techniques described below differ in the fact how well they can answer these questions.
-The classification of the techniques regarding this aspect is presented in \cite{andrienko2003exploratory}.
+The classification of the techniques regarding this aspect is presented by Andrienko et al.%
+\ \cite{andrienko2003exploratory}.
 Here we focus on the general characteristics.
 % For the purpose of their work, Andrienko et al. simplified this classification into two cases:
 %     \begin{description}
@@ -1352,6 +1353,7 @@ The column \emph{Duration} contains the number of days for each period and it ca
 that the greatest common divisor is 2 months.
 \begin{table}[ht!]
   \centering
+  \small
   \caption{Example dataset}
   \label{tab:granularity}
 \setlength{\extrarowheight}{3pt}
@@ -1376,13 +1378,13 @@ avg\_temp.06@timeseries &     2002-07-01 00:00:00  &   2002-09-01 00:00:00   &  
 Although topology is a term widely used in the area of mathematics studying properties of space,
 this term can be used analogically for the time dimension.
 Temporal topology analyzes temporal relations between time stamps (for both interval and point time).
-There are 13 base relations between two intervals according to \cite{relationships}.
+There are 13 base relations between two intervals according to Allen \cite{relationships}.
 Table \ref{tab:relationships} shows these relations (without the inverse relations).
 
 
 \begin{table}[ht]
 \centering
-\caption{Temporal relationships according to \cite{relationships}}
+\caption{Temporal relationships according to Allen \cite{relationships}}
 \label{tab:relationships}
 \setlength{\extrarowheight}{10pt}
 
@@ -1517,7 +1519,7 @@ functionality to process spatial data.
 Temporal modules share certain common options:
 \begin{itemize}
   \item They allow to specify the temporal range of datasets so that only a part of a dataset can be processed.
-  \item Several modules support two possibilities of specifying the input data\dash directly or by providing a file.
+  \item Several modules support two possibilities of specifying the input data\dash either directly or by providing a file.
   \item When modules output a report or a table it is possible to change the format suitably.
 \end{itemize}
 
@@ -2695,7 +2697,8 @@ precip_4@PERMANENT precip_4  PERMANENT
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\textwidth]{./images/animation_tool1.png}
-  \caption{\at: two animations of temporal datasets with different time resolution (yearly and seasonal).
+  \caption[\at: two animations of temporal datasets with different time resolution (yearly and seasonal)]
+  {\at: two animations of temporal datasets with different time resolution (yearly and seasonal).
   Data source: E-OBS gridded dataset \cite{haylock2008european}.}
   \label{fig:anim2D}
 \end{figure}
@@ -2704,7 +2707,9 @@ precip_4@PERMANENT precip_4  PERMANENT
 \begin{figure}[h!]
   \centering
   \includegraphics[width=\textwidth]{./images/animation_tool2.png}
-  \caption{\at: synchronized 2D and 2.5D animation of the same area using
+  \caption[\at: synchronized 2D and 2.5D animation of the same area using
+  multiple maps without time information]
+  {\at: synchronized 2D and 2.5D animation of the same area using
   multiple maps without time information. Data source: NagsHead mapset available from
   \url{http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip}}
   \label{fig:anim3D}
