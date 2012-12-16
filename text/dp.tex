@@ -1556,6 +1556,7 @@ animation is a natural and easily understandable way to display spatio-temporal 
 Because the current animation module \module{xganim} was very limited
 in several aspects (explained in section \ref{sec:grassVisualization}),
 a new tool has been developed.
+Screenshots of the \at can be found in appendix \ref{appdx:animation}.
 
 \subsection{Features}
 Beside the features of \module{xganim} module, \at provides new possibilities
@@ -2438,7 +2439,7 @@ see the improvement in figure \ref{fig:forms}.
 All these problems are related to the GUI only and the behavior of the \tf
 remains untouched. 
 
-
+\chapter{Conclusion}
 
 
 \newpage
@@ -2639,5 +2640,47 @@ precip_4@PERMANENT precip_4  PERMANENT
 
 \end{lstlisting}
 \end{small}
+
+\chapter{\at screenshots}
+\label{appdx:animation}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{./images/animation_tool1.png}
+  \caption{\at: two animations of temporal datasets with different time resolution (yearly and seasonal).
+  Data source: E-OBS gridded dataset \cite{haylock2008european}.}
+  \label{fig:anim2D}
+\end{figure}
+% We acknowledge the E-OBS dataset from the EU-FP6 project ENSEMBLES (http://ensembles-eu.metoffice.com) and the data providers in the ECA&D project (http://www.ecad.eu)
+
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{./images/animation_tool2.png}
+  \caption{\at: synchronized 2D and 2.5D animation of the same area using
+  multiple maps without time information. Data source: NagsHead mapset available from
+  \url{http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip}}
+  \label{fig:anim3D}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics{./images/animation_tool_edit.png}
+  \caption{\at: dialog for defining animation properties}
+  \label{fig:anim_edit}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics{./images/animation_tool_export.png}
+  \caption{\at: dialog for exporting animation\,---\,adding decorations}
+  \label{fig:anim_export}
+\end{figure}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics{./images/animation_tool_speed.png}
+  \caption{\at: dialog for adjusting speed of animation (temporal mode active)}
+  \label{fig:anim_speed}
+\end{figure}
 
 \end{document}

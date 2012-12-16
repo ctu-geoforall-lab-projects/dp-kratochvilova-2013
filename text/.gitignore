@@ -8,3 +8,5 @@ dp.pdf
 *-blx.bib
 *.lof
 *.lot
+*.out
+*.toc
