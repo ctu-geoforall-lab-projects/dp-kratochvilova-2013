@@ -46,19 +46,19 @@ right=25mm
 \usepackage{fancyhdr}
 \setlength{\headheight}{15.2pt}
 \pagestyle{fancy}
-\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.\ #1}{}}
-\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}{}}
+\renewcommand{\chaptermark}[1]{\markright{\chaptername\ \thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{}
 
 \fancyhf{}
-\fancyhead[LE]{\textit{\leftmark}}
-\fancyhead[RO]{\textit{\rightmark}}
+% \fancyhead[LE]{\textit{\leftmark}}
+\fancyhead[R]{\textit{\rightmark}}
 
-\fancyfoot[LE,RO]{\thepage}
-\fancyfoot[RE,LO]{\textit{Anna Kratochvílová, CTU in Prague, 2012}}
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{\textit{Anna Kratochvílová, CTU in Prague, 2012}}
 
 % plain affects chapter first page
 \fancypagestyle{plain}{
-% \fancyhf{}
+\fancyhf{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 }
@@ -112,6 +112,7 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \newcommand{\tf}{Temporal Framework\xspace}
 \newcommand{\at}{Animation Tool\xspace}
 \newcommand{\ms}{Map Swipe\xspace}
+\newcommand{\dash}{\mbox{\,---\,}}
 
  \hypersetup{
     unicode=true,
@@ -146,7 +147,9 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \tableofcontents
 \cleardoublepage
 \pagestyle{fancy}
-\chapter{Introduction}
+\chapter*{Introduction}
+\markboth{}{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
 % http://upload.wikimedia.org/wikipedia/commons/2/29/Minard.png
 Although the concept of time is intuitive, geographers, cartographers and other researchers have been
 struggling with it from the early beginning of the existence of maps.
@@ -363,7 +366,7 @@ a tool (that is visual, digital or tactile) for presenting geographical informat
 whose locational and/or attribute components change over time}''.
 They distinguish three categories of maps:
     \begin{description}
-        \item[A single static map] represents an event by means of graphic sign system\,---\,from complex point symbols,
+        \item[A single static map] represents an event by means of graphic sign system\dash from complex point symbols,
             temporal glyphs, to generalized trend-surface or flow-linkage maps depicting movement \cite{monmonier1990strategies}.
 
         \item[A strip map] represents an event by ordering `state' maps chronologically (as in `comic strip' style).
@@ -437,7 +440,7 @@ such as interactivity and dynamics which are necessary for most exploratory tech
 like map querying or animation.
 
 \subsubsection{Querying}
-A query consists of two main parts\,---\,target and constraints \cite{andrienko2003exploratory}.
+A query consists of two main parts\dash target and constraints \cite{andrienko2003exploratory}.
 For example, we can ask where (target) a particular object was located at a given time instance (constraint).
 A query can be specified by the user either by a machine-readable language (typically Structured Query Language)
 or via graphical user interface (possibly using Visual Query Languages \cite{catarci1997visual})
@@ -505,7 +508,7 @@ Unlike map iteration, map animation is a technique which is applicable for compu
 Nonetheless, there is only a few steps from map iteration to map animation.
 Instead of displaying a series of static maps, there is a single map but its content changes.
 The changes representing an event are inferred from real movement on the map.
-Animation consists of frames\,---\,single images (maps).
+Animation consists of frames\dash single images (maps).
 
 \paragraph{Application}
 Animations can be useful to reveal trends, processes and subtle spatio-temporal patterns
@@ -890,7 +893,7 @@ under the GNU Lesser General Public License and GNU General Public License, resp
 Since many GIS-based applications are currently moving from desktops to web, it is not surprising that
 new web-based libraries and programs focused on  spatio-temporal data visualization appear.
 Web applications are mostly concerned with the `communication' corner in terms of the cube analogy
-(explained in section \ref{sec:visualization})\,---\,they try to present the information
+(explained in section \ref{sec:visualization})\dash they try to present the information
 in an interesting and attractive way. This is connected with the fact that GUI for web application
 tends to be  far more flexible and the traditional widgets are enriched by new innovative features.
 This can help to improve the visualization of the spatio-temporal data.
@@ -936,7 +939,7 @@ It is designed for mapping of moving objects or objects with changing attributes
 Tracking Analyst include exploratory tools such as animations, time window approach based on symbology,
 creating special charts and other sophisticated tools.
 Further, it supports viewing data in 3D using ArcGlobe. 
-ArcGIS itself provides data storage mechanism\,---\,the primary storage option is the geodatabase.
+ArcGIS itself provides data storage mechanism\dash the primary storage option is the geodatabase.
 
 The price of a single use license (e.i., for a single desktop computer)
 of Tracking Analyst is currently \$2,500%
@@ -1050,7 +1053,7 @@ programming language using \emph{Tk} graphical toolkit.
 However, during the 2000's the limitations of Tcl/Tk toolkit turned out to be
 an obstacle for further development \cite{wxGUI2008}.
 In 2006, it was decided to build a new GUI based on
-\emph{wxPyton}\footnote{\url{http://www.wxpython.org}}\,---\, a Python wrapper
+\emph{wxPyton}\footnote{\url{http://www.wxpython.org}}\dash  a Python wrapper
 for cross-platform GUI toolkit \emph{wxWidgets}\footnote{\url{http://www.wxwidgets.org/}}.
 Among other benefits, Python programming language is far more popular than Tcl
 and it is also much easier to learn which enlarges the number of potential contributors.
@@ -1161,7 +1164,7 @@ Module \module{m.nviz.image} is not really an animation tool as \module{xganim} 
 however it can be used to create an animation.
 The purpose of this module is to render 3D view of raster, vector or 3D raster date to an image.
 The underlying library, \emph{OGSF}, is used by both \module{m.nviz.image}
-and the interactive 3D view tool\,---\,wxNviz (mentioned below).
+and the interactive 3D view tool\dash wxNviz (mentioned below).
 Module \module{m.nviz.image} as a command line tool is ideal for scripting.
 Typically, \module{m.nviz.image} is run in a loop while one or more parameters change.
 The resulting sequence of images can be converted to an animation by an external program,
@@ -1340,7 +1343,7 @@ In the context of the \tf , it represents the greatest common divisor
 of the temporal extents (and possible gaps) of all maps of the dataset.
 The temporal granularity can change every time there is a change in dataset maps
 (added, removed or changed time stamp).
-To understand better, see table \ref{tab:granularity} content of which is based on the output
+To understand better, see table \ref{tab:granularity} whose content is based on the output
 of one of the temporal modules (namely \module{t.rast.list}).
 
 Example interval time dataset consists of 6 maps and
@@ -1514,7 +1517,7 @@ functionality to process spatial data.
 Temporal modules share certain common options:
 \begin{itemize}
   \item They allow to specify the temporal range of datasets so that only a part of a dataset can be processed.
-  \item Several modules support two possibilities of specifying the input data\,---\,directly or by providing a file.
+  \item Several modules support two possibilities of specifying the input data\dash directly or by providing a file.
   \item When modules output a report or a table it is possible to change the format suitably.
 \end{itemize}
 
@@ -1822,7 +1825,7 @@ changed by avoiding reporting messages which would slow the loading down.
 The absolute numbers are not as important, however when we compare one with another,
 we can see that the difference between the new implementation and the original one is not so significant.
 Additionally, there is one important aspect which effects the loading duration
-significantly for all implementations\,---\,the size of the map.
+significantly for all implementations\dash the size of the map.
 If we double the size of the image, we can expect the duration to increase four times.
 
 \begin{table}[h]
@@ -2204,7 +2207,7 @@ Next development will focus on the following points:
 \begin{itemize}
   \item highlighting individual maps, which should be synchronized in 2D and 3D
   \item support for datasets with `mixed' time (time instances and intervals together in one dataset)
-  \item user settings\,---\,colors, date formatting
+  \item user settings\dash colors, date formatting
 \end{itemize}
 In the future, such tool could be integrated into any application processing temporal data
 and then, it could be used as a control widget.
@@ -2396,7 +2399,7 @@ for all temporal modules work only partially because the widget for the selectio
 instead of selecting the available dataset from a list.
 
 To support the selection of temporal elements in the GUI, four new elements were
-added\,---\,strds (space time raster dataset), stvds (space time vector dataset),
+added\dash strds (space time raster dataset), stvds (space time vector dataset),
 str3d (space time 3D raster dataset) and stds (space time dataset).
 Figure \ref{fig:gselect} shows the widget offering a tree view of the space time datasets
 organized according to mapsets and type of dataset.
@@ -2437,9 +2440,55 @@ see the improvement in figure \ref{fig:forms}.
 
 
 All these problems are related to the GUI only and the behavior of the \tf
-remains untouched. 
+remains untouched.
 
-\chapter{Conclusion}
+\cleardoublepage
+
+\chapter*{Conclusion}
+\markboth{}{Conclusion}
+
+\addcontentsline{toc}{chapter}{Conclusion}
+The visualization of spatio-temporal data in GIS environment can have many forms.
+Among the most popular ones belong map animation and iteration techniques and space-time cube approach.
+These methods were covered in the theoretical part of this thesis
+while the practical part of this work focuses on some of these techniques
+and implements them in GRASS GIS environment.
+
+This work comes in the moment when a new great addition, the GRASS GIS \tf, was integrated into GRASS 7.
+While the \tf concentrates on spatio-temporal data management, processing and computations, this work
+tries to make the \tf more accessible and even more useful to its users by providing them with visualization
+tools. To better understand the implementation and usage of these tools
+the \tf basics, relevant to this work, are further discussed.
+
+Since animation is vital for exploring and presentation of spatio-temporal data, a new tool has been developed
+to replace the old and insufficient one. Moreover this tool is more robust
+and thus has the prospect of being extended by new features.
+
+The second developed tool, \ms, uses technique which might not be as known as animation
+but it is becoming popular. It is helpful for comparing two maps, therefore its functionality
+is general enough to be used not only for temporal data analysis.
+Hence, a wide spectrum of users can make use of it.
+
+Finally, the Timeline tool is not aimed directly at the visualization of spatio-temporal data
+but during the development and work with the \tf, a need for this kind of tool emerged.
+It converts the temporal datasets metadata\dash temporal type, topology,
+spatio-temporal extents\dash into easily perceivable graphical information.
+Every user of the \tf working with more complex datasets would surely appreciate such tool.
+% Moreover, in the future it could be integrated  into another tool
+
+Since the \tf and the new tools developed within this work are fully integrated into
+GRASS GIS, free and open-source cross-platform software, they can be easily used
+without any additional costs by wide range of users which can in addition take advantage
+of other GRASS GIS functionality.
+
+Future work will be focused on extending capabilities of the new tools,
+especially adding more map layers and combining raster and vector maps.
+which is one of the wishes already expressed by GRASS users.
+Another topic for further development would be to implement new tool
+designed for temporal vector data with attribute values since this work
+was mainly focused on raster data. 
+
+
 
 
 \newpage
@@ -2671,7 +2720,7 @@ precip_4@PERMANENT precip_4  PERMANENT
 \begin{figure}[h!]
   \centering
   \includegraphics{./images/animation_tool_export.png}
-  \caption{\at: dialog for exporting animation\,---\,adding decorations}
+  \caption{\at: dialog for exporting animation\dash adding decorations}
   \label{fig:anim_export}
 \end{figure}
 
