@@ -1,6 +1,6 @@
 \documentclass[a4paper,12pt,oneside]{book}
 \usepackage[utf8x]{inputenc}
-\usepackage[english]{babel}
+\usepackage[czech,english]{babel}
 \usepackage{a4wide}
 \usepackage{url}
 \usepackage{xcolor}
@@ -128,6 +128,17 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 %     urlcolor=black
 }
 
+\newenvironment{mtabstract}[1][Abstract]{%
+\chapter*{\centering #1}%
+\thispagestyle{empty}
+\newcommand{\keyvalue}[2]{\noindent\textbf{##1: }##2}
+\newcommand{\keywordsskip}{\bigskip
+\bigskip
+\bigskip
+\bigskip
+}
+}{}
+
 \begin{document}
 \pagestyle{empty}
 
@@ -135,8 +146,8 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 \cleardoublepage
 \input{submission}
 
-% \include{abstract_en}
-% \include{abstract_cs}
+\include{abstract_en}
+\include{abstract_cs}
 
 % prohlaseni
 \cleardoublepage
@@ -1323,6 +1334,7 @@ Relative time format consists of a number and time unit, which can be one the fo
 
 \begin{table}[ht!]
   \centering
+  \catcode`\-=12
 \caption{Examples of valid time formats}
 \label{tab:timeFormat}
 \setlength{\extrarowheight}{3pt}
