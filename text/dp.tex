@@ -1559,7 +1559,7 @@ through VTK format which can be exported by temporal module \module{t.rast.out.v
 The new \tf brings new possibilities to process spatio-temporal data,
 however it is not focused on its visualization in GRASS GIS. To partially fill this `missing gap',
 three new tools have been developed which either make use of the \tf
-or help to explore spatio-temporal data generally.
+or help to generally explore spatio-temporal data.
 
 These tools are:
 \begin{description}
@@ -1582,78 +1582,77 @@ Screenshots of the \at can be found in appendix \ref{appdx:animation}.
 Beside the features of \module{xganim} module, \at provides new possibilities
 to explore spatio-temporal data.
 
-Basic features (also existing in \module{xganim} module):
-\paragraph{More views}
-\at can display up to 4 different synchronized animations at once.
-Unlike the \module{xganim} module, it is possible to add or remove each of the views separately
-without the need to restart it.
-\paragraph{Change animation speed}
-Unlike the \module{xganim} module where you can only
-slow down or speed up the animation by an unspecified coefficient, \at allows to set
-exact duration of the frame (in milliseconds).
-\paragraph{Loops}
-There are two methods of looping key frames.
-The first type cycles through the key frames and when it reaches the last one it jumps back
-to the first key frame and continues looping.
-The second type of looping goes back through the key frames in reverse order.
+\noindent Basic features (also existing in \module{xganim} module):
+\begin{description}
+  \item[More views]
+  \at can display up to 4 different synchronized animations at once.
+    Unlike the \module{xganim} module, it is possible to add or remove each of the views separately
+    without the need to restart it.
+    \item [Change animation speed]
+    Unlike the \module{xganim} module where you can only
+    slow down or speed up the animation by an unspecified coefficient, \at allows to set
+    exact duration of the frame (in milliseconds).
+    \item [Loops]
+    There are two methods of looping key frames.
+    The first type cycles through the key frames and when it reaches the last one it jumps back
+    to the first key frame and continues looping.
+    The second type of looping goes back through the key frames in reverse order.
+ \end{description}
 
+\noindent New features:
+\begin{description}
+    \item[Interactive change of the active frame]
+    In order to better control currently displayed frame a slider control is provided.
+    By dragging the slider's knob user can select a certain frame.
+    Also it enables to inspect in detail a part of an animation
+    by repeated dragging of the knob back and forth within a few frames.
 
-New features:
-\paragraph{Interactive change of the active frame}
-In order to better control currently displayed frame a slider control is provided.
-By dragging the slider's knob user can select a certain frame.
-Also it enables to inspect in detail a part of an animation
-by repeated dragging of the knob back and forth within a few frames.
-      
-\paragraph{Support of the \tf}
-The most important attribute of the \at is the interoperability with the \tf
-which involves several features described in section \ref{sec:wx.animation:support}.
-      
+    \item[Support of the \tf]
+    The most important attribute of the \at is the interoperability with the \tf
+    which involves several features described in section \ref{sec:wx.animation:support}.
 
-\paragraph{3D view animation}
-A nice feature is the ability to animate raster maps in 3D view.
-As illustrated in figure \ref{fig:color_elevation_map},
-raster maps can either represent a changing color of a static surface (\subref{fig:color_map}) or
-a changing surface (\subref{fig:elevation_map}).
-Apart from raster maps, also vector point and line data can be animated, too.
-Implementation details can be found in section \ref{sec:3dViewAnimation}.
+    \item[3D view animation]
+    A nice feature is the ability to animate raster maps in 3D view.
+    As illustrated in figure \ref{fig:color_elevation_map},
+    raster maps can either represent a changing color of a static surface (\subref{fig:color_map}) or
+    a changing surface (\subref{fig:elevation_map}).
+    Apart from raster maps, also vector point and line data can be animated, too.
+    Implementation details can be found in section \ref{sec:3dViewAnimation}.
 
-\begin{figure}[ht]
-\centering
-    \begin{subfigure}[h]{\textwidth}
+    \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.3\textwidth]{./images/color_map1.png}
-    \includegraphics[width=0.3\textwidth]{./images/color_map2.png}
-    \includegraphics[width=0.3\textwidth]{./images/color_map3.png}
-    \caption{Change of color map (temperature)}
-    \label{fig:color_map}
-    \end{subfigure}
-    
-    \begin{subfigure}[h]{\textwidth}
-    \centering
-    \includegraphics[width=0.3\textwidth]{./images/elevation_map1.png}
-    \includegraphics[width=0.3\textwidth]{./images/elevation_map2.png}
-    \includegraphics[width=0.3\textwidth]{./images/elevation_map3.png}
-    \caption{Change of elevation map (Nags Head area)}
-    \label{fig:elevation_map}
-    \end{subfigure}
-    \caption{Example}
-    \label{fig:color_elevation_map}
-\end{figure}
+        \begin{subfigure}[h]{\textwidth}
+        \centering
+        \includegraphics[width=0.3\textwidth]{./images/color_map1.png}
+        \includegraphics[width=0.3\textwidth]{./images/color_map2.png}
+        \includegraphics[width=0.3\textwidth]{./images/color_map3.png}
+        \caption{Change of color map (temperature)}
+        \label{fig:color_map}
+        \end{subfigure}
 
-        
-      
-\paragraph{Export}
-Animation can be exported either as a sequence of images or an animated gif.
-%TODO: add example of ffmpeg command
-Sequence of images can be converted to a video file in several ways.
-One of the possibilities is to call ffmpeg\footnote{\url{http://ffmpeg.org/}} with the following parameters
-      
-\begin{footnotesize}
-\begin{lstlisting}[style=mybash]
-ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
-\end{lstlisting}
-\end{footnotesize}
+        \begin{subfigure}[h]{\textwidth}
+        \centering
+        \includegraphics[width=0.3\textwidth]{./images/elevation_map1.png}
+        \includegraphics[width=0.3\textwidth]{./images/elevation_map2.png}
+        \includegraphics[width=0.3\textwidth]{./images/elevation_map3.png}
+        \caption{Change of elevation map (Nags Head area)}
+        \label{fig:elevation_map}
+        \end{subfigure}
+        \caption{Example}
+        \label{fig:color_elevation_map}
+    \end{figure}
+
+    \item[Export]
+    Animation can be exported either as a sequence of images or an animated gif.
+    %TODO: add example of ffmpeg command
+    Sequence of images can be converted to a video file in several ways.
+    One of the possibilities is to call ffmpeg\footnote{\url{http://ffmpeg.org/}} with the following parameters
+
+    \begin{footnotesize}
+    \begin{lstlisting}[style=mybash]
+    ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
+    \end{lstlisting}
+    \end{footnotesize}
       where \emph{-r} stands for frame rate (frames per second),
       \emph{-i} for input files (requires sequential numbering of files) and
       \emph{vcodec} determines the video encoding.
@@ -1664,7 +1663,7 @@ ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
       A usual requirement is include some additional text, logo or time stamp in the video.
       The \at supports all these options, moreover the number of these decorations is not limited.
       The placement is specified as the percentage of the image size from the top left corner.
-      
+\end{description}
 
 \subsection{Support of the \tf}
 \label{sec:wx.animation:support}
