@@ -58,7 +58,7 @@ right=25mm
 
 % plain affects chapter first page
 \fancypagestyle{plain}{
-\fancyhf{}
+\fancyhead{}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 }
@@ -153,12 +153,14 @@ Y \hspace{#3} \rule[3pt]{#4}{1mm}
 % http://upload.wikimedia.org/wikipedia/commons/2/29/Minard.png
 Although the concept of time is intuitive, geographers, cartographers and other researchers have been
 struggling with it from the early beginning of the existence of maps.
-Unlike space dimension, time dimension has been ignored for a long time. For instance,
-during 1817 - 1861, the establishment of the so called ``Stable''  cadastre by the Emperor Joseph II. 
-in the whole Austrian Empire did not consider first the inevitable changes in the recorded data during the following years.
+Unlike space dimensions, time dimension has been ignored for a long time. For instance,
+during 1817--1861, the establishment of the so called ``Stable''  cadastre by the Emperor Joseph II.
+in the whole Austrian Empire did not anticipate possible changes
+in the recorded data during the following years.
 On the other hand, in 1869 (i.e.,\ almost at the same time)
 a flow map on the subject of Napoleon's disastrous Russian campaign of 1812 was
-published by a French civil engineer Charles Joseph Minard (see appendix \ref{appdx:minard}). This map is claimed to be
+published by a French civil engineer Charles Joseph Minard (see appendix \ref{appdx:minard}).
+This map is claimed to be
 one of the best drawn historical graphics visualizing multiple variables where time is one of them.
 
 In the past, research on spatial and temporal data representation and visualization
@@ -180,10 +182,11 @@ to bring the \tf closer to the users. New visualization tools providing graphica
 are being developed; some of them make directly use of the \tf. These tools include tool
 for animation, interactive comparing of maps and a support tool to visualize temporal dataset's metadata.
 
-The work is organized as follows. In the next chapter \ref{chap:stdata}, I present issues connected with spatio-temporal data:
+The work is organized as follows. In the first chapter, I present issues connected with spatio-temporal data:
 how we can represent it, visualize and explore, which software tools are currently available?
-The following chapter \ref{chap:grass} is focused on GRASS GIS, its graphical user interface and, of course, the new \tf.
-Chapter \ref{chap:results} finally introduces the newly developed tools and present their capabilities and implementation.
+The following chapter is focused on GRASS GIS, its graphical user interface and, of course,
+the new GRASS GIS \tf.
+The last chapter finally introduces the newly developed tools and presents their capabilities and implementation.
 
 
 
@@ -2451,14 +2454,14 @@ remains untouched.
 
 \addcontentsline{toc}{chapter}{Conclusion}
 The visualization of spatio-temporal data in GIS environment can have many forms.
-Among the most popular ones belong map animation and iteration techniques and space-time cube approach.
+Map animation and iteration techniques and space-time cube approach belong among the most popular ones.
 These methods were covered in the theoretical part of this thesis
 while the practical part of this work focuses on some of these techniques
 and implements them in GRASS GIS environment.
 
 This work comes in the moment when a new great addition, the GRASS GIS \tf, was integrated into GRASS 7.
 While the \tf concentrates on spatio-temporal data management, processing and computations, this work
-tries to make the \tf more accessible and even more useful to its users by providing them with visualization
+tries to make the \tf more accessible and even more useful for its users by providing them with visualization
 tools. To better understand the implementation and usage of these tools
 the \tf basics, relevant to this work, are further discussed.
 
@@ -2471,7 +2474,7 @@ but it is becoming popular. It is helpful for comparing two maps, therefore its 
 is general enough to be used not only for temporal data analysis.
 Hence, a wide spectrum of users can make use of it.
 
-Finally, the Timeline tool is not aimed directly at the visualization of spatio-temporal data
+Finally, the third developed tool, Timeline tool, is not aimed directly at the visualization of spatio-temporal data
 but during the development and work with the \tf, a need for this kind of tool emerged.
 It converts the temporal datasets metadata\dash temporal type, topology,
 spatio-temporal extents\dash into easily perceivable graphical information.
@@ -2484,9 +2487,9 @@ without any additional costs by wide range of users which can in addition take a
 of other GRASS GIS functionality.
 
 Future work will be focused on extending capabilities of the new tools,
-especially adding more map layers and combining raster and vector maps.
+especially adding more map layers and combining raster and vector maps
 which is one of the wishes already expressed by GRASS users.
-Another topic for further development would be to implement new tool
+Another topic for further development would be to implement a new tool
 designed for temporal vector data with attribute values since this work
 was mainly focused on raster data. 
 
@@ -2534,7 +2537,7 @@ The lower portion of the graph is to be read from right to left. It shows the te
 from Russia, in degrees below freezing on the Réaumur scale. (Multiply Réaumur temperatures by $1 ^1\!/\!_4$ to get Celsius,
 e.g. $-30\text{\textdegree} R = -37.5\,\text{\textcelsius}$).
 At Smolensk, the temperature was $-21$° Réaumur on November 14th.\\
-Source:& Wikipedia, The Free Encyclopedia
+Source:& Wikipedia, The Free Encyclopedia \cite{wiki:Minard}
 \end{tabularx}
 \end{center}
 \end{singlespace}
