@@ -1012,7 +1012,17 @@ year\footnote{source: \url{http://www.google.com/earth/explore/products/desktop.
 
 \chapter{GRASS GIS}
 \label{chap:grass}
+
+This chapter introduces GRASS GIS along with its graphical user interface
+(section \ref{sec:grassoverview} and \ref{sec:grasswxgui}).
+The new GRASS GIS \tf is described in more details in section \ref{sec:GRASSTF}
+to provide background information needed
+to understand certain aspects of the newly developed tools covered in chapter \ref{chap:results}.
+Also, the support and visualization possibilities of GRASS GIS excluding
+the recent work are further discussed in section \ref{sec:grassstate}.
+
 \section{General overview}
+\label{sec:grassoverview}
 GRASS  (Geographical Resources Analysis Support System)\footnote{\url{http://grass.osgeo.org}}
 is a general purpose cross-platform open-source geographic information system (GIS)
 with raster, vector and image processing capabilities \cite{neteler2011grass}.
@@ -1114,6 +1124,7 @@ These are either integrated into Layer Manager or Map Display
 (e.g.\ Cartographic Composer, Supervised Classification Tool, Profile Analysis Tool).
 
 \section{Temporal data support and visualization}
+\label{sec:grassstate}
 The support of the temporal component of spatio-temporal data in GRASS is limited
 (considering the situation before the integration of the Temporal Framework).
 It is possible to assign a time stamp to a raster, vector or 3D-raster map using module
