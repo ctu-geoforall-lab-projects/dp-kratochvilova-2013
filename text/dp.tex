@@ -1328,7 +1328,7 @@ interval time is a better choice \cite{pointVsInterval}.
 Absolute time stamp is related to a fact and it does not depend on any other facts.
 On the contrary, relative time is related to another time and
 it can be represented even by a negative number which stands for ``before".
-The \tf recognizes several date time formats for absolute time -- TODO.
+The \tf recognizes currently two date time formats for absolute time.
 Relative time format consists of a number and time unit, which can be one the following: \emph{years},
 \emph{months}, \emph{days}, \emph{hours}, \emph{minutes} and \emph{seconds} (see table \ref{tab:timeFormat}).
 
@@ -1341,9 +1341,8 @@ Relative time format consists of a number and time unit, which can be one the fo
 \begin{tabular}{|l|l|}
 \hline
 \multirow{3}{*}{Absolute time}
- & 2001-01-05  \\ \cline{2-2}
- & 1996-07-06 23:01:59  \\\cline{2-2}
- & TODO  \\
+ & 2001-01-25  \\ \cline{2-2}
+ & 1996-07-16 23:01:59  \\\cline{2-2}
  \hline
 \multirow{2}{*}{Relative time}
  & 1 months  \\\cline{2-2}
@@ -1589,7 +1588,7 @@ to explore spatio-temporal data.
     Unlike the \module{xganim} module, it is possible to add or remove each of the views separately
     without the need to restart it.
     \item [Change animation speed]
-    Unlike the \module{xganim} module where you can only
+    Unlike the \module{xganim} module where one can only
     slow down or speed up the animation by an unspecified coefficient, \at allows to set
     exact duration of the frame (in milliseconds). If case of animating temporal dataset,
     one can set the exact duration for a selected time unit.
@@ -1722,7 +1721,7 @@ The \at recognizes such cases and displays a ``no data'' sign in order to make t
 
 In case of loading more space time datasets the \tf enables to synchronize the animations
 even if the temporal datasets are spaced unequally.
-Figure \ref{fig:synchronizedAnim}) presents an example of such datasets and the related table
+Figure \ref{fig:synchronizedAnim} presents an example of such datasets and the related table
 shows the frames displayed at selected time instances.
 The concept of temporal granularity and temporal sampling is used to achieve this described behavior.
 
@@ -1786,7 +1785,6 @@ is to launch the \at as a module from command line. By typing:
 > g.gui.animation
 \end{lstlisting}
 \end{small}
-
 the \at is launched with no data loaded and the user is supposed to specify maps via the GUI.
 Additionally, input data can be specified directly in the command line.
 As of any other GRASS module, the parameters of \module{g.gui.animation} command can be retrieved by typing:
