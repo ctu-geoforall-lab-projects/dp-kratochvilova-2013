@@ -1591,7 +1591,8 @@ to explore spatio-temporal data.
     \item [Change animation speed]
     Unlike the \module{xganim} module where you can only
     slow down or speed up the animation by an unspecified coefficient, \at allows to set
-    exact duration of the frame (in milliseconds).
+    exact duration of the frame (in milliseconds). If case of animating temporal dataset,
+    one can set the exact duration for a selected time unit.
     \item [Loops]
     There are two methods of looping key frames.
     The first type cycles through the key frames and when it reaches the last one it jumps back
@@ -1612,11 +1613,11 @@ to explore spatio-temporal data.
     which involves several features described in section \ref{sec:wx.animation:support}.
 
     \item[3D view animation]
-    A nice feature is the ability to animate raster maps in 3D view.
+    A nice feature is the ability to animate raster maps in 3D view (technically more correct would be 2.5D view).
     As illustrated in figure \ref{fig:color_elevation_map},
     raster maps can either represent a changing color of a static surface (\subref{fig:color_map}) or
     a changing surface (\subref{fig:elevation_map}).
-    Apart from raster maps, also vector point and line data can be animated, too.
+    Apart from raster maps, vector point and line data can be animated, too.
     Implementation details can be found in section \ref{sec:3dViewAnimation}.
 
     \begin{figure}[ht]
@@ -1635,34 +1636,57 @@ to explore spatio-temporal data.
         \includegraphics[width=0.3\textwidth]{./images/elevation_map1.png}
         \includegraphics[width=0.3\textwidth]{./images/elevation_map2.png}
         \includegraphics[width=0.3\textwidth]{./images/elevation_map3.png}
-        \caption{Change of elevation map (Nags Head area)}
+        \caption{Change of elevation map}
         \label{fig:elevation_map}
         \end{subfigure}
-        \caption{Example}
+        \caption{Example illustrating two types of raster animation available in the \at}
         \label{fig:color_elevation_map}
     \end{figure}
 
     \item[Export]
-    Animation can be exported either as a sequence of images or an animated gif.
-    %TODO: add example of ffmpeg command
-    Sequence of images can be converted to a video file in several ways.
-    One of the possibilities is to call ffmpeg\footnote{\url{http://ffmpeg.org/}} with the following parameters
+    There are several possibilities how to export animation.
+    The simplest approach is to export a sequence of images.
+    The images can be repeated in the sequence to indicate
+    that the state of the animated phenomenon remains unchanged during several time units.
+    Image sequence can be converted to a video file in several ways.
+    One of the possibilities is to call ffmpeg\footnote{\url{http://ffmpeg.org/}}
+    with the following parameters:
 
     \begin{footnotesize}
     \begin{lstlisting}[style=mybash]
-    ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
+ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
     \end{lstlisting}
     \end{footnotesize}
-      where \emph{-r} stands for frame rate (frames per second),
-      \emph{-i} for input files (requires sequential numbering of files) and
+      where \emph{r} stands for frame rate (frames per second),
+      \emph{i} for input files (requires sequential numbering of files which is ensured by the \at) and
       \emph{vcodec} determines the video encoding.
-      The export dialog provides the user with the frame rate, so that he can then create
+      The export dialog provides the user with the current frame rate, so that he or she can then create
       a video with the same frame rate%
       \footnote{However, not all video codecs and containers support an arbitrary frame rate.} as in the \at.
 
-      A usual requirement is include some additional text, logo or time stamp in the video.
+    Since the current possibilities to export animations in GRASS are not sufficient,
+    an external open-source Python visualization library,
+    \emph{Visvis}\footnote{\url{http://code.google.com/p/visvis/}},
+    was used to export animation to animated GIF, SWF and AVI files.
+    GIF (Graphics Interchange Format) is a bitmap image format which is characterized
+    by widespread usage on web and in presentations, however since it supports only 256 distinct colors,
+    lower image quality is expected.
+    SWF is a popular Adobe Flash file format for multimedia on web pages.
+    AVI is a multimedia container format.
+    Writing GIF and SWF is completely implemented in Visvis, for export to AVI Visvis
+    calls FFmpeg. When writing to GIF and SWF, no intermediate temporary files have to be created.
+    In order to provide these export options, Visvis has to be installed.
+    One possibility to avoid this dependency is to include source codes of the relevant
+    part of Visvis in GRASS Python library.
+
+      A usual requirement is to include some additional text, logo or time stamp in the video.
       The \at supports all these options, moreover the number of these decorations is not limited.
       The placement is specified as the percentage of the image size from the top left corner.
+      The screenshot of dialog window for specifying decorations is in figure \ref{fig:anim_export}.
+
+      It should be noted that when exporting multiple concurrent animations (more views),
+      also the exported file shows all the views together respecting their layout.
+
 \end{description}
 
 \subsection{Support of the \tf}
