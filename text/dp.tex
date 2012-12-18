@@ -734,16 +734,16 @@ The space-time cube is dynamically linked to a map display so that it is possibl
 \paragraph{Voxel data}
 \label{voxelHelena}
 Another potentially large field of study is the application of space-time cube concept for voxel data.
+This approach can be used for modeling any type of spatially distributed phenomena changing over time.
 Mitasova et al.\ \cite{mitasova2011landscape} presents a multidimensional framework for characterization
 of land surface dynamics using time series of elevation data (LiDAR point cloud).
 Space-time cube, as one part of this framework,
 creates a voxel representation of elevation evolution with time as a third dimension.
 The evolution of contour-based features (shorelines) is studied
-by visualization of multiple isosurfaces extracted from the voxel model%
-%(\ref{fig:})
-.
+by visualization of multiple isosurfaces extracted from the voxel model \cite{mitasova2012scientific}.
 In this context, an isosurface represents a contour of given $z$-coordinate (height)
-stretched in the vertical time dimension.
+stretched in the vertical time dimension (for a simple example see figure \ref{fig:nviz_isosurface}
+or refer to Mitasova et. al \cite{mitasova2012scientific}, figure 19).
 % TODO: add images of voxel schema, isosurfaces http://www.sciencedirect.com/science/article/pii/S0169555X11002935
 
 \paragraph{3D glyphs}
@@ -1202,7 +1202,8 @@ Because it is not easy to specify the optimal parameter values
 (especially view parameters) it is recommended to first find best view using interactive
 wxNviz and then use its ability to generate the command for \module{m.nviz.image} for the current state.
 This command can be than edited and used in a script.
-Follows an example of a simple Bash script which creates a video from raster series (mapset NagsHead\_series).
+Follows an example of a simple Bash script which creates a video from raster series
+(mapset NagsHead\_series \cite{nagshead}).
 
 
 \begin{small}
@@ -1245,8 +1246,7 @@ map using regularized spline tension algorithm (RST) \cite{mitasova1993interpola
 
 Having the voxel data, we can visualize them in 3D view as isosurfaces
 or cross-sections. An isosurface is an analogue of an isoline in 3D.
-In the figure \ref{fig:nviz_isosurface} displaying elevation voxel data%
-\footnote{available from \url{http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip}},
+In the figure \ref{fig:nviz_isosurface} displaying elevation voxel data,
 isosurface represents the change of a particular contour line in time.
 The movement of the contour is apparent from the changing shape of the isosurface.
 Also, time component can be emphasized by a color scheme which can better identify the time when changes occur.
@@ -1275,15 +1275,12 @@ These techniques are used by Mitasova TODO ref Visualizations of Coastal Elevati
 {Visualization of 3D raster (voxel) data of elevation with $z$ coordinate as time in GRASS GIS.
 Figure \subref{fig:nviz_isosurface} shows an evolution of a contour line ($z=10\ m$).
 A cross-section on figure \subref{fig:nviz_slices} also illustrates that the height of the middle
-part changed with time.
-Data source: mapset NagsHead\_series}
+part changed with time. (Voxel data are shifted along the $z$-axis make it more visible.)
+Data source: mapset NagsHead\_series \cite{nagshead}}
 
 \label{fig:nviz_voxel}
 \end{figure}
 
-
-
-% http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip
 
 \section{Temporal GRASS GIS framework}
 \label{sec:GRASSTF}
@@ -2782,8 +2779,7 @@ precip_4@PERMANENT precip_4  PERMANENT
   \caption[\at: synchronized 2D and 2.5D animation of the same area using
   multiple maps without time information]
   {\at: synchronized 2D and 2.5D animation of the same area using
-  multiple maps without time information. Data source: NagsHead mapset available from
-  \url{http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip}}
+  multiple maps without time information. Data source: NagsHead mapset \cite{nagshead}}
   \label{fig:anim3D}
 \end{figure}
 
