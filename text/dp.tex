@@ -477,7 +477,7 @@ which enables to select arbitrary combinations of years, month, days and hours.
   \includegraphics[width=0.5\textwidth]{./images/cyclical_time.png}
   \caption[Widget for temporal queries from system TEMPEST]
         {Widget for temporal queries from system TEMPEST (Source:
-      \url{http://w ww.geovista.psu.edu/products/demos/edsall/Tclets072799/cyclicaltime.htm})}
+      \url{http://www.geovista.psu.edu/products/demos/edsall/Tclets072799/cyclicaltime.htm})}
   \label{fig:cyclical_time}
 \end{figure}
 
@@ -585,6 +585,7 @@ Each picture shows the measurements from a different time interval.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Dynamic visualization variables}
+\label{sec:dynamicVariables}
 In \cite{dibiase1992animation}, DiBiase et al.\ introduced three dynamic visualization variables of animation:
 \emph{duration}, \emph{rate of change}, \emph{order}.
 Three more variables were added by MacEachren \cite{maceachren2004maps}:
@@ -1578,14 +1579,15 @@ These tools are:
     \item[\ms]for a comparison of two raster maps of the same area from different time period.
 \end{description}
 
-\section{Animation tool}
+\section{\at}
 \label{sec:animationTool}
 As described in section \ref{sec:mapAnimation},
 animation is a natural and easily understandable way to display spatio-temporal data.
 
 Because the current animation module \module{xganim} was very limited
 in several aspects (explained in section \ref{sec:grassVisualization}),
-a new tool has been developed.
+a new tool has been developed. So far this tool is able to animate raster maps
+only which could be changed in the future.
 Screenshots of the \at can be found in appendix \ref{appdx:animation}.
 
 \subsection{Features}
@@ -1850,7 +1852,7 @@ For this kind of operation, Python is too slow comparing to C or C++.
 This problem can be alleviated by using NumPy\footnote{\url{http://numpy.scipy.org/}},
 however that makes the code less readable.
 
-One possible solution is to use the current system used by wxGUI
+One possible solution is to use the current rendering system used by wxGUI
 where the raster maps are rendered into temporary files by module \module{d.rast}.
 However, this method is quite slow mainly because it is necessary to write data to disk and read them afterwards.
 Therefore, this method was rejected for the time being.
@@ -1868,12 +1870,12 @@ Moreover, if the module fails for any reason, the application is able to handle 
 Still, the achieved performance is worse comparing to \module{xganim}.
 This is probably caused by the fact that each call of the module requires not negligible amount of time.
 Table \ref{tab:comparisonTime} shows a performance comparison of the described methods.
-The time measurement was done on one computer and each number is a sample mean computed from 5 measurements.
+The time measurement was done on one computer and each number is a mean computed from 5 measurements.
 To make the measurement more objective, the \module{xganim} source code was slightly
-changed by avoiding reporting messages which would slow the loading down.
+changed to avoid reporting messages which would slow the loading down.
 The absolute numbers are not as important, however when we compare one with another,
 we can see that the difference between the new implementation and the original one is not so significant.
-Additionally, there is one important aspect which effects the loading duration
+Additionally, there is one important aspect which affects the loading duration
 significantly for all implementations\dash the size of the map.
 If we double the size of the image, we can expect the duration to increase four times.
 
@@ -1885,7 +1887,7 @@ If we double the size of the image, we can expect the duration to increase four 
     \toprule
     original xganim & 46 s & 100 \%\\
     calling \module{r.out.ppm} & 51 s & 111 \%\\
-    \module{d.rast} rendering to file (wxGUI) & 67 s & 146\%\\
+    \module{d.rast} rendering to file (wxGUI) & 67 s & 146 \%\\
     \bottomrule
 
     \end{tabular}
@@ -1927,6 +1929,10 @@ The number of bitmaps is not limited programmatically,
 however in reality it is limited by the the size of the bitmaps and available RAM.
 This is not an issue for usual animations today.
 
+In order to animate also vector maps in the future, module \module{d.vect} will be probably
+used. Since with the current implementation it would involve rendering to file and reading it back
+into the \at, it might be slower than loading raster maps via \module{r.out.ppm}.
+
 \subsubsection{Window resizing}
 Every application has to react on the change of its frame size.
 Unlike \module{xganim}, the \at is able to resize the displayed images to fit the new frame size.
@@ -1953,10 +1959,10 @@ The \tf which supports the concept of temporal granularity and temporal sampling
 
 There are a few computations needed to display the right maps at the right moments.
 These steps are the same no matter if there are one or more space time datasets.
-The first step is to get the time granularity.
+The first step is to get the time granularity (computed by the \tf).  
 The second step is the sampling of each dataset by the granularity using temporal relation \emph{start}.
 This way we get all needed information about the time intervals (or instances) and the names of the maps.
-The \at then puts all of this information together.
+The \at then puts all this information together.
 
 Table \ref{tab:exampleOfSamplingImpl} shows the result of temporal sampling of two sample space time datasets.
 As we can see, the temporal granularity of the dataset $X$ (1 month) differs from the granularity of dataset $Y$ (2 months).
@@ -2002,7 +2008,7 @@ This granularity is then used to sample both datasets (table \ref{tab:exampleOfS
 \toprule
  $X$ & $Y$ & start time & end time \\\midrule
 --- & $Y_1$ & 2001-01-01 & 2001-02-01\\
-$X_1$& $Y_2$ & 2001-02-01 & 2001-03-01\\
+$X_1$& $Y_1$ & 2001-02-01 & 2001-03-01\\
 $X_2$& --- & 2001-03-01 & 2001-04-01\\
 $X_2$& --- & 2001-04-01 & 2001-05-01\\
 $X_2$& $Y_2$ & 2001-05-01 & 2001-06-01\\
@@ -2038,13 +2044,13 @@ which frame to display according to the result of the temporal sampling explaine
 The timer interval represents the temporal granularity of the datasets.
 Therefore, each map is displayed exactly at the right moment.
 
-When the interval of a map takes more than one temporal granularity, internally, there is no redraw.
+When the map is repeated, internally there is no redraw.
 
 
 
 \subsubsection{Checking compatibility of data}
 During the development it was necessary to decide which data are compatible and can be animated together.
-Several combinations are possible.
+Several combinations are possible, the following list represents the problematic ones:
 \begin{description}
   \item[Space time dataset $\times$ multiple maps]
   This combination is allowed granted that the number of maps matches the number of maps in the dataset.
@@ -2064,7 +2070,7 @@ The \at always checks the user input and in the case it recognizes an incompatib
 
 \subsubsection{3D view animation}
 \label{sec:3dViewAnimation}
-Images for 3D view animation must be first rendered by module \module{r.nviz.image} \cite{grassUserMan}.
+Images for 3D view animation must be first rendered by module \module{m.nviz.image} \cite{grassUserMan}.
 The rendering is more time-consuming than loading raster maps for the 2D view,
 however this does not affect the speed of the animation itself.
 
@@ -2072,7 +2078,8 @@ however this does not affect the speed of the animation itself.
 Beside the maps (either multiple maps or space time dataset), the user is asked for a \emph{workspace file}%
 \footnote{Workspace file is XML file storing the state of the wxGUI application (e.g.\ loaded layers, displayed extent).}.
 The workspace file has to be created during a GRASS wxGUI session with active 3D view,
-so that it can provide information about the 3D view state. After parsing this file, a command for \module{m.nviz.image}
+so that it can provide information about the 3D view state (camera position, light, etc.).
+After parsing this file, a command for \module{m.nviz.image}
 is created.
 Additionally, the user chooses which parameter to animate.
 Typically, it is either \emph{elevation\_map} or \emph{color\_map}
@@ -2080,17 +2087,33 @@ Typically, it is either \emph{elevation\_map} or \emph{color\_map}
 although we can animate points or lines, too.
 
 \subsection{Future development}
-\begin{itemize}
-  \item loading more layers
-  \item add where to determine time interval
-  \item add legend
-  \item better support of formats
-  \item 
-\end{itemize}
+Future development will be focused on the following topics:
+\begin{description}
+  \item [Support for vector data and combination of layers]
+  This a quite complex topic because it is necessary to specify which layers should be animated and
+  which should be static, and their order.
+  \item [Option `where'] In order to animate only part of the temporal dataset,
+  option `where' could be implemented (this option is provided by most temporal modules).
+  Currently, it is possible to first extract new dataset (by \module{t.rast.extract})
+  and then animate it.
+  
+  \item [Legend] Legend is important to understand the displayed information and
+  should be optionally included in the animation.
+  \item [Time and date formats] More formats for displayed time is needed.
+  It is useful to be able to customize it because datasets can have different
+  time resolution and thus, one can require to display for example only years or only hours.
+
+  \item [Different offset for animations] As already mentioned in section \ref{sec:dynamicVariables},
+  different starting point of animation can help to reveal spatio-temporal patterns.
+
+  \item [Preview for animation export] Preview would be useful when decorations are included in the export
+  to immediately see if they are placed properly.
+  
+\end{description}
 
 
 
-\section{Timeline tool}
+\section{Timeline Tool}
 Timeline Tool is an interactive application based on wxPython and Python plotting library matplotlib \cite{matplotlib} which allows
 the user of the \tf to visualize space time datasets' metadata, especially temporal and spatial extents.
 
