@@ -1031,12 +1031,12 @@ It includes more than 350 modules for managing and analyzing geographical data.
 GRASS was created in the early 1980s by the Construction Engineering Research Laboratory (CERL)
 of the United States Army as a software management tool for military applications.
 Nowadays it is one of the cutting-edge projects of the Open Source Geospatial Foundation
-(OSGeo\footnote{\url{http://www.osgeo.org/}}, founded in 2006).
+(OSGeo\footnote{\url{http://www.osgeo.org}}, founded in 2006).
 Quoting Neteler and Mitasova \cite[p.~3]{grassGisApproach}:
 
 \begin{quote}
 The key development in recent GRASS history was the adoption of GNU GPL
-(General Public License, see http://www.gnu.org) in 1999.
+(General Public License, see \url{http://www.gnu.org}) in 1999.
 With this, GRASS embraced the Open Source philosophy,
 well known from the GNU/Linux development model, which stimulated its wide acceptance.
 \end{quote}
@@ -1045,7 +1045,7 @@ well known from the GNU/Linux development model, which stimulated its wide accep
 % of GRASS GIS with contributions to the source code becoming decentralized.
 The legal statements declared in the GPL are based on the ``four freedom'' paradigm \cite{stallman1985gnu}
 and allow the user to use the software’s full range of capabilities, and to distribute, study and improve it.
-The revision control system of GRASS GIS (namely subversion\footnote{\url{http://subversion.apache.org/}})
+The revision control system of GRASS GIS (namely subversion\footnote{\url{http://subversion.apache.org}})
 allowed different institutions and individuals to contribute to the code base
 from different countries around the world.
 
@@ -1079,7 +1079,7 @@ programming language using \emph{Tk} graphical toolkit.
 However, during the 2000's the limitations of Tcl/Tk toolkit turned out to be
 an obstacle for further development \cite{wxGUI2008}.
 In 2006, it was decided to build a new GUI based on
-\emph{wxPyton}\footnote{\url{http://www.wxpython.org}}\dash  a Python wrapper
+\emph{wxPyton}\footnote{\url{http://www.wxpython.org/}}\dash  a Python wrapper
 for cross-platform GUI toolkit \emph{wxWidgets}\footnote{\url{http://www.wxwidgets.org/}}.
 Among other benefits, Python programming language is far more popular than Tcl
 and it is also much easier to learn which enlarges the number of potential contributors.
@@ -1192,8 +1192,8 @@ however it can be used to create an animation.
 The purpose of this module is to render 3D view of raster, vector or 3D raster date to an image.
 The underlying library, \emph{OGSF}, is used by both \module{m.nviz.image}
 and the interactive 3D view tool\dash wxNviz (mentioned below).
-Module \module{m.nviz.image} as a command line tool is ideal for scripting.
-Typically, \module{m.nviz.image} is run in a loop while one or more parameters change.
+Module \module{m.nviz.image} as a~command line tool is ideal for scripting.
+Typically, \module{m.nviz.image} is run in a~loop while one or more parameters change.
 The resulting sequence of images can be converted to an animation by an external program,
 e.g.\ \emph{ImageMagick}\footnote{\url{http://www.imagemagick.org/}} or
 \emph{FFmpeg}\footnote{\url{http://ffmpeg.org/}}.
@@ -1202,7 +1202,7 @@ Because it is not easy to specify the optimal parameter values
 (especially view parameters) it is recommended to first find best view using interactive
 wxNviz and then use its ability to generate the command for \module{m.nviz.image} for the current state.
 This command can be than edited and used in a script.
-Follows an example of a simple Bash script which creates a video from raster series (mapset NagsHead\_series).
+Follows an example of a~simple Bash script which creates a video from raster series (mapset NagsHead\_series).
 
 
 \begin{small}
@@ -1246,7 +1246,7 @@ map using regularized spline tension algorithm (RST) \cite{mitasova1993interpola
 Having the voxel data, we can visualize them in 3D view as isosurfaces
 or cross-sections. An isosurface is an analogue of an isoline in 3D.
 In the figure \ref{fig:nviz_isosurface} displaying elevation voxel data%
-\footnote{available from \url{http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip}},
+\footnote{Available from \url{http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip}},
 isosurface represents the change of a particular contour line in time.
 The movement of the contour is apparent from the changing shape of the isosurface.
 Also, time component can be emphasized by a color scheme which can better identify the time when changes occur.
@@ -1300,7 +1300,7 @@ This approach can be easily understood and is simple enough to be integrated int
 The integration consists of two levels.
 In the first level, timestamps are assigned to the existing spatial data types -- raster, vector, 3D raster maps.
 The second level introduces new datatypes -- space time raster,
-vector and 3D raster datasets (referred as stdrs, stvds and str3ds).
+vector and 3D raster datasets (referred as strds, stvds and str3ds).
 
 The implementation of the \tf is based on a temporal library and a SQL database scheme.
 The library is written in Python programming language and provides an application programming interface (API) which is used by the temporal modules,
@@ -1352,7 +1352,7 @@ Relative time format consists of a number and time unit, which can be one the fo
 \setlength{\extrarowheight}{3pt}
 \begin{tabular}{|l|l|}
 \hline
-\multirow{3}{*}{Absolute time}
+\multirow{2}{*}{Absolute time}
  & 2001-01-25  \\ \cline{2-2}
  & 1996-07-16 23:01:59  \\\cline{2-2}
  \hline
@@ -1437,7 +1437,7 @@ As a consequence, such dataset is not accepted by certain temporal modules.
 \paragraph{Temporal sampling}
 \label{sec:temporalSampling}
 Temporal sampling is used to determine the state of one process during a second process.
-The \tf enables to sample a dataset (can have both point and interval time) by another dataset having interval time.
+The \tf enables to sample a~dataset (can have both point and interval time) by another dataset having interval time.
 There is an example of temporal sampling in figure \ref{fig:samplingExample}.
 The figure indicates that for different sampling methods (temporal relationships)
 which are provided by module \module{t.sample}, different results are expected.
@@ -1551,7 +1551,7 @@ Temporal modules share certain common options:
 
 The important ability of the \tf is the interoperability
 with several powerful open-source applications for statistical computations and visualization.
-Textual ouputs of many modules are suitable for statistical environment \emph{R}\footnote{\url{www.r-project.org/}}.
+Textual ouputs of many modules are suitable for statistical environment \emph{R}\footnote{\url{http://www.r-project.org/}}.
 Module \module{r3.out.netcdf} exports 3D raster to NetCDF
 format\footnote{\url{http://www.opengeospatial.org/standards/netcdf}}
 which can be then processed e.g. in \emph{Climate Data Operator (CDO)}\footnote{\url{https://code.zmaw.de/projects/cdo}}.
