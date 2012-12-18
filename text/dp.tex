@@ -1572,7 +1572,7 @@ however it is not focused on its visualization in GRASS GIS. To partially fill t
 three new tools have been developed which either make use of the \tf
 or help to generally explore spatio-temporal data.
 
-These tools are:
+\noindent These tools are:
 \begin{description}
     \item[\at]for animation of raster map series or space time raster dataset, both in 2D and 2.5D.
     \item[Timeline Tool] as a support tool for visualization of dataset's topology and other metadata.
@@ -1660,7 +1660,7 @@ to explore spatio-temporal data.
     The simplest approach is to export a sequence of images.
     The images can be repeated in the sequence to indicate
     that the state of the animated phenomenon remains unchanged during several time units.
-    Image sequence can be converted to a video file in several ways.
+    Image sequence can be converted to a~video file in several ways.
     One of the possibilities is to call ffmpeg\footnote{\url{http://ffmpeg.org/}}
     with the following parameters:
 
@@ -1966,7 +1966,7 @@ The \at then puts all this information together.
 
 Table \ref{tab:exampleOfSamplingImpl} shows the result of temporal sampling of two sample space time datasets.
 As we can see, the temporal granularity of the dataset $X$ (1 month) differs from the granularity of dataset $Y$ (2 months).
-The common granularity (1 month) is in this case easy to compute.
+The common granularity (1~month) is in this case easy to compute.
 This granularity is then used to sample both datasets (table \ref{tab:exampleOfSamplingImpl-2}).
 
 
@@ -2035,7 +2035,7 @@ as explained in \ref{sec:grassVisualization}.
 The \at implementation uses timer events (class wx.Timer provided by wxPython) to achieve regular time intervals between two frames.
 The interval between two successive events is specified by the programmer according to what the user requires.
 In case of space time datasets animation, the user specifies how long
-should a chosen time unit\footnote{units of time supported by the \tf, section \ref{sec:absoluteVsRelative}}
+should a chosen time unit\footnote{Units of time supported by the \tf, section \ref{sec:absoluteVsRelative}.}
 last (in milliseconds).
 
 For each dataset, there is a separate object which controls the animation.
@@ -2255,10 +2255,10 @@ r.mapcalc --o expr="prec_7=rand(0,320)"
 r.mapcalc --o expr="prec_8=rand(0,510)"
 
 # create the space time raster dataset with absolute time
-t.create --o type=strds temporaltype=absolute output=precip_abs1 \
-title="A test" descr="A test"
-t.create --o type=strds temporaltype=absolute output=precip_abs2 \
-title="A test" descr="A test"
+t.create --o type=strds temporaltype=absolute \
+output=precip_abs1 title="A test" descr="A test"
+t.create --o type=strds temporaltype=absolute \
+output=precip_abs2 title="A test" descr="A test"
 
 # register the raster maps in the first space time dataset
 # with given start time and increment
@@ -2341,7 +2341,7 @@ These two modes can be switched dynamically. Thanks to this, GRASS users can
 examine the data from different view without any other necessary steps, like loading
 the maps separately into different Map Displays.
 
-Other features include:
+\noindent Other features include:
 \begin{itemize}
     \item switching the orientation of the border line (horizontal or vertical)
     \item switching the position of the maps
@@ -2372,8 +2372,8 @@ Description:
  Allows to interactively compare two maps by swiping.
 
 Usage:
- g.gui.mapswipe [first=name] [second=name] [mode=value] [--verbose]
-   [--quiet]
+ g.gui.mapswipe [first=name] [second=name] [mode=value] 
+   [--verbose] [--quiet]
 
 Flags:
  --v   Verbose module output
@@ -2402,8 +2402,8 @@ g.region rast=lsat7_2002_10 -p
 
 # create RGB composites, first color-balance:
 # data from 1987
-i.landsat.rgb b=lsat5_1987_10@landsat g=lsat5_1987_20@landsat \
-r=lsat5_1987_30@landsat
+i.landsat.rgb b=lsat5_1987_10@landsat \
+g=lsat5_1987_20@landsat r=lsat5_1987_30@landsat
 
 r.composite b=lsat5_1987_10@landsat g=lsat5_1987_20@landsat \
 r=lsat5_1987_30@landsat out=lsat5_1987.rgb
@@ -2414,7 +2414,7 @@ i.landsat.rgb b=lsat7_2002_10 g=lsat7_2002_20 r=lsat7_2002_30
 r.composite b=lsat7_2002_10 g=lsat7_2002_20 r=lsat7_2002_30 \
 out=lsat7_2002.rgb
 
-# .. now load the two RGB composites into the "Map Swipe" tool.
+# .. now load the two RGB composites into the "Map Swipe" tool
 g.gui.mapswipe first=lsat5_1987.rgb second=lsat7_2002.rgb
 \end{lstlisting}
 \end{small}
@@ -2427,7 +2427,7 @@ for the `swiping' behavior. It was necessary to achieve smooth movement of the b
 and precise alignment of the maps. Furthermore, in order not to duplicate code providing
 e.g.\ zoom functionality, it was desirable to reuse existing classes as much as possible.
 
-The implementation consist of two main points:
+\noindent The implementation consist of two main points:
     \begin{description}
       \item [Size of canvas and position of map] The tool should behave as if there was only one canvas with two map layers
       and a moving border line (one of the maps visible on each side of the border).
@@ -2435,7 +2435,7 @@ The implementation consist of two main points:
       \footnote{Splitter is a common name used in GUI frameworks for a widget which manages layout of other widgets.}.
       Each canvas displays one of the two maps. To make it look like it is only one canvas,
       special `trick' is necessary. Both canvases pretend that their actual size is different from the real one%b
-      \footnote{This is done by overriding a wxPython method which returns the size of a widget}.
+      \footnote{This is done by overriding a wxPython method which returns the size of a widget.}.
       In case of vertical border line, we are trying to pretend
       that the width of each canvas is the sum of widths of both canvases.
       Also, the map of the right canvas must be drawn on a shifted position, so that we see the right part of it.
@@ -2470,7 +2470,7 @@ Although the \tf is fully working from command line, it is not yet introduced in
 This means that automatically generated GUI dialogs (refer to \ref{sec:grasswxgui})
 for all temporal modules work only partially because the widget for the selection of GRASS elements
 (like raster, 3D raster, vector, region, etc.) is not able to display the new temporal elements
-(space time datasets). As a consequence, user has to type the name of the dataset manually
+(space time datasets). As a~consequence, user has to type the name of the dataset manually
 instead of selecting the available dataset from a list.
 
 To support the selection of temporal elements in the GUI, four new elements were
