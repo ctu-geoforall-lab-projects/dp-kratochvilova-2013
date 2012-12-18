@@ -817,7 +817,7 @@ It allows basic animation functionality (to control the animation flow) and
 users can specify offset for each layer separately.
 
 QGIS and Time Manager are under the GNU General Public License%
-\footnote{http://www.gnu.org/licenses/gpl.html}.
+\footnote{\url{http://www.gnu.org/licenses/gpl.html}}.
 
 \subsubsection{R: spacetime package}
 R software is a powerful software environment for statistical computing and graphics.
@@ -847,7 +847,7 @@ geographic visualization. It presents spatio-temporal multivariate data
 in a dynamically-linked environment; it includes scatterplot, bivariate choropleth map%
 \footnote{Choropleth map is a thematic map in which areas are colored
 (or patterned) proportionally to the measurement of the displayed statistical variable.
-Bivariate choropleth map is explained in \cite{leonowicz2006two}.},
+Bivariate choropleth map is explained in~\cite{leonowicz2006two}.},
 parallel coordinate plot and time series graph.
 ESTAT is used for epidemiology research but it can handle other types of data as well.
 
@@ -861,7 +861,7 @@ understanding of geolocated events and their relationships.
 It enables to derive patterns at multiple spatial and temporal scales by innovative statistical procedures,
 with integrated interactive visualization.
 STempo consists of different views including a map, a time line,
-a concept-based view represented by a tag-cloud and a table presenting data.
+a~concept-based view represented by a tag-cloud and a table presenting data.
 These views can be used for selecting and filtering event data.
 
 STempo is an open-source software built upon Visual Inquiry Toolkit and GeoViz Toolkit
@@ -964,7 +964,7 @@ The price of ArcGIS itself (which is not publicly available) is not included.
 
 \subsubsection{STEMgis}
 STEMgis (Discovery Software) is a temporal GIS which provides the tools to manage, visualize
-and analyze undergoing changes,
+and analyze undergoing changes.
 It can be used for environmental, coastal, marine, health, crime, sales and marketing,
 agriculture and forestry applications.
 It consists from three parts: STEMgis Manager (data management), 
@@ -1031,12 +1031,12 @@ It includes more than 350 modules for managing and analyzing geographical data.
 GRASS was created in the early 1980s by the Construction Engineering Research Laboratory (CERL)
 of the United States Army as a software management tool for military applications.
 Nowadays it is one of the cutting-edge projects of the Open Source Geospatial Foundation
-(OSGeo\footnote{\url{http://www.osgeo.org/}}, founded in 2006).
+(OSGeo\footnote{\url{http://www.osgeo.org}}, founded in 2006).
 Quoting Neteler and Mitasova \cite[p.~3]{grassGisApproach}:
 
 \begin{quote}
 The key development in recent GRASS history was the adoption of GNU GPL
-(General Public License, see http://www.gnu.org) in 1999.
+(General Public License, see \url{http://www.gnu.org}) in 1999.
 With this, GRASS embraced the Open Source philosophy,
 well known from the GNU/Linux development model, which stimulated its wide acceptance.
 \end{quote}
@@ -1045,7 +1045,7 @@ well known from the GNU/Linux development model, which stimulated its wide accep
 % of GRASS GIS with contributions to the source code becoming decentralized.
 The legal statements declared in the GPL are based on the ``four freedom'' paradigm \cite{stallman1985gnu}
 and allow the user to use the software’s full range of capabilities, and to distribute, study and improve it.
-The revision control system of GRASS GIS (namely subversion\footnote{\url{http://subversion.apache.org/}})
+The revision control system of GRASS GIS (namely subversion\footnote{\url{http://subversion.apache.org}})
 allowed different institutions and individuals to contribute to the code base
 from different countries around the world.
 
@@ -1079,7 +1079,7 @@ programming language using \emph{Tk} graphical toolkit.
 However, during the 2000's the limitations of Tcl/Tk toolkit turned out to be
 an obstacle for further development \cite{wxGUI2008}.
 In 2006, it was decided to build a new GUI based on
-\emph{wxPyton}\footnote{\url{http://www.wxpython.org}}\dash  a Python wrapper
+\emph{wxPyton}\footnote{\url{http://www.wxpython.org/}}\dash  a Python wrapper
 for cross-platform GUI toolkit \emph{wxWidgets}\footnote{\url{http://www.wxwidgets.org/}}.
 Among other benefits, Python programming language is far more popular than Tcl
 and it is also much easier to learn which enlarges the number of potential contributors.
@@ -1192,8 +1192,8 @@ however it can be used to create an animation.
 The purpose of this module is to render 3D view of raster, vector or 3D raster date to an image.
 The underlying library, \emph{OGSF}, is used by both \module{m.nviz.image}
 and the interactive 3D view tool\dash wxNviz (mentioned below).
-Module \module{m.nviz.image} as a command line tool is ideal for scripting.
-Typically, \module{m.nviz.image} is run in a loop while one or more parameters change.
+Module \module{m.nviz.image} as a~command line tool is ideal for scripting.
+Typically, \module{m.nviz.image} is run in a~loop while one or more parameters change.
 The resulting sequence of images can be converted to an animation by an external program,
 e.g.\ \emph{ImageMagick}\footnote{\url{http://www.imagemagick.org/}} or
 \emph{FFmpeg}\footnote{\url{http://ffmpeg.org/}}.
@@ -1202,7 +1202,7 @@ Because it is not easy to specify the optimal parameter values
 (especially view parameters) it is recommended to first find best view using interactive
 wxNviz and then use its ability to generate the command for \module{m.nviz.image} for the current state.
 This command can be than edited and used in a script.
-Follows an example of a simple Bash script which creates a video from raster series
+Follows an example of a~simple Bash script which creates a video from raster series
 (mapset NagsHead\_series \cite{nagshead}).
 
 
@@ -1246,7 +1246,12 @@ map using regularized spline tension algorithm (RST) \cite{mitasova1993interpola
 
 Having the voxel data, we can visualize them in 3D view as isosurfaces
 or cross-sections. An isosurface is an analogue of an isoline in 3D.
+<<<<<<< HEAD
 In the figure \ref{fig:nviz_isosurface} displaying elevation voxel data,
+=======
+In the figure \ref{fig:nviz_isosurface} displaying elevation voxel data%
+\footnote{Available from \url{http://courses.ncsu.edu/mea582/common/media/01/NagsHead_series.zip}},
+>>>>>>> 832e80521a0fe03cc400aee7bf1026a8e7272f5a
 isosurface represents the change of a particular contour line in time.
 The movement of the contour is apparent from the changing shape of the isosurface.
 Also, time component can be emphasized by a color scheme which can better identify the time when changes occur.
@@ -1297,7 +1302,7 @@ This approach can be easily understood and is simple enough to be integrated int
 The integration consists of two levels.
 In the first level, timestamps are assigned to the existing spatial data types -- raster, vector, 3D raster maps.
 The second level introduces new datatypes -- space time raster,
-vector and 3D raster datasets (referred as stdrs, stvds and str3ds).
+vector and 3D raster datasets (referred as strds, stvds and str3ds).
 
 The implementation of the \tf is based on a temporal library and a SQL database scheme.
 The library is written in Python programming language and provides an application programming interface (API) which is used by the temporal modules,
@@ -1349,7 +1354,7 @@ Relative time format consists of a number and time unit, which can be one the fo
 \setlength{\extrarowheight}{3pt}
 \begin{tabular}{|l|l|}
 \hline
-\multirow{3}{*}{Absolute time}
+\multirow{2}{*}{Absolute time}
  & 2001-01-25  \\ \cline{2-2}
  & 1996-07-16 23:01:59  \\\cline{2-2}
  \hline
@@ -1434,7 +1439,7 @@ As a consequence, such dataset is not accepted by certain temporal modules.
 \paragraph{Temporal sampling}
 \label{sec:temporalSampling}
 Temporal sampling is used to determine the state of one process during a second process.
-The \tf enables to sample a dataset (can have both point and interval time) by another dataset having interval time.
+The \tf enables to sample a~dataset (can have both point and interval time) by another dataset having interval time.
 There is an example of temporal sampling in figure \ref{fig:samplingExample}.
 The figure indicates that for different sampling methods (temporal relationships)
 which are provided by module \module{t.sample}, different results are expected.
@@ -1548,7 +1553,7 @@ Temporal modules share certain common options:
 
 The important ability of the \tf is the interoperability
 with several powerful open-source applications for statistical computations and visualization.
-Textual ouputs of many modules are suitable for statistical environment \emph{R}\footnote{\url{www.r-project.org/}}.
+Textual ouputs of many modules are suitable for statistical environment \emph{R}\footnote{\url{http://www.r-project.org/}}.
 Module \module{r3.out.netcdf} exports 3D raster to NetCDF
 format\footnote{\url{http://www.opengeospatial.org/standards/netcdf}}
 which can be then processed e.g. in \emph{Climate Data Operator (CDO)}\footnote{\url{https://code.zmaw.de/projects/cdo}}.
@@ -1569,7 +1574,7 @@ however it is not focused on its visualization in GRASS GIS. To partially fill t
 three new tools have been developed which either make use of the \tf
 or help to generally explore spatio-temporal data.
 
-These tools are:
+\noindent These tools are:
 \begin{description}
     \item[\at]for animation of raster map series or space time raster dataset, both in 2D and 2.5D.
     \item[Timeline Tool] as a support tool for visualization of dataset's topology and other metadata.
@@ -1657,7 +1662,7 @@ to explore spatio-temporal data.
     The simplest approach is to export a sequence of images.
     The images can be repeated in the sequence to indicate
     that the state of the animated phenomenon remains unchanged during several time units.
-    Image sequence can be converted to a video file in several ways.
+    Image sequence can be converted to a~video file in several ways.
     One of the possibilities is to call ffmpeg\footnote{\url{http://ffmpeg.org/}}
     with the following parameters:
 
@@ -1963,7 +1968,7 @@ The \at then puts all this information together.
 
 Table \ref{tab:exampleOfSamplingImpl} shows the result of temporal sampling of two sample space time datasets.
 As we can see, the temporal granularity of the dataset $X$ (1 month) differs from the granularity of dataset $Y$ (2 months).
-The common granularity (1 month) is in this case easy to compute.
+The common granularity (1~month) is in this case easy to compute.
 This granularity is then used to sample both datasets (table \ref{tab:exampleOfSamplingImpl-2}).
 
 
@@ -2032,7 +2037,7 @@ as explained in \ref{sec:grassVisualization}.
 The \at implementation uses timer events (class wx.Timer provided by wxPython) to achieve regular time intervals between two frames.
 The interval between two successive events is specified by the programmer according to what the user requires.
 In case of space time datasets animation, the user specifies how long
-should a chosen time unit\footnote{units of time supported by the \tf, section \ref{sec:absoluteVsRelative}}
+should a chosen time unit\footnote{Units of time supported by the \tf, section \ref{sec:absoluteVsRelative}.}
 last (in milliseconds).
 
 For each dataset, there is a separate object which controls the animation.
@@ -2252,10 +2257,10 @@ r.mapcalc --o expr="prec_7=rand(0,320)"
 r.mapcalc --o expr="prec_8=rand(0,510)"
 
 # create the space time raster dataset with absolute time
-t.create --o type=strds temporaltype=absolute output=precip_abs1 \
-title="A test" descr="A test"
-t.create --o type=strds temporaltype=absolute output=precip_abs2 \
-title="A test" descr="A test"
+t.create --o type=strds temporaltype=absolute \
+output=precip_abs1 title="A test" descr="A test"
+t.create --o type=strds temporaltype=absolute \
+output=precip_abs2 title="A test" descr="A test"
 
 # register the raster maps in the first space time dataset
 # with given start time and increment
@@ -2338,7 +2343,7 @@ These two modes can be switched dynamically. Thanks to this, GRASS users can
 examine the data from different view without any other necessary steps, like loading
 the maps separately into different Map Displays.
 
-Other features include:
+\noindent Other features include:
 \begin{itemize}
     \item switching the orientation of the border line (horizontal or vertical)
     \item switching the position of the maps
@@ -2369,8 +2374,8 @@ Description:
  Allows to interactively compare two maps by swiping.
 
 Usage:
- g.gui.mapswipe [first=name] [second=name] [mode=value] [--verbose]
-   [--quiet]
+ g.gui.mapswipe [first=name] [second=name] [mode=value] 
+   [--verbose] [--quiet]
 
 Flags:
  --v   Verbose module output
@@ -2399,8 +2404,8 @@ g.region rast=lsat7_2002_10 -p
 
 # create RGB composites, first color-balance:
 # data from 1987
-i.landsat.rgb b=lsat5_1987_10@landsat g=lsat5_1987_20@landsat \
-r=lsat5_1987_30@landsat
+i.landsat.rgb b=lsat5_1987_10@landsat \
+g=lsat5_1987_20@landsat r=lsat5_1987_30@landsat
 
 r.composite b=lsat5_1987_10@landsat g=lsat5_1987_20@landsat \
 r=lsat5_1987_30@landsat out=lsat5_1987.rgb
@@ -2411,7 +2416,7 @@ i.landsat.rgb b=lsat7_2002_10 g=lsat7_2002_20 r=lsat7_2002_30
 r.composite b=lsat7_2002_10 g=lsat7_2002_20 r=lsat7_2002_30 \
 out=lsat7_2002.rgb
 
-# .. now load the two RGB composites into the "Map Swipe" tool.
+# .. now load the two RGB composites into the "Map Swipe" tool
 g.gui.mapswipe first=lsat5_1987.rgb second=lsat7_2002.rgb
 \end{lstlisting}
 \end{small}
@@ -2424,7 +2429,7 @@ for the `swiping' behavior. It was necessary to achieve smooth movement of the b
 and precise alignment of the maps. Furthermore, in order not to duplicate code providing
 e.g.\ zoom functionality, it was desirable to reuse existing classes as much as possible.
 
-The implementation consist of two main points:
+\noindent The implementation consist of two main points:
     \begin{description}
       \item [Size of canvas and position of map] The tool should behave as if there was only one canvas with two map layers
       and a moving border line (one of the maps visible on each side of the border).
@@ -2432,7 +2437,7 @@ The implementation consist of two main points:
       \footnote{Splitter is a common name used in GUI frameworks for a widget which manages layout of other widgets.}.
       Each canvas displays one of the two maps. To make it look like it is only one canvas,
       special `trick' is necessary. Both canvases pretend that their actual size is different from the real one%b
-      \footnote{This is done by overriding a wxPython method which returns the size of a widget}.
+      \footnote{This is done by overriding a wxPython method which returns the size of a widget.}.
       In case of vertical border line, we are trying to pretend
       that the width of each canvas is the sum of widths of both canvases.
       Also, the map of the right canvas must be drawn on a shifted position, so that we see the right part of it.
@@ -2467,7 +2472,7 @@ Although the \tf is fully working from command line, it is not yet introduced in
 This means that automatically generated GUI dialogs (refer to \ref{sec:grasswxgui})
 for all temporal modules work only partially because the widget for the selection of GRASS elements
 (like raster, 3D raster, vector, region, etc.) is not able to display the new temporal elements
-(space time datasets). As a consequence, user has to type the name of the dataset manually
+(space time datasets). As a~consequence, user has to type the name of the dataset manually
 instead of selecting the available dataset from a list.
 
 To support the selection of temporal elements in the GUI, four new elements were
