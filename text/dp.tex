@@ -1292,12 +1292,12 @@ Temporal modules' names starting with t./t.rast/t.vect/t.rast3d names
 comply with the GRASS modules' naming conventions.
 
 \subsection{Implementation}
-\tf uses a snapshot approach (described above).
+\tf uses a snapshot approach (described in \ref{sec:stModels}).
 This approach can be easily understood and is simple enough to be integrated into the layer-based GIS.
 The integration consists of two levels.
-In the first level, timestamps are assigned to the existing spatial data types -- raster, vector, 3D raster maps.
-The second level introduces new datatypes -- space time raster,
-vector and 3D raster datasets (referred as strds, stvds and str3ds).
+In the first level, timestamps are assigned to the existing spatial data types\dash raster, vector, 3D raster maps.
+The second level introduces new datatypes\dash space time raster,
+vector and 3D raster datasets (referred as strds, stvds and str3ds, respectively).
 
 The implementation of the \tf is based on a temporal library and a SQL database scheme.
 The library is written in Python programming language and provides an application programming interface (API) which is used by the temporal modules,
@@ -1306,7 +1306,7 @@ Beside valid time the temporal database stores also transaction time%
 \footnote{Valid time is the time period during which a database fact is valid in the modeled reality,
 transaction time  is the time period during which a database fact is stored in the database \cite{temporalGlossary}}
 and other map and dataset metadata.
-The \tf supports two different database back-ends -- SQLite%
+The \tf supports two different database back-ends\dash SQLite%
 \footnote{\url{http://www.sqlite.org}} (more lightweight) and
 PostgreSQL\footnote{\url{http://www.postgresql.org}}.
 However, GRASS GIS users usually do not have to come in contact with the underlying database backend
@@ -1676,7 +1676,7 @@ ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
 
     Since the current possibilities to export animations in GRASS are not sufficient,
     an external open-source Python visualization library,
-    \emph{Visvis}\footnote{\url{http://code.google.com/p/visvis/}},
+    \emph{Visvis}\footnote{\url{http://code.google.com/p/visvis}},
     was used to export animation to animated GIF, SWF and AVI files.
     GIF (Graphics Interchange Format) is a bitmap image format which is characterized
     by widespread usage on web and in presentations, however since it supports only 256 distinct colors,
@@ -1847,7 +1847,7 @@ however these methods can call exit function which causes a sudden end of the pr
 This behavior is sufficient for a module but it is not suitable for a long running GUI application.
 Secondly, the image representing the raster map is created by setting the color of each pixel sequentially.
 For this kind of operation, Python is too slow comparing to C or C++.
-This problem can be alleviated by using NumPy\footnote{\url{http://numpy.scipy.org/}},
+This problem can be alleviated by using NumPy\footnote{\url{http://numpy.scipy.org}},
 however that makes the code less readable.
 
 One possible solution is to use the current rendering system used by wxGUI
