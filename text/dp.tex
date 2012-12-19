@@ -211,16 +211,16 @@ The term \emph{spatial} data refers to data where each object has associated wit
 Naturally, \emph{spatio-temporal} data also include a temporal coordinate.
 Spatial data have been collected, processed and visualized from the early history of mankind.
 Conversely until today, the representation and visualization of spatio-temporal data
-is problematic despite of great effort of researches all over the world.
+is problematic despite of the great effort of researches all over the world.
 
 This chapter summarizes main points about spatio-temporal data.
 First a brief overview of the historical and current research efforts is presented.
 Follows a description of several spatio-temporal data models and visualization techniques.
-The last section mention some of the software tools for handling this kind of data.
+The last section mentions some of the software tools for handling this kind of data.
 
 
 \section{Efforts to integrate time with space}
-Peuquet \cite{peuquet2001} provides an overview of the development of spatio-temporal data representation
+Peuquet~\cite{peuquet2001} provides an overview of the development of spatio-temporal data representation
 and she reflects on the reasons of the still problematic situation.
 
 One of the first areas which needed to handle temporal data were banking systems,
@@ -230,9 +230,9 @@ temporal data. Simultaneously, a temporal database query language was being deve
 which resulted in TSQL2%
 \footnote{There was an attempt to incorporate certain parts of this language
 into new SQL standard SQL:1999, however the TSQL2 was later criticized
-\cite{darwen2005}.} \cite{snodgrass1995}.
+\cite{darwen2005}.}~\cite{snodgrass1995}.
 Recently, a new set of language extensions for temporal data support became a part of
-SQL:2011 \cite{kulkarni2012}.
+SQL:2011~\cite{kulkarni2012}.
 
 With the improvements in computer technologies and data capturing
 (e.g.\ remotely sensed satellite data) researchers were able to empirically
@@ -241,7 +241,7 @@ convenient \emph{snapshot} model (described in section \ref{sec:stModels}).
 
 Since the attempts to represent time often lacked flexibility and suffered from other shortcomings,
 the need for more theoretical view on space-time representation was recognized.
-Peuquet \cite{peuquet2001} lists five areas as current research priorities:
+Peuquet~\cite{peuquet2001} lists five areas as current research priorities:
     \begin{description}
       \item[The ontology of space and time]
       deals with the space and time on an abstract level. It tries to understand
@@ -265,13 +265,13 @@ in this field will continue.
 \label{sec:stModels}
 The capabilities of any information system depend on the design of its data models.
 Spatio-temporal data modeling involves defining object data types,
-relations and operations, and ensuring database integrity \cite{pelekis2004}.
+relations and operations, and ensuring database integrity~\cite{pelekis2004}.
 Apart from that, a data model should take into account possible spatio-temporal queries and performed analyzes.
 
 We have succeeded in modeling of spatial information;
 current geographic information systems use raster, vector model or the combination of both.
 Nonetheless, to model temporal information together with spatial information
-has proved to be more complicated \cite{peuquet2001}.
+has proved to be more complicated~\cite{peuquet2001}.
 
 In the following paragraphs, several spatio-temporal data models are described.
 There is quite a large number of spatio-temporal data models (\cite{pelekis2004} identifies 11 distinct models), however
@@ -282,8 +282,8 @@ and it shows how spatio-temporal models vary.
 \subsubsection{The snapshot model}
 One of the simplest field-based spatio-temporal data models is the snapshot model.
 This representation consists of a sequence of layers,
-where each layer shows a state recorded at a certain point in time (see figure \ref{fig:snapshot_model}).
-Hence, this model can be perceived as a 3D or 4D space-time cube \cite{peuquet2001}, for explanation of space-time cube refer to section \ref{sec:stcube}.
+where each layer shows a state recorded at a certain point in time (see figure~\ref{fig:snapshot_model}).
+Hence, this model can be perceived as a 3D or 4D space-time cube~\cite{peuquet2001}, for explanation of space-time cube refer to section \ref{sec:stcube}.
 
 \begin{figure}[h!]
   \centering
@@ -296,40 +296,40 @@ Hence, this model can be perceived as a 3D or 4D space-time cube \cite{peuquet20
 The main drawback is the redundancy of data when there is little change between two successive states.
 Also, it is not convenient to describe changes in space through time because the model captures only states.
 Due to missing temporal structure, it is difficult to enforce integrity rules
-and resolve all possible types of queries \cite{pelekis2004}.
+and resolve all possible types of queries~\cite{pelekis2004}.
 It can be even compared to spaghetti model, term related to vector topology.
 On the other hand, the advantage of this model is its simplicity;
 it's implementation and usage is quite straightforward and intuitive.
 In addition, it can be easily used to extend existent layer-based GIS.
 
 To alleviate the problem of storing redundant data, an alternative approach,
-\emph{Base state with Amendments} was suggested \cite{langran1988}.
+\emph{Base state with Amendments} was suggested~\cite{langran1988}.
 This approach models changes instead of states.
 The state can be retrieved by amending changes to the main state.
 In order to improve the efficiency of retrieving a distant state,
-various approaches have been suggested \cite{wang2012},
+various approaches have been suggested~\cite{wang2012},
 differing in the choice of base state or states and in the number and distribution of difference files.
 
 \subsubsection{The space-time composite data model}
-This model was suggested by Langran \cite{langran1988}. It assumes vector data representation.
+This model was suggested by Langran~\cite{langran1988}. It assumes vector data representation.
 The base map in this model is gradually fragmented as the changes occur.
 Each fragment has its own attribute history represented by an ordered list of records.
 To obtain a state at a point in time, all fragments are retrieved and common spatial boundaries are dissolved.
-This model is conceptually straightforward, however the updating process may be more time consuming \cite{pelekis2004}
+This model is conceptually straightforward, however the updating process may be more time consuming~\cite{pelekis2004}
 comparing to other models.
 % The fragmentation requires to change identifiers each time when an old fragment is split into two new parts
 
 \subsubsection{Event-oriented models}
-According to Dyreson et al.\ \cite[p.~56]{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
+According to Dyreson et al.~\cite[p.~56]{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
 The models mentioned above cannot clearly represent events.
 In order to overcome this problem, events can be represented explicitly.
-Several event-based models have been suggested by \cite{claramunt1995managing}, \cite{peuquet1995}, \cite{chen1998event}.
+Several event-based models have been suggested by~\cite{claramunt1995managing,peuquet1995,chen1998event}.
 
 We can explain the basic concept of event-oriented models by describing
 the raster-based approach implemented%
-\footnote{The actual implementation used GRASS GIS for storing base map \cite{peuquet1995}.}
+\footnote{The actual implementation used GRASS GIS for storing base map~\cite{peuquet1995}.}
 by Peuquet and Duan, called
-\emph{Event-based Spatio Temporal Data Model} (ESTDM)  \cite{peuquet1995}.
+\emph{Event-based Spatio Temporal Data Model} (ESTDM) ~\cite{peuquet1995}.
 This model stores changes associated with each time instance in an event list.
 Every event from this list points to a list of event components,
 which describe where changes occur (using efficient data structures).
@@ -342,18 +342,18 @@ As object-oriented design showed promising results in the field of programming,
 there were efforts to apply its features, such as classes and instances, attributes and methods,
 inheritance and polymorphism, in spatio-temporal data model.
 
-An object-oriented approach was for the first time applied by Worboys \cite{worboys1994unified}.
+An object-oriented approach was for the first time applied by Worboys~\cite{worboys1994unified}.
 He suggested a unified spatio-temporal object (\emph{ST-complex}) which combines spatial component
 with bitemporal component (event and database time). ST-complex is a collection of \emph{ST-simplexes}
 where the spatial component represents a point, a straight line segment or a triangular area.
 Operations like union, difference, boundary or spatial and temporal projection are defined for the ST-object.
 
 Object-oriented models seem to have more advantages and less drawbacks comparing to other models.
-Pelekis \cite[p.~27]{pelekis2004} claims that it can ``\emph{support  all types of data handling,
+Pelekis~\cite[p.~27]{pelekis2004} claims that it can ``\emph{support  all types of data handling,
 in terms of measurement, topological relationships and operations}''.
 
 \subsubsection{The three domains model}
-The three domains model was described by Yuan \cite{yuan1994wildfire}
+The three domains model was described by Yuan~\cite{yuan1994wildfire}
 and it was originally applied for wildfire modeling.
 As the name suggests, the model has three domains, semantics, time, and space, which are interlinked.
 In case of wildfire modeling, semantic domain can contain names of fire events, types or fire intensity.
@@ -361,7 +361,7 @@ The time domain describes the existence of semantic and spatial objects
 (like geometrical primitives, cells and volumes).
 Each domain can be handled separately in terms of database management system.
 Thanks to the splitting of the spatio-temporal information,
-this model is flexible enough to support wide range of spatio-temporal queries \cite{pelekis2004}.
+this model is flexible enough to support wide range of spatio-temporal queries~\cite{pelekis2004}.
 The interesting aspect is that both splitting (the case of the three domains model)
 and unifying (the case of the object-oriented model) can lead to good results.
 
@@ -374,14 +374,14 @@ Current advanced software and hardware enable us to visualize geospatial data in
 however, existing visualization and exploratory techniques often do not suffice, especially in the temporal domain.
 
 Visualization of spatio-temporal data is closely related to the term \emph{temporal map}.
-Kraak and MacEachren \cite{kraak1994visualization} define temporal maps as
+Kraak and MacEachren~\cite{kraak1994visualization} define temporal maps as
 ``\emph{a representation or abstraction of changes in geographical reality:
 a tool (that is visual, digital or tactile) for presenting geographical information
 whose locational and/or attribute components change over time}''.
 They distinguish three categories of maps:
     \begin{description}
         \item[A single static map] represents an event by means of graphic sign system\dash from complex point symbols,
-            temporal glyphs, to generalized trend-surface or flow-linkage maps depicting movement \cite{monmonier1990strategies}.
+            temporal glyphs, to generalized trend-surface or flow-linkage maps depicting movement~\cite{monmonier1990strategies}.
 
         \item[A strip map] represents an event by ordering `state' maps chronologically (as in `comic strip' style).
             Each map shows the state of the geographical reality at a unique time instance.
@@ -395,7 +395,7 @@ They distinguish three categories of maps:
             as long as there is no change in the spatial component (i.e.\ landscape).
     \end{description}
 
-MacEachren \cite{maceachren1997exploratory} suggests a concept of visualization
+MacEachren~\cite{maceachren1997exploratory} suggests a concept of visualization
 where map usage is treated as a cube;
 the axes represent the user of map (private vs.\ public),
 objectives of use (revealing unknowns vs.\ presenting knowns)
@@ -403,17 +403,17 @@ and degree of interactivity (high vs.\ low).
 One of the corners (private users, revealing unknowns and high interactivity)
 represents \emph{visualization} and the opposite one \emph{communication}.
 All maps involve both visualization (exploratory analysis leading to revealing new information)
-and communication (delivery of desired information to map user),
-however they differ in which component they underline.
+and communication (delivery of desired information to map user).
+However, they differ in which component they underline.
 Both components are important; first the researcher need to analyze the data
 and then he explains his findings to the public.
 In the following paragraphs I will focus mostly on the exploratory use of visualization tools.
 
-Andrienko et al.\ \cite{andrienko2003exploratory} provides a review
+Andrienko et al.~\cite{andrienko2003exploratory} provides a review
 of general exploratory techniques used for analysis of spatio-temporal data.
 They based the task typology on work
-%of Bertin \cite{bertin1983semiology}
-of Peuquet \cite{peuquet1994s}.
+%of Bertin~\cite{bertin1983semiology}
+of Peuquet~\cite{peuquet1994s}.
 She distinguished three view components in spatio-temporal data:
 \emph{where} (space), \emph{when} (time) and \emph{what} (object).
 This leads to three basic kinds of questions:
@@ -436,7 +436,7 @@ This leads to three basic kinds of questions:
 
 The techniques described below differ in the fact how well they can answer these questions.
 The classification of the techniques regarding this aspect is presented by Andrienko et al.%
-\ \cite{andrienko2003exploratory}.
+~\cite{andrienko2003exploratory}.
 Here we focus on the general characteristics.
 % For the purpose of their work, Andrienko et al. simplified this classification into two cases:
 %     \begin{description}
@@ -455,20 +455,20 @@ such as interactivity and dynamics which are necessary for most exploratory tech
 like map querying or animation.
 
 \subsubsection{Querying}
-A query consists of two main parts\dash target and constraints \cite{andrienko2003exploratory}.
+A query consists of two main parts\dash target and constraints~\cite{andrienko2003exploratory}.
 For example, we can ask where (target) a particular object was located at a given time instance (constraint).
 A query can be specified by the user either by a machine-readable language (typically Structured Query Language)
-or via graphical user interface (possibly using Visual Query Languages \cite{catarci1997visual})
+or via graphical user interface (possibly using Visual Query Languages~\cite{catarci1997visual})
 which is usually more convenient for end-users who then tend to perform tasks faster.
 An example of dynamic query tools which constrain the query can be found
-in \cite{ahlberg1992dynamic} and \cite{hochheiser2004dynamic}.
+in~\cite{ahlberg1992dynamic} and~\cite{hochheiser2004dynamic}.
 However, dynamic query tools usually do not allow to build a more complicated query;
 for example, when logical \emph{OR} and \emph{AND} are combined.
 
 % Often, the query constraints are specified by a mouse cursor pointing at a location on map.
 
 In case of temporal queries, specific graphical user interface
-might be needed. Figure \ref{fig:cyclical_time} shows a temporal query tool
+might be needed. Figure~\ref{fig:cyclical_time} shows a temporal query tool
 which enables to select arbitrary combinations of years, month, days and hours.
 
 
@@ -502,10 +502,10 @@ because certain changes might be revealed easier at a different level of transpa
 Similar approach is the fading technique.
 One map gradually disappears while the next map emerges from beneath of it.
 
-Another variation on the topic which is not mentioned in \cite{andrienko2003exploratory}
+Another variation on the topic which is not mentioned in~\cite{andrienko2003exploratory}
 is `swipe' technique.
 It allows the user to interactively compare two layers (typically raster)
-of the same area by revealing different parts of the maps (see for example figure \ref{fig:swipe}).
+of the same area by revealing different parts of the maps (see for example figure~\ref{fig:swipe}).
 
 
 \begin{figure}[h!]
@@ -527,31 +527,34 @@ Animation consists of frames\dash single images (maps).
 
 \paragraph{Application}
 Animations can be useful to reveal trends, processes and subtle spatio-temporal patterns
-that are not evident in static representation. Dorling and Openshaw \cite{dorling1993using}
+that are not evident in static representation. Dorling and Openshaw~\cite{dorling1993using}
 demonstrated a power of animated maps to stimulate knowledge;
 they investigated childhood leukemia rates in northern England during twenty years.
 Thanks to the animation the previously unrecognized hot-spots (localized both in space and time) emerged
 as well as the oscillation between the rise and fall of the incidence of
 cases in Newcastle and Manchester. Since time component was not considered in previous studies,
-they failed to reveal these patterns.
+these studies failed to reveal these patterns.
 
-Animation can be used to visualize routes of moving objects \cite{andrienko2003exploratory}.
+Animation can be used to visualize routes of moving objects~\cite{andrienko2003exploratory}.
 Unlike static representations, animation can reveal details about speed, acceleration and interaction
 of the individual objects. Consider the case when the trajectories of two objects cross each other.
 Without animation we are not able to decide if the objects really met or
 if they just arrived at the same place in a different moment.
-There are three alternative approaches to visualize object movement by animation \cite{andrienko2003exploratory}:
+There are three alternative approaches to visualize object movement by animation~\cite{andrienko2003exploratory}:
     \begin{description}
-        \item[Snapshot in time] The simplest approach is based on displaying the objects
+        \item[Snapshot in time]~\\
+        The simplest approach is based on displaying the objects
         at their location at the given time instance. This method is usually not convenient for more than one object.
-        \item[Movement history] Beside the objects, also their trajectories are displayed from the starting point.
+        \item[Movement history]~\\
+        Beside the objects, also their trajectories are displayed from the starting point.
         When the animation ends, complete trajectories are shown. This approach prevents the user from loosing track,
         however in case of more complicated trajectories, the situation might become too complex.
-        \item[Time window] Similarly to the previous approach, trajectories are displayed.
+        \item[Time window]~\\
+        Similarly to the previous approach, trajectories are displayed.
         However only a part of the trajectories corresponding to the last few time units are visible,
         like the white trails leaved behind by a plane.
         This method solves the drawback of the `movement history' method.
-        An example of such approach is in figure \ref{fig:shark}.
+        An example of such approach is in figure~\ref{fig:shark}.
     \end{description}
 
 
@@ -586,20 +589,20 @@ Each picture shows the measurements from a different time interval.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Dynamic visualization variables}
 \label{sec:dynamicVariables}
-In \cite{dibiase1992animation}, DiBiase et al.\ introduced three dynamic visualization variables of animation:
+In~\cite{dibiase1992animation}, DiBiase et al.\ introduced three dynamic visualization variables of animation:
 \emph{duration}, \emph{rate of change}, \emph{order}.
-Three more variables were added by MacEachren \cite{maceachren2004maps}:
+Three more variables were added by MacEachren~\cite{maceachren2004maps}:
 \emph{frequency}, \emph{display time} and \emph{synchronization}.
-According to Kraak \cite{kraak2000visualisation}, duration and order are the most important
+According to Kraak~\cite{kraak2000visualisation}, duration and order are the most important
 dynamic variables. Duration is the time interval during which no change on the display occurs.
 Order, the succession of individual frames, together with duration can be used to
 \emph{``express an animation's narrative character''}\cite[p.~31]{kraak2000visualisation}.
 Frequency is the number of identifiable states per unit of display time.
 Despite the fact that frequency is the dual of duration,
 \emph{``it is worth treating as a separate dynamic variable because \ldots
-humans react to frequency as if it were an independent variable''} \cite{kraak1994visualization}.
+humans react to frequency as if it were an independent variable''}~\cite{kraak1994visualization}.
 Display time, also called \emph{moment of display}, refers to the time when some display change is initiated.
-According to Blok  \cite{blok2005dynamic}, synchronization and rate of change are not dynamic variables
+According to Blok~\cite{blok2005dynamic}, synchronization and rate of change are not dynamic variables
 but effects of interaction with other dynamic variables.
 
 The last mentioned variable, synchronization, refers to the possibility to run two or more
@@ -608,13 +611,13 @@ Also it may be useful to experiment with different starting moments of animation
 This allows to explore cause-effect relationships between phenomena, for example
 the delayed effect of precipitation on vegetation growth.
 However, it is unclear whether an analyst is able to effectively watch two or more simultaneous
-juxtaposed animations \cite{andrienko2003exploratory}. More research need to be conducted.
+juxtaposed animations~\cite{andrienko2003exploratory}. More research need to be conducted.
 Using the eye-tracking technology seems to be one possible approach
-(see for example study \cite{opach2011evaluating}).
+(see for example study~\cite{opach2011evaluating}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \paragraph{Temporal legend}
-In \cite{kraak1997cartographic}, Kraak et al.\ deal with temporal legend for animations.
+In~\cite{kraak1997cartographic}, Kraak et al.\ deal with temporal legend for animations.
 Temporal legend is the part of the interface which does not only help to understand and interpret
 the phenomenon but it can also serve as navigation tool to control dynamically the animation.
 In order to explore spatio-temporal data, animation should offer functionality like replaying, pausing
@@ -627,9 +630,9 @@ However it describes only the temporal location within one cycle.
 On the other hand, for several kinds of data linear time representation is more natural (e.g.\ erosion process)
 and for this case a slide bar, where the marker shows the current temporal location, would be a better choice.
 Both types of temporal legends could be accompanied by numerical legend (e.g.\ 23:14,  March 2012, \ldots)
-as suggested by Kraak \cite{kraak1997cartographic}.
+as suggested by Kraak~\cite{kraak1997cartographic}.
 However, a study showed that the choice among these three types of legend has no significant effect on
-the performance, response times or correctness of results \cite{edsall1997assessing}.
+the performance, response times or correctness of results~\cite{edsall1997assessing}.
 
 Another types of temporal legend for animation can try to avoid the distracting the user.
 Sound legend can signalize either the date and time or the animation frequency (by ticking).
@@ -644,7 +647,7 @@ to induce an illusion of day and night.
 \label{sec:stcube}
 The space-time cube is basically a 3D plot in which the spatial component (e.g.\ a geographic map)
 is plotted in the $xy$\nobreakdash-plane and the temporal domain is represented
-on the vertical $z$-axis (see figure \ref{fig:stcube_cut}).
+on the vertical $z$-axis (see figure~\ref{fig:stcube_cut}).
 
 \begin{figure}[h!]
   \centering
@@ -653,7 +656,7 @@ on the vertical $z$-axis (see figure \ref{fig:stcube_cut}).
   \label{fig:stcube_cut}
 \end{figure}
 
-This new view on time as an additional spatial dimension was introduced in 1970 by Hägerstrand \cite{hagerstrand1970}.
+This new view on time as an additional spatial dimension was introduced in 1970 by Hägerstrand~\cite{hagerstrand1970}.
 He suggested a three-dimensional diagram, the space-time cube, to study the space-time behavior of human individuals.
 In those days, creating graphics was limited to manual methods.
 Therefore creating an alternative view on the cube, which is essential for this visualization technique,
@@ -669,13 +672,13 @@ to the type of analyzed data (vector lines, points, voxel data).
 \paragraph{Space-time path}
 The original Hägerstrand's concept was concerned with movement of objects (people).
 During day each person follows a trajectory through space and time called
-\emph{space-time path}. Figure \ref{fig:st-path} shows a simplified example
+\emph{space-time path}. Figure~\ref{fig:st-path} shows a simplified example
 of persons movements during a working day. The locations where people stay,
 called \emph{stations} (e.g.\ at home, at work), are represented by a vertical direction of the path.
 However in a larger scale, we could observe movement at these stations
 (people moving inside buildings). The time when people meet at a station is called \emph{activity bundle}.
 
-Figure \ref{fig:st-prism} schematically shows a \emph{space-time prism}
+Figure~\ref{fig:st-prism} schematically shows a \emph{space-time prism}
 which indicates the locations that can be reached in a particular time interval
 (starting and returning to the same place). In reality, it is not circular because
 not all places are accessible.
@@ -702,17 +705,17 @@ not all places are accessible.
 \end{figure}
 
 
-Space-time paths are naturally applied to movement data, such as public transport data \cite{transport2005visualisation}.
+Space-time paths are naturally applied to movement data, such as public transport data~\cite{transport2005visualisation}.
 Apart from that, space-time paths are often used to analyze sociological aspects
-as for example in the study focused on non-employment activities with regard to gender \cite{kwan1999gender}.
-In \cite{moore2003time}, this technique was used in sport to analyze rugby matches.
-Additionally, Kraak \cite{kraak2005visualization} suggests to use it for real-time monitoring which is possible thanks to
+as for example in the study focused on non-employment activities with regard to gender~\cite{kwan1999gender}.
+In~\cite{moore2003time}, this technique was used in sport to analyze rugby matches.
+Additionally, Kraak~\cite{kraak2005visualization} suggests to use it for real-time monitoring which is possible thanks to
 the boom of GNSS (Global Navigation Satellite System) technologies.
 Another discipline which may benefit from the space-time paths approach is archeology.
-Kraak \cite{kraak2005visualization} provides an example of space-time paths representing
+Kraak~\cite{kraak2005visualization} provides an example of space-time paths representing
 archeology excavations where the stations indicate the duration of the existence of settlements.
 Another study concentrated on the interaction of cultures using a combination of the space-time cube approach
-with graph theory \cite{huisman2008development}.
+with graph theory~\cite{huisman2008development}.
 
 
 
@@ -724,7 +727,7 @@ with graph theory \cite{huisman2008development}.
 \paragraph{Event data}
 Space-time cube concept is suitable not only to represent moving objects
 but it can be successfully applied to events, too.
-Gatalsky et al.\ \cite{gatalsky2004interactive}
+Gatalsky et al.~\cite{gatalsky2004interactive}
 focused on the detection of spatio-temporal patterns in event occurrences.
 In their work, events (earthquakes) are represented as circles placed vertically according to their occurrence.
 Size and color of each circle reflect the thematic characteristics of the event.
@@ -735,23 +738,23 @@ The space-time cube is dynamically linked to a map display so that it is possibl
 \label{voxelHelena}
 Another potentially large field of study is the application of space-time cube concept for voxel data.
 This approach can be used for modeling any type of spatially distributed phenomena changing over time.
-Mitasova et al.\ \cite{mitasova2011landscape} presents a multidimensional framework for characterization
+Mitasova et al.~\cite{mitasova2011landscape} presents a multidimensional framework for characterization
 of land surface dynamics using time series of elevation data (LiDAR point cloud).
 Space-time cube, as one part of this framework,
 creates a voxel representation of elevation evolution with time as a third dimension.
 The evolution of contour-based features (shorelines) is studied
-by visualization of multiple isosurfaces extracted from the voxel model \cite{mitasova2012scientific}.
+by visualization of multiple isosurfaces extracted from the voxel model~\cite{mitasova2012scientific}.
 In this context, an isosurface represents a contour of given $z$-coordinate (height)
-stretched in the vertical time dimension (for a simple example see figure \ref{fig:nviz_isosurface}
-or refer to Mitasova et. al \cite{mitasova2012scientific}, figure 19).
+stretched in the vertical time dimension (for a simple example see figure~\ref{fig:nviz_isosurface}
+or refer to Mitasova et. al~\cite{mitasova2012scientific}, figure 19).
 % TODO: add images of voxel schema, isosurfaces http://www.sciencedirect.com/science/article/pii/S0169555X11002935
 
 \paragraph{3D glyphs}
 Space-time cube approach is also used to visualize distributions of
-geospatial time-varying data through a pictorial representation \cite{tominski20053d,thakur20103d}.
+geospatial time-varying data through a pictorial representation~\cite{tominski20053d,thakur20103d}.
 A base map is typically divided into regions or administrative districts.
 Above each of these parts, a 3D icon or glyph is drawn.
-In \cite{thakur20103d}, the glyph is represented by a set of disks stacked along the vertical temporal axis,
+In~\cite{thakur20103d}, the glyph is represented by a set of disks stacked along the vertical temporal axis,
 one for each time step. The size of the disk is scaled according to maximum disk size.
 Additionally, color is used to encode data values and although it is redundant
 (the information is already in the disk size), it can help to detect outliers.
@@ -767,7 +770,7 @@ to be caused by rapid improvements in computer technologies as well as by simpli
 data collection process by GNSS technologies and remote sensing.
 
 Although space-time cube is a useful exploratory tool it might not always be helpful
-for novice users because of problems with its interpretation. A study \cite{kristensson2009evaluation}
+for novice users because of problems with its interpretation. A study~\cite{kristensson2009evaluation}
 showed that novice users benefit from the space-time cube representation only when they are asked to analyze
 complex spatio-temporal patterns. In case of simpler tasks, using the space-time cube representation
 led to higher error rate comparing with using a 2D representation.
@@ -778,16 +781,16 @@ led to higher error rate comparing with using a 2D representation.
 
 
 \section{Existing software}
-The list of GIS software on Wikipedia \cite{wiki:gislist}
+The list of GIS software on Wikipedia~\cite{wiki:gislist}
 shows us that there exist many geographic information systems,
 both open-source and proprietary.
 However, the number of GIS or other related applications which can handle
 spatio-temporal data is much smaller.
 This is not surprising considering the fact that GIS development started
-in the 1960s \cite{coppock1991history} while the initial efforts to model spatio-temporal
-data appeared in the 1980s and later \cite{peuquet2001}.
+in the 1960s~\cite{coppock1991history} while the initial efforts to model spatio-temporal
+data appeared in the 1980s and later~\cite{peuquet2001}.
 
-In \cite{andrienko2003exploratory} from 2003, a partial review of existing systems is provided.
+In~\cite{andrienko2003exploratory} from 2003, a partial review of existing systems is provided.
 However, it was not meant to be complete. Moreover, it contains mainly research prototypes,
 which are often very specialized and serve for academic purposes only, although their implementations
 and features can be innovative and useful.
@@ -821,7 +824,7 @@ QGIS and Time Manager are under the GNU General Public License%
 
 \subsubsection{R: spacetime package}
 R software is a powerful software environment for statistical computing and graphics.
-A new package \emph{spacetime} has been added recently \cite{PebesmaR} to support spatio-temporal data.
+A new package \emph{spacetime} has been added recently~\cite{PebesmaR} to support spatio-temporal data.
 This package is built upon \emph{sp} package for spatial data and
 \emph{xts} package for time series data.
 The package introduces four space-time layouts (full grid, sparse grid, irregular, trajectory)
@@ -884,7 +887,7 @@ and partly under a closed source license.
 \subsubsection{TerraLib and TerraView}
 TerraLib\footnote{\url{http://www.terralib.org}} is an open-source GIS software library.
 It supports large-scale applications using socio-economic
-and environmental data \cite{camara2008terralib}.
+and environmental data~\cite{camara2008terralib}.
 % TerraLib extends object-relational DBMS
 % technology to support spatio-temporal models, spatial analysis, spatial data
 % mining and image databases.
@@ -950,7 +953,7 @@ Timemap.js is licensed under the MIT License\footnote{\url{http://opensource.org
 
 \subsection{Proprietary software}
 \subsubsection{ArcGIS: Tracking Analyst}
-Tracking Analyst is an ArcGIS (ESRI) extension for spatio-temporal data focused on vector data \cite{arcgisHelp}.
+Tracking Analyst is an ArcGIS (ESRI) extension for spatio-temporal data focused on vector data~\cite{arcgisHelp}.
 It is designed for mapping of moving objects or objects with changing attributes.
 Tracking Analyst include exploratory tools such as animations, time window approach based on symbology,
 creating special charts and other sophisticated tools.
@@ -1026,13 +1029,13 @@ the recent work are further discussed in section \ref{sec:grassstate}.
 \label{sec:grassoverview}
 GRASS  (Geographical Resources Analysis Support System)\footnote{\url{http://grass.osgeo.org}}
 is a general purpose cross-platform open-source geographic information system (GIS)
-with raster, vector and image processing capabilities \cite{neteler2011grass}.
+with raster, vector and image processing capabilities~\cite{neteler2011grass}.
 It includes more than 350 modules for managing and analyzing geographical data.
 GRASS was created in the early 1980s by the Construction Engineering Research Laboratory (CERL)
 of the United States Army as a software management tool for military applications.
 Nowadays it is one of the cutting-edge projects of the Open Source Geospatial Foundation
 (OSGeo\footnote{\url{http://www.osgeo.org}}, founded in 2006).
-Quoting Neteler and Mitasova \cite[p.~3]{grassGisApproach}:
+Quoting Neteler and Mitasova~\cite[p.~3]{grassGisApproach}:
 
 \begin{quote}
 The key development in recent GRASS history was the adoption of GNU GPL
@@ -1043,7 +1046,7 @@ well known from the GNU/Linux development model, which stimulated its wide accep
 
 % The adoption of the free software license changed the development process
 % of GRASS GIS with contributions to the source code becoming decentralized.
-The legal statements declared in the GPL are based on the ``four freedom'' paradigm \cite{stallman1985gnu}
+The legal statements declared in the GPL are based on the ``four freedom'' paradigm~\cite{stallman1985gnu}
 and allow the user to use the software’s full range of capabilities, and to distribute, study and improve it.
 The revision control system of GRASS GIS (namely subversion\footnote{\url{http://subversion.apache.org}})
 allowed different institutions and individuals to contribute to the code base
@@ -1051,9 +1054,9 @@ from different countries around the world.
 
 The modular software design of GRASS facilitates the introduction of new functionality.
 Moreover, its scripting capabilities enable automated processing of a large volume of data.
-Since 2008, GRASS users and developers can make use of the Python programming language \cite{van1995python}
+Since 2008, GRASS users and developers can make use of the Python programming language~\cite{van1995python}
 to introduce new features. Integration between GRASS and Python has been recently enhanced through a new,
-more ``pythonic'' API \cite{pygrass} which provides easier, more natural and consistent scripting possibilities.
+more ``pythonic'' API~\cite{pygrass} which provides easier, more natural and consistent scripting possibilities.
 
 GRASS is a project which is actively developed and tested by users from different
 countries using different platforms.
@@ -1077,7 +1080,7 @@ which led to the first GUI prototype called \emph{TCLTKGRASS}
 written in \emph{Tcl}\footnote{\url{http://www.tcl.tk}}
 programming language using \emph{Tk} graphical toolkit.
 However, during the 2000's the limitations of Tcl/Tk toolkit turned out to be
-an obstacle for further development \cite{wxGUI2008}.
+an obstacle for further development~\cite{wxGUI2008}.
 In 2006, it was decided to build a new GUI based on
 \emph{wxPyton}\footnote{\url{http://www.wxpython.org}}\dash  a Python wrapper
 for cross-platform GUI toolkit \emph{wxWidgets}\footnote{\url{http://www.wxwidgets.org}}.
@@ -1089,13 +1092,13 @@ It consists of three core components:
     \begin{enumerate}
       \item \emph{Layer Manager} allows users to launch different GRASS modules from menu,
       manage layers. Command-line prompt, command output window and python shell
-      for scripting are integrated (figure \ref{fig:wxGUI1}).
+      for scripting are integrated (figure~\ref{fig:wxGUI1}).
       \item \emph{Map Display Window(s)} provides basic tools for zooming, panning, data querying,
       decorations (legend, north arrows, bar scale).
-      During one session, multiple Map Displays can be opened (figure \ref{fig:wxGUI1}).
+      During one session, multiple Map Displays can be opened (figure~\ref{fig:wxGUI1}).
       \item \emph{module dialogs} are generated for each GRASS module from the XML interface description.
       This approach enables to create GUI for every module while respecting its particular parameters
-      (figure \ref{fig:wxGUI2}).
+      (figure~\ref{fig:wxGUI2}).
     \end{enumerate}
 
 \begin{figure}[ht!]
@@ -1130,7 +1133,7 @@ The support of the temporal component of spatio-temporal data in GRASS is limite
 (considering the situation before the integration of the Temporal Framework).
 It is possible to assign a time stamp to a raster, vector or 3D-raster map using module
 \module{r.timestamp}, \module{v.timestamp} and \module{r3.timestamp}, respectively.
-These modules internally use \emph{GRASS Datetime Library} \cite{grassProgMan}.
+These modules internally use \emph{GRASS Datetime Library}~\cite{grassProgMan}.
 However, time stamps serve only for information as a part of metadata.
 
 Another module which can be used to process spatio-temporal data is \module{r.series}
@@ -1150,7 +1153,7 @@ Module \module{xganim} in GRASS 7 is written in C++ using wxWidgets graphical to
 This is inconsistent with the rest of wxGUI which is written in wxPython.
 Originally, it was a X/Motif application, however in GRASS 7 it was necessary
 to rewrite it because it was decided to leave the old display architecture.
-It is apparent from the figure \ref{fig:xganim} that the GUI lags behind modern GUI design,
+It is apparent from the figure~\ref{fig:xganim} that the GUI lags behind modern GUI design,
 however, there are more serious problems.
 
 \begin{figure}[ht!]
@@ -1203,7 +1206,7 @@ Because it is not easy to specify the optimal parameter values
 wxNviz and then use its ability to generate the command for \module{m.nviz.image} for the current state.
 This command can be than edited and used in a script.
 Follows an example of a~simple Bash script which creates a video from raster series
-(mapset NagsHead\_series \cite{nagshead}).
+(mapset NagsHead\_series~\cite{nagshead}).
 
 
 \begin{small}
@@ -1230,27 +1233,27 @@ used for the visualization of space-time cube.
 
 The approach described in \ref{voxelHelena} requires to create voxel data
 where the $z$ coordinate represents time.
-This can be achieved by using \module{r.to.rast3} \cite{grassUserMan}
-which converts series of 2D raster maps to one 3D raster map as illustrated in figure \ref{fig:rtorast3}.
+This can be achieved by using \module{r.to.rast3}~\cite{grassUserMan}
+which converts series of 2D raster maps to one 3D raster map as illustrated in figure~\ref{fig:rtorast3}.
 
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.7\textwidth]{./images/rtorast3.png}
   \caption[Functionality of module \module{r.to.rast3}]
-  {Functionality of module \module{r.to.rast3}. Source: GRASS GIS 7.0 Reference Manual \cite{grassUserMan}.}
+  {Functionality of module \module{r.to.rast3}. Source: GRASS GIS 7.0 Reference Manual~\cite{grassUserMan}.}
   \label{fig:rtorast3}
 \end{figure}
 
 In case we have vector points data (e.g.\ LiDAR data), module \module{v.vol.rst} interpolates these points into a 3D raster
-map using regularized spline tension algorithm (RST) \cite{mitasova1993interpolation,mitasova1993interpolation2}.
+map using regularized spline tension algorithm (RST)~\cite{mitasova1993interpolation,mitasova1993interpolation2}.
 
 Having the voxel data, we can visualize them in 3D view as isosurfaces
 or cross-sections. An isosurface is an analogue of an isoline in 3D.
-In the figure \ref{fig:nviz_isosurface} displaying elevation voxel data,
+In the figure~\ref{fig:nviz_isosurface} displaying elevation voxel data,
 isosurface represents the change of a particular contour line in time.
 The movement of the contour is apparent from the changing shape of the isosurface.
 Also, time component can be emphasized by a color scheme which can better identify the time when changes occur.
-The same changes in elevation can be inferred from the cross-sections visualization (figure \ref{fig:nviz_slices})
+The same changes in elevation can be inferred from the cross-sections visualization (figure~\ref{fig:nviz_slices})
 where the cross-section is an intersection of a plane with the voxel cube.
 These techniques are used by Mitasova TODO ref Visualizations of Coastal Elevation Time-series
 
@@ -1276,7 +1279,7 @@ These techniques are used by Mitasova TODO ref Visualizations of Coastal Elevati
 Figure \subref{fig:nviz_isosurface} shows an evolution of a contour line ($z=10\ m$).
 A cross-section on figure \subref{fig:nviz_slices} also illustrates that the height of the middle
 part changed with time. (Voxel data are shifted along the $z$-axis make it more visible.)
-Data source: mapset NagsHead\_series \cite{nagshead}}
+Data source: mapset NagsHead\_series~\cite{nagshead}}
 
 \label{fig:nviz_voxel}
 \end{figure}
@@ -1285,7 +1288,7 @@ Data source: mapset NagsHead\_series \cite{nagshead}}
 \section{Temporal GRASS GIS framework}
 \label{sec:GRASSTF}
 Temporal GRASS GIS Framework is a new extension available in GRASS 7
-for manipulating spatio-temporal data \cite{soerenTGRASS}.
+for manipulating spatio-temporal data~\cite{soerenTGRASS}.
 It enables to manage, analyze and process large amount of spatio-temporal data.
 Following the GRASS GIS modular design, the framework introduces over 30 new modules.
 Temporal modules' names starting with t./t.rast/t.vect/t.rast3d names
@@ -1304,7 +1307,7 @@ The library is written in Python programming language and provides an applicatio
 however the library is meant to be used not only by other modules but also within user scripts or the GRASS GUI if needed.
 Beside valid time the temporal database stores also transaction time%
 \footnote{Valid time is the time period during which a database fact is valid in the modeled reality,
-transaction time  is the time period during which a database fact is stored in the database \cite{temporalGlossary}}
+transaction time  is the time period during which a database fact is stored in the database~\cite{temporalGlossary}}
 and other map and dataset metadata.
 The \tf supports two different database back-ends\dash SQLite%
 \footnote{\url{http://www.sqlite.org}} (more lightweight) and
@@ -1315,13 +1318,13 @@ as the default SQLite driver is often what they need.
 \subsection{Basic concepts}
 The \tf follows the concept of linear and discrete time.
 To understand the basic concept of the \tf it is necessary to explain several terms.
-The terms are explained in the context of the \tf , more theoretical and accurate definitions can be found in \cite{temporalGlossary}.
+The terms are explained in the context of the \tf , more theoretical and accurate definitions can be found in~\cite{temporalGlossary}.
 
 \paragraph{Interval vs. point time}
 \label{sec:intervalVsPoint}
-One can decide which time model to use -- interval time or time instances (also called point time).
+One can decide which time model to use\dash interval time or time instances (also called point time).
 Point time is a single moment in the time dimension
-while interval is a period of time consisting of two instances -- start time instance and end time instance.
+while interval is a period of time consisting of two instances\dash start time instance and end time instance.
 The time interval contains the start time but not the end time:
 $$[start, end)$$
 
@@ -1330,7 +1333,7 @@ Consider temperature and precipitation measuring.
 While temperature is measured in a given time instance and the measured value describes the state,
 precipitation is measured over a given time period. The decision which model to choose is not always
 straightforward, however it appears that for many applications,
-interval time is a better choice \cite{pointVsInterval}.
+interval time is a better choice~\cite{pointVsInterval}.
 
 \paragraph{Absolute vs. relative time}
 \label{sec:absoluteVsRelative}
@@ -1338,7 +1341,7 @@ Absolute time stamp is related to a fact and it does not depend on any other fac
 On the contrary, relative time is related to another time and
 it can be represented even by a negative number which stands for ``before".
 The \tf recognizes currently two date time formats for absolute time.
-Relative time format consists of a number and time unit, which can be one the following: \emph{years},
+Relative time format consists of a number and time unit, which can be one of the following: \emph{years},
 \emph{months}, \emph{days}, \emph{hours}, \emph{minutes} and \emph{seconds} (see table \ref{tab:timeFormat}).
 
 \begin{table}[ht!]
@@ -1365,7 +1368,7 @@ Relative time format consists of a number and time unit, which can be one the fo
 Temporal granularity is an important characteristics of every temporal dataset.
 In the context of the \tf , it represents the greatest common divisor
 of the temporal extents (and possible gaps) of all maps of the dataset.
-The temporal granularity can change every time there is a change in dataset maps
+The temporal granularity is recomputed every time when there is a change in dataset maps
 (added, removed or changed time stamp).
 To understand better, see table \ref{tab:granularity} whose content is based on the output
 of one of the temporal modules (namely \module{t.rast.list}).
@@ -1401,13 +1404,13 @@ avg\_temp.06@timeseries &     2002-07-01 00:00:00  &   2002-09-01 00:00:00   &  
 Although topology is a term widely used in the area of mathematics studying properties of space,
 this term can be used analogically for the time dimension.
 Temporal topology analyzes temporal relations between time stamps (for both interval and point time).
-There are 13 base relations between two intervals according to Allen \cite{relationships}.
+There are 13 base relations between two intervals according to Allen~\cite{relationships}.
 Table \ref{tab:relationships} shows these relations (without the inverse relations).
 
 
 \begin{table}[ht]
 \centering
-\caption{Temporal relationships according to Allen \cite{relationships}}
+\caption{Temporal relationships according to Allen~\cite{relationships}}
 \label{tab:relationships}
 \setlength{\extrarowheight}{10pt}
 
@@ -1435,12 +1438,12 @@ As a consequence, such dataset is not accepted by certain temporal modules.
 \label{sec:temporalSampling}
 Temporal sampling is used to determine the state of one process during a second process.
 The \tf enables to sample a~dataset (can have both point and interval time) by another dataset having interval time.
-There is an example of temporal sampling in figure \ref{fig:samplingExample}.
+There is an example of temporal sampling in figure~\ref{fig:samplingExample}.
 The figure indicates that for different sampling methods (temporal relationships)
 which are provided by module \module{t.sample}, different results are expected.
 
-In figure \ref{fig:samplingExampleReverse}, the input (sampled) dataset and the sample dataset are interchanged
-to demonstrate the reciprocity of the temporal relations. For example, the table \ref{fig:samplingTable} shows that
+In figure~\ref{fig:samplingExampleReverse}, the input (sampled) dataset and the sample dataset are interchanged
+to demonstrate the reciprocity of the temporal relations. For example, the table~\ref{fig:samplingTable} shows that
 there is a relation \emph{during} between intervals $Y_2$ and $X_2$, $X_3$.
 When the same datasets are interchanged the relation must remain, however it is transformed into \emph{contain}.
 The same applies for relations \emph{precede} and \emph{follow}.
@@ -1497,7 +1500,7 @@ The opposite of the relation \emph{start} is \emph{end} which is not included in
             & \hspace{1cm}\raisebox{3pt}{\thicklines \vector(1, 0){5}} time \\
         \end{tabular}
         \label{fig:samplingDatasetsReverse}
-        \caption{Space time datasets with interval time (switched datasets from figure \ref{fig:samplingExample})}
+        \caption{Space time datasets with interval time (switched datasets from figure~\ref{fig:samplingExample})}
     \end{subfigure}
 
 \vspace{0.5cm}
@@ -1624,7 +1627,7 @@ to explore spatio-temporal data.
 
     \item[3D view animation]
     A nice feature is the ability to animate raster maps in 3D view (technically more correct would be 2.5D view).
-    As illustrated in figure \ref{fig:color_elevation_map},
+    As illustrated in figure~\ref{fig:color_elevation_map},
     raster maps can either represent a changing color of a static surface (\subref{fig:color_map}) or
     a changing surface (\subref{fig:elevation_map}).
     Apart from raster maps, vector point and line data can be animated, too.
@@ -1692,7 +1695,7 @@ ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
       A usual requirement is to include some additional text, logo or time stamp in the video.
       The \at supports all these options, moreover the number of these decorations is not limited.
       The placement is specified as the percentage of the image size from the top left corner.
-      The screenshot of dialog window for specifying decorations is in figure \ref{fig:anim_export}.
+      The screenshot of dialog window for specifying decorations is in figure~\ref{fig:anim_export}.
 
       It should be noted that when exporting multiple concurrent animations (more views),
       also the exported file shows all the views together respecting their layout.
@@ -1710,7 +1713,7 @@ However, the main difference between displaying a set of maps and a space time d
 that the duration of each key frame is given by the given time stamp information.
 This is useful when data are collected in irregular intervals.
 Then, the key frames do not change e.g.\ every second but at a given moment the frame stays visible for a longer time.
-To achieve similar behavior it is necessary to add the frame multiple times, see figure \ref{fig:temporalDifference}.
+To achieve similar behavior it is necessary to add the frame multiple times, see figure~\ref{fig:temporalDifference}.
 Concerning temporal data having interval time, there are cases when no data were collected or measured at all.
 The \at recognizes such cases and displays a ``no data'' sign in order to make the user aware of the gap in data.
 
@@ -1732,7 +1735,7 @@ The \at recognizes such cases and displays a ``no data'' sign in order to make t
 
 In case of loading more space time datasets the \tf enables to synchronize the animations
 even if the temporal datasets are spaced unequally.
-Figure \ref{fig:synchronizedAnim} presents an example of such datasets and the related table
+Figure~\ref{fig:synchronizedAnim} presents an example of such datasets and the related table
 shows the frames displayed at selected time instances.
 The concept of temporal granularity and temporal sampling is used to achieve this described behavior.
 
@@ -1809,8 +1812,7 @@ Description:
  or a space time raster dataset
 
 Usage:
- g.gui.animation [rast=name[,name,...]] [strds=name] [--verbose]
-   [--quiet]
+ g.gui.animation [rast=name[,name,...]] [strds=name]
 
 Flags:
  --v   Verbose module output
@@ -1831,7 +1833,7 @@ Moreover, this simple interface should be sufficient for most cases.
 \subsection{Implementation}
 While \module{xganim} module was written in wxWidgets using C++ programming language (in GRASS 7),
 the \at is written completely in wxPython using Python so that it can be better integrated into the GRASS wxGUI.
-It uses \emph{GRASS Python Scripting Library} and \emph{GRASS Python Temporal Library} \cite{grassProgMan},
+It uses \emph{GRASS Python Scripting Library} and \emph{GRASS Python Temporal Library}~\cite{grassProgMan},
 which is the integral part of the \tf. In the following paragraphs, some of the implementation issues are described.
 
 \subsubsection{Loading data}
@@ -1841,7 +1843,7 @@ rewritten into Python because of performance issues.
 Therefore it was necessary to choose a different implementation.
 
 If we try to use the \module{xganim} implementation, we encounter two main problems.
-First, when loading data, the \emph{GRASS Raster Library} functions \cite{grassProgMan} are called.
+First, when loading data, the \emph{GRASS Raster Library} functions~\cite{grassProgMan} are called.
 In Python we could use ctypes to interface these methods,
 however these methods can call exit function which causes a sudden end of the program.
 This behavior is sufficient for a module but it is not suitable for a long running GUI application.
@@ -1922,7 +1924,7 @@ r.out.ppm
 46.148
 \end{comment}
 
-The images are stored internally as \verb|wx.Bitmap| \cite{wxPythonDoc} objects.
+The images are stored internally as \verb|wx.Bitmap|~\cite{wxPythonDoc} objects.
 The number of bitmaps is not limited programmatically,
 however in reality it is limited by the the size of the bitmaps and available RAM.
 This is not an issue for usual animations today.
@@ -2068,7 +2070,7 @@ The \at always checks the user input and in the case it recognizes an incompatib
 
 \subsubsection{3D view animation}
 \label{sec:3dViewAnimation}
-Images for 3D view animation must be first rendered by module \module{m.nviz.image} \cite{grassUserMan}.
+Images for 3D view animation must be first rendered by module \module{m.nviz.image}~\cite{grassUserMan}.
 The rendering is more time-consuming than loading raster maps for the 2D view,
 however this does not affect the speed of the animation itself.
 
@@ -2081,7 +2083,7 @@ After parsing this file, a command for \module{m.nviz.image}
 is created.
 Additionally, the user chooses which parameter to animate.
 Typically, it is either \emph{elevation\_map} or \emph{color\_map}
-(see the difference between figures \ref{fig:color_map} and \ref{fig:elevation_map}),
+(see the difference between figures~\ref{fig:color_map} and~\ref{fig:elevation_map}),
 although we can animate points or lines, too.
 
 \subsection{Future development}
@@ -2112,14 +2114,14 @@ Future development will be focused on the following topics:
 
 
 \section{Timeline Tool}
-Timeline Tool is an interactive application based on wxPython and Python plotting library matplotlib \cite{matplotlib} which allows
+Timeline Tool is an interactive application based on wxPython and Python plotting library matplotlib~\cite{matplotlib} which allows
 the user of the \tf to visualize space time datasets' metadata, especially temporal and spatial extents.
 
 During the development of the \at, it appeared that it would be useful to create such tool
 to quickly understand the topology of temporal datasets. 
 
 \subsection{Features}
-The main purpose of this tool is illustrated by the figure \ref{fig:timeline1}
+The main purpose of this tool is illustrated by the figure~\ref{fig:timeline1}
 which is the output plot generated by the tool.
 
 The x-axis represents time and the space time datasets are located on y-axis.
@@ -2134,7 +2136,7 @@ Also, invalid topology of a dataset is visualized.
 Invalid topology basically means overlaying intervals or points
 which can be easily represented by using semi-transparency to draw plot.
 As a result, overlaying intervals are darker
-which allows to recognize them (see figure \ref{fig:timeline1}, red dataset topol\_abs8).
+which allows to recognize them (see figure~\ref{fig:timeline1}, red dataset topol\_abs8).
 
 \begin{figure}[ht!]
   \centering
@@ -2157,12 +2159,12 @@ which allows to recognize them (see figure \ref{fig:timeline1}, red dataset topo
 \end{figure}
 
 Other metadata can be displayed by clicking on the plotted dataset.
-An annotation bubble appears showing basic information about the dataset and the selected map (figure \ref{fig:timeline3}).
+An annotation bubble appears showing basic information about the dataset and the selected map (figure~\ref{fig:timeline3}).
 It also warns about invalid topology of the dataset.
 
 
 Not only temporal extent but also spatial extent can be visualized by using matplolib extension mplot3d.
-The 3D plot is a space time cube where x- and y-axis represent the spatial part and the z-axis represents time (figure \ref{fig:timeline2}).
+The 3D plot is a space time cube where x- and y-axis represent the spatial part and the z-axis represents time (figure~\ref{fig:timeline2}).
 
 \begin{figure}[ht!]
   \centering
@@ -2298,8 +2300,8 @@ this tool is based on `map iteration' method (section \ref{sec:mapIteration}).
 Since the technique is generally applicable, also GRASS users who are not working with
 spatio-temporal data can make use of this tool.
 
-A possible application of the \ms tool is presented in figure \ref{fig:mapswipe}
-and on the manual page \cite{grassUserMan} of the \ms tool.
+A possible application of the \ms tool is presented in figure~\ref{fig:mapswipe}
+and on the manual page~\cite{grassUserMan} of the \ms tool.
 
 \begin{figure}[ht!]
 \centering
@@ -2325,13 +2327,13 @@ and on the manual page \cite{grassUserMan} of the \ms tool.
 Map Swipe offers two different views on the raster maps.
 \begin{description}
   \item[``Swipe'' mode] is the default mode. It enables to compare two raster layers (of the same area)
-  by revealing different parts of the maps \ref{fig:mapswipe_swipe}.
+  by revealing different parts of the maps~\ref{fig:mapswipe_swipe}.
   The position of the dividing line between the two maps
   can be controlled either by dragging the line itself or dragging the slider knob which
   is located below the maps or beside them.
 
   \item[``Mirror'' mode] enables to explore two raster maps of the same area by
-  synchronizing the display region \ref{fig:mapswipe_mirror}. When a user zooms
+  synchronizing the display region~\ref{fig:mapswipe_mirror}. When a user zooms
   to any of these maps, the other one is kept synchronized.
 \end{description}
 
@@ -2390,7 +2392,7 @@ Parameters:
 \end{lstlisting}
 \end{small}
 
-The following example \cite{mapswipeWiki} can be run in the command line to test
+The following example~\cite{mapswipeWiki} can be run in the command line to test
 the \ms tool with North Carolina sample dataset%
 \footnote{download: \url{http://grass.osgeo.org/sampledata/north_carolina/nc_spm_08_grass7.tar.gz}}:
 \begin{small}
@@ -2417,7 +2419,7 @@ g.gui.mapswipe first=lsat5_1987.rgb second=lsat7_2002.rgb
 \end{lstlisting}
 \end{small}
 
-Also, a small video tutorial is available on GRASS-Wiki page \cite{mapswipeWiki}.
+Also, a small video tutorial is available on GRASS-Wiki page~\cite{mapswipeWiki}.
 
 \subsection{Implementation}
 The essential and most problematic part of the implementation was the part responsible
@@ -2452,7 +2454,7 @@ Thanks to the described design, it was relatively easy to implement the `mirror'
 Actually, we get the `mirror' behavior when we just simply omit the described techniques above.
 
 \subsection{Future development}
-The wiki page \cite{mapswipeWiki} of \ms lists possible enhancement of this tool
+The wiki page~\cite{mapswipeWiki} of \ms lists possible enhancement of this tool
 so that anybody can express his ideas. Some of this ideas were already implemented
 (for example saving display to graphic file which was not in the initial prototype).
 
@@ -2474,7 +2476,7 @@ instead of selecting the available dataset from a list.
 To support the selection of temporal elements in the GUI, four new elements were
 added\dash strds (space time raster dataset), stvds (space time vector dataset),
 str3ds (space time 3D raster dataset) and stds (space time dataset).
-Figure \ref{fig:gselect} shows the widget offering a tree view of the space time datasets
+Figure~\ref{fig:gselect} shows the widget offering a tree view of the space time datasets
 organized according to mapsets and type of dataset.
 Originally, this widget supported only two levels of tree structure,
 for the case of stds element one more level, the dataset type, was needed.
@@ -2489,7 +2491,7 @@ for the case of stds element one more level, the dataset type, was needed.
 Apart from this problem, the auto-generated dialogs suffered from
 not well organized module options and flags. This means that all input widgets
 are together no matter what are their purposes.
-Figure \ref{fig:gselect} shows two main tabs, Required and Optional,
+Figure~\ref{fig:gselect} shows two main tabs, Required and Optional,
 where all options are located by default.
 Since many temporal modules have no required parameters, tab Optional
 contains all parameters. This can be avoided by specifying
@@ -2500,7 +2502,7 @@ by the individual tabs (e.g.\ Input, Formatting), which makes the
 GUI easier to use.
 
 Other corrections were done to improve the appearance of the GUI. For example,
-see the improvement in figure \ref{fig:forms}.
+see the improvement in figure~\ref{fig:forms}.
 \begin{figure}[h!]
   \centering
   \includegraphics{./images/forms.png}
@@ -2604,7 +2606,7 @@ The lower portion of the graph is to be read from right to left. It shows the te
 from Russia, in degrees below freezing on the Réaumur scale. (Multiply Réaumur temperatures by $1 ^1\!/\!_4$ to get Celsius,
 e.g. $-30\text{\textdegree} R = -37.5\,\text{\textcelsius}$).
 At Smolensk, the temperature was $-21$° Réaumur on November 14th.\\
-Source:& Wikipedia, The Free Encyclopedia \cite{wiki:Minard}
+Source:& Wikipedia, The Free Encyclopedia~\cite{wiki:Minard}
 \end{tabularx}
 \end{center}
 \end{singlespace}
@@ -2769,7 +2771,7 @@ precip_4@PERMANENT precip_4  PERMANENT
   \includegraphics{./images/animation_tool1.png}
   \caption[\at: two animations of temporal datasets with different time resolution (yearly and seasonal)]
   {\at: two animations of temporal datasets with different time resolution (yearly and seasonal).
-  Data source: E-OBS gridded dataset \cite{haylock2008european}.}
+  Data source: E-OBS gridded dataset~\cite{haylock2008european}.}
   \label{fig:anim2D}
 \end{figure}
 
@@ -2780,7 +2782,7 @@ precip_4@PERMANENT precip_4  PERMANENT
   \caption[\at: synchronized 2D and 2.5D animation of the same area using
   multiple maps without time information]
   {\at: synchronized 2D and 2.5D animation of the same area using
-  multiple maps without time information. Data source: NagsHead mapset \cite{nagshead}}
+  multiple maps without time information. Data source: NagsHead mapset~\cite{nagshead}}
   \label{fig:anim3D}
 \end{figure}
 
