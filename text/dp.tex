@@ -279,7 +279,7 @@ I decided to present only certain models which are frequently discussed in relat
 The brief description should give an idea of spatio-temporal modeling
 and it shows how spatio-temporal models vary.
 
-\subsubsection{The snapshot model}
+\subsection{The snapshot model}
 One of the simplest field-based spatio-temporal data models is the snapshot model.
 This representation consists of a sequence of layers,
 where each layer shows a state recorded at a certain point in time (see figure~\ref{fig:snapshot_model}).
@@ -310,7 +310,7 @@ In order to improve the efficiency of retrieving a distant state,
 various approaches have been suggested~\cite{wang2012},
 differing in the choice of base state or states and in the number and distribution of difference files.
 
-\subsubsection{The space-time composite data model}
+\subsection{The space-time composite data model}
 This model was suggested by Langran~\cite{langran1988}. It assumes vector data representation.
 The base map in this model is gradually fragmented as the changes occur.
 Each fragment has its own attribute history represented by an ordered list of records.
@@ -319,7 +319,7 @@ This model is conceptually straightforward, however the updating process may be 
 comparing to other models.
 % The fragmentation requires to change identifiers each time when an old fragment is split into two new parts
 
-\subsubsection{Event-oriented models}
+\subsection{Event-oriented models}
 According to Dyreson et al.~\cite[p.~56]{temporalGlossary}, event ``\emph{is an instantaneous fact, i.e., something occurring at an instant}''.
 The models mentioned above cannot clearly represent events.
 In order to overcome this problem, events can be represented explicitly.
@@ -337,7 +337,7 @@ Events are connected; every event has a pointer to the previous and the followin
 Similarly to the concept of amendments, there is also a base map, showing an initial snapshot.
 ESTDM assumes that each event list and associated changes relate to a single thematic domain.
 
-\subsubsection{Object-oriented models}
+\subsection{Object-oriented models}
 As object-oriented design showed promising results in the field of programming,
 there were efforts to apply its features, such as classes and instances, attributes and methods,
 inheritance and polymorphism, in spatio-temporal data model.
@@ -352,7 +352,7 @@ Object-oriented models seem to have more advantages and less drawbacks comparing
 Pelekis~\cite[p.~27]{pelekis2004} claims that it can ``\emph{support  all types of data handling,
 in terms of measurement, topological relationships and operations}''.
 
-\subsubsection{The three domains model}
+\subsection{The three domains model}
 The three domains model was described by Yuan~\cite{yuan1994wildfire}
 and it was originally applied for wildfire modeling.
 As the name suggests, the model has three domains, semantics, time, and space, which are interlinked.
@@ -370,9 +370,24 @@ and unifying (the case of the object-oriented model) can lead to good results.
 \section{Visualization}
 \label{sec:visualization}
 Visualizing the world (through geospatial data) has been a cartographic interest for many centuries.
-Current advanced software and hardware enable us to visualize geospatial data in many different ways,
-however, existing visualization and exploratory techniques often do not suffice, especially in the temporal domain.
 
+
+MacEachren~\cite{maceachren1997exploratory} suggests a concept of visualization
+where map usage is treated as a cube;
+the axes represent the user of map (private vs.\ public),
+objectives of use (revealing unknowns vs.\ presenting knowns)
+and degree of interactivity (high vs.\ low).
+One of the corners (private users, revealing unknowns and high interactivity)
+represents \emph{visualization} and the opposite one \emph{communication}.
+All maps involve both visualization (exploratory analysis leading to revealing new information)
+and communication (delivery of desired information to map user).
+However, they differ in which component they underline.
+Both components are important; first the researcher need to analyze the data
+and then he explains his findings to the public.
+In section \ref{sec:exploratoryTechniques} and the following sections,
+I will focus mostly on the exploratory use of visualization tools.
+
+% \subsection{Theory}
 Visualization of spatio-temporal data is closely related to the term \emph{temporal map}.
 Kraak and MacEachren~\cite{kraak1994visualization} define temporal maps as
 ``\emph{a representation or abstraction of changes in geographical reality:
@@ -395,19 +410,15 @@ They distinguish three categories of maps:
             as long as there is no change in the spatial component (i.e.\ landscape).
     \end{description}
 
-MacEachren~\cite{maceachren1997exploratory} suggests a concept of visualization
-where map usage is treated as a cube;
-the axes represent the user of map (private vs.\ public),
-objectives of use (revealing unknowns vs.\ presenting knowns)
-and degree of interactivity (high vs.\ low).
-One of the corners (private users, revealing unknowns and high interactivity)
-represents \emph{visualization} and the opposite one \emph{communication}.
-All maps involve both visualization (exploratory analysis leading to revealing new information)
-and communication (delivery of desired information to map user).
-However, they differ in which component they underline.
-Both components are important; first the researcher need to analyze the data
-and then he explains his findings to the public.
-In the following paragraphs I will focus mostly on the exploratory use of visualization tools.
+
+
+\subsection{Exploratory techniques}
+\label{sec:exploratoryTechniques}
+Current advanced software and hardware enable us to visualize geospatial data in many different ways,
+however, existing visualization and exploratory techniques often do not suffice in the temporal domain.
+Fortunately, unlike paper maps, computer-based visualization offer many important features
+such as interactivity and dynamics which are necessary for most exploratory techniques
+like map querying or animation.
 
 Andrienko et al.~\cite{andrienko2003exploratory} provides a review
 of general exploratory techniques used for analysis of spatio-temporal data.
@@ -444,17 +455,10 @@ Here we focus on the general characteristics.
 %             Time is given and other information (location, characteristics) has to be found out.
 %         \item[where + what $\rightarrow$ when:]
 %             With other types of information, time has to be discovered.
-% 
+%
 %      \end{description}
-%  
 
-\subsection{Exploratory techniques}
-\label{sec:exploratoryTechniques}
-Unlike paper maps, computer-based visualization tools offer many important features
-such as interactivity and dynamics which are necessary for most exploratory techniques
-like map querying or animation.
-
-\subsubsection{Querying}
+\subsection{Querying}
 A query consists of two main parts\dash target and constraints~\cite{andrienko2003exploratory}.
 For example, we can ask where (target) a particular object was located at a given time instance (constraint).
 A query can be specified by the user either by a machine-readable language (typically Structured Query Language)
@@ -483,7 +487,7 @@ which enables to select arbitrary combinations of years, month, days and hours.
 
 
 
-\subsubsection{Map iteration}
+\subsection{Map iteration}
 \label{sec:mapIteration}
 Map iteration corresponds to the term ``strip maps'' mentioned before.
 Temporal information is presented as a juxtaposition of several maps.
@@ -517,7 +521,7 @@ of the same area by revealing different parts of the maps (see for example figur
 \end{figure}
 
 
-\subsubsection{Map animation}
+\subsection{Map animation}
 \label{sec:mapAnimation}
 Unlike map iteration, map animation is a technique which is applicable for computer screens only.
 Nonetheless, there is only a few steps from map iteration to map animation.
@@ -525,7 +529,7 @@ Instead of displaying a series of static maps, there is a single map but its con
 The changes representing an event are inferred from real movement on the map.
 Animation consists of frames\dash single images (maps).
 
-\paragraph{Application}
+\subsubsection{Application}
 Animations can be useful to reveal trends, processes and subtle spatio-temporal patterns
 that are not evident in static representation. Dorling and Openshaw~\cite{dorling1993using}
 demonstrated a power of animated maps to stimulate knowledge;
@@ -587,7 +591,7 @@ Each picture shows the measurements from a different time interval.}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Dynamic visualization variables}
+\subsubsection{Dynamic visualization variables}
 \label{sec:dynamicVariables}
 In~\cite{dibiase1992animation}, DiBiase et al.\ introduced three dynamic visualization variables of animation:
 \emph{duration}, \emph{rate of change}, \emph{order}.
@@ -616,7 +620,7 @@ Using the eye-tracking technology seems to be one possible approach
 (see for example study~\cite{opach2011evaluating}).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\paragraph{Temporal legend}
+\subsubsection{Temporal legend}
 In~\cite{kraak1997cartographic}, Kraak et al.\ deal with temporal legend for animations.
 Temporal legend is the part of the interface which does not only help to understand and interpret
 the phenomenon but it can also serve as navigation tool to control dynamically the animation.
@@ -643,7 +647,7 @@ to induce an illusion of day and night.
 % TODO: add ref from Helena  - ROLE OF DYNAMIC CARTOGRAPHY IN SIMULATIONS OF LANDSCAPE PROCESSES BASED ON MULTI-VARIATE FIELDS
 % skagit.meas.ncsu.edu/~helena/gmslab/papers/listsj.html
 
-\subsubsection{Space-time cube}
+\subsection{Space-time cube}
 \label{sec:stcube}
 The space-time cube is basically a 3D plot in which the spatial component (e.g.\ a geographic map)
 is plotted in the $xy$\nobreakdash-plane and the temporal domain is represented
@@ -666,10 +670,10 @@ investigate it in order to use it as a new exploratory tool.
 
 Space-time cube is a concept which is applicable for various analyses and type of data.
 We can find several different employment of space-time cube in literature.
-The usages differ in the purpose of analysis which is then closely related
+The usages differ in the purpose of analysis which is closely related
 to the type of analyzed data (vector lines, points, voxel data).
 
-\paragraph{Space-time path}
+\subsubsection{Space-time path}
 The original Hägerstrand's concept was concerned with movement of objects (people).
 During day each person follows a trajectory through space and time called
 \emph{space-time path}. Figure~\ref{fig:st-path} shows a simplified example
@@ -724,7 +728,7 @@ with graph theory~\cite{huisman2008development}.
 % GNSS influenced makes collecting
 
 
-\paragraph{Event data}
+\subsubsection{Event data}
 Space-time cube concept is suitable not only to represent moving objects
 but it can be successfully applied to events, too.
 Gatalsky et al.~\cite{gatalsky2004interactive}
@@ -734,7 +738,7 @@ Size and color of each circle reflect the thematic characteristics of the event.
 The space-time cube is dynamically linked to a map display so that it is possible to highlight corresponding events.
 % By using this method, they were able to find grouping
 
-\paragraph{Voxel data}
+\subsubsection{Voxel data}
 \label{voxelHelena}
 Another potentially large field of study is the application of space-time cube concept for voxel data.
 This approach can be used for modeling any type of spatially distributed phenomena changing over time.
@@ -749,7 +753,7 @@ stretched in the vertical time dimension (for a simple example see figure~\ref{f
 or refer to Mitasova et. al~\cite{mitasova2012scientific}, figure 19).
 % TODO: add images of voxel schema, isosurfaces http://www.sciencedirect.com/science/article/pii/S0169555X11002935
 
-\paragraph{3D glyphs}
+\subsubsection{3D glyphs}
 Space-time cube approach is also used to visualize distributions of
 geospatial time-varying data through a pictorial representation~\cite{tominski20053d,thakur20103d}.
 A base map is typically divided into regions or administrative districts.
@@ -763,7 +767,7 @@ quantities on a map and extract useful information.
 
 
 
-\paragraph{}
+\subsubsection{Concluding remark}
 As illustrated in the paragraphs above, space time cube approach
 can be applied in various domains. The increased interest in this technique seems
 to be caused by rapid improvements in computer technologies as well as by simplification and speeding
@@ -778,6 +782,23 @@ led to higher error rate comparing with using a 2D representation.
 
 
 
+\subsection{Arranging and linking views}
+This technique involves manipulating and connecting different views on data.
+Data views denote all kinds of data visualization like 2D or 3D view, data charts and tables or any other
+possible view.
+Views can be manipulated by zooming, panning, rotating, selecting and other methods
+depending on the character of the view.
+
+Multiple views can show different aspects of data therefore it is necessary to be able
+to arrange these views. Specifying an appropriate layout can facilitate comparison tasks.
+
+To gain more information from multiple views, these views should be linked together.
+This usually means that corresponding parts of the views are highlighted or the views
+react on a change in another view. Typically, by selection of a record in the attribute table
+or a data series in the chart the corresponding features are highlighted in the map.
+
+Although this technique is general and applicable for any type of data, it is particularly
+useful for spatio-temporal data.
 
 
 \section{Existing software}
@@ -795,16 +816,29 @@ However, it was not meant to be complete. Moreover, it contains mainly research 
 which are often very specialized and serve for academic purposes only, although their implementations
 and features can be innovative and useful.
 Since 2003, some of these projects have been renamed,
-moved to newer websites or they just disappeared or they are not maintained anymore.
+moved to newer websites, they just disappeared or they are not maintained anymore.
 On the other hand, new tools have been developed.
 For example, we can witness the expansion of web-based applications in the recent years.
 It seems that visualizing time dimension becomes `modern'.
 
 The following list of software able to process and or visualize spatio-temporal data is not comprehensive.
-It includes only the main systems with large user base.
+It includes only the main systems with large user base or systems which are significant from other reasons.
 Often these systems are not intended primarily for temporal data,
 but they started to provide this functionality because of the users' needs
 and also to keep up with new trends in GIS.
+
+The systems are divided into \emph{free and open-source software}
+and \emph{proprietary software}.
+Free and open-source software offers the users the freedom to use the software for any purpose
+and for unlimited time. Moreover, users can study, modify the source code
+and share the changes with others if desired.%
+\footnote{\url{http://www.gnu.org/philosophy/free-sw.html}}
+On the other hand, proprietary software users are restricted to use this software under certain conditions;
+studying, modifying and sharing the software are often illegal.
+Last but not least, purchasing proprietary software is usually financially demanding;
+the prices are included in the following list.
+There are no prices mentioned for free and open-source software since it is free of charge.
+
 
 
 \subsection{Free and open-source software}
