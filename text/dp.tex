@@ -1309,7 +1309,7 @@ where the cross-section is an intersection of a plane with the voxel cube.
 {Visualization of 3D raster (voxel) data of elevation with $z$ coordinate as time in GRASS GIS.
 Figure \subref{fig:nviz_isosurface} shows an evolution of a contour line ($z=10\ m$).
 A cross-section on figure \subref{fig:nviz_slices} also illustrates that the height of the middle
-part changed with time. (Voxel data are shifted along the $z$-axis make it more visible.)
+part changed with time. (Voxel data are shifted along the $z$-axis above the terrain to make it more visible.)
 Data source: mapset NagsHead\_series~\cite{nagshead}}
 
 \label{fig:nviz_voxel}
@@ -1335,11 +1335,12 @@ vector and 3D raster datasets (referred as strds, stvds and str3ds, respectively
 
 The implementation of the \tf is based on a temporal library and a SQL database scheme.
 The library is written in Python programming language and provides an application programming interface (API) which is used by the temporal modules,
-however the library is meant to be used not only by other modules but also within user scripts or the GRASS GUI if needed.
+however the library is meant to be used not only by temporal
+modules but also within user scripts or the GRASS GUI if needed.
 Beside valid time the temporal database stores also transaction time%
 \footnote{Valid time is the time period during which a database fact is valid in the modeled reality,
 transaction time  is the time period during which a database fact is stored in the database~\cite{temporalGlossary}}
-and other map and dataset metadata.
+and maps' and datasets' metadata.
 The \tf supports two different database back-ends\dash SQLite%
 \footnote{\url{http://www.sqlite.org}} (more lightweight) and
 PostgreSQL\footnote{\url{http://www.postgresql.org}}.
@@ -1468,7 +1469,8 @@ As a consequence, such dataset is not accepted by certain temporal modules.
 \paragraph{Temporal sampling}
 \label{sec:temporalSampling}
 Temporal sampling is used to determine the state of one process during a second process.
-The \tf enables to sample a~dataset (can have both point and interval time) by another dataset having interval time.
+The \tf enables to sample a~dataset having either point or interval time by another dataset having interval time.%
+\footnote{Note that a dataset can also be sampled by a granularity (e.g. \module{t.rast.list}).}
 There is an example of temporal sampling in figure~\ref{fig:samplingExample}.
 The figure indicates that for different sampling methods (temporal relationships)
 which are provided by module \module{t.sample}, different results are expected.
@@ -1560,10 +1562,10 @@ The main capabilities of the library include:
 
 \begin{itemize}
     \item Registration of raster, vector a 3D raster maps in datasets (called \emph{strds}, \emph{stvds}, \emph{str3ds}, respectively).
-    \item Support of absolute and relative time (only maps of one type can be in one dataset).
+    \item Support of absolute and relative time (only maps of one temporal type can be in one dataset).
     \item Support of interval and point time (can be used together in one dataset).
     \item Metadata (number of maps, spatial, temporal extent, creation time, \ldots) of a dataset
-    are recomputed automatically after (un)registering of maps.
+    are recomputed automatically after map (un)registering.
     \item Computation of time granularity.
     \item Computation of temporal topology and reporting its validity.
     \item Temporal sampling of one dataset by another dataset or by its time granularity.
@@ -1582,11 +1584,11 @@ Temporal modules share certain common options:
 
 The important ability of the \tf is the interoperability
 with several powerful open-source applications for statistical computations and visualization.
-Textual ouputs of many modules are suitable for statistical environment
-\emph{R}\footnote{\url{http://www.r-project.org}}.
+Textual ouputs of many modules are suitable for statistical
+environment~\emph{R}\footnote{\url{http://www.r-project.org}}.
 Module \module{r3.out.netcdf} exports 3D raster to NetCDF
 format\footnote{\url{http://www.opengeospatial.org/standards/netcdf}}
-which can be then processed e.g. in \emph{Climate Data Operator (CDO)}\footnote{\url{https://code.zmaw.de/projects/cdo}}.
+which can be then processed e.g.\ in \emph{Climate Data Operator (CDO)}\footnote{\url{https://code.zmaw.de/projects/cdo}}.
 The support of visualization software \emph{ParaView}\footnote{\url{http://www.paraview.org}} is available
 through VTK format which can be exported by temporal module \module{t.rast.out.vtk}.
 
@@ -2326,7 +2328,7 @@ and then, it could be used as a control widget.
 It is useful for comparing two raster maps from different time periods.
 Although \ms does not use the \tf, as there is no particular application for it,
 thanks to its capabilities we can regard it as an useful tool for exploring spatio-temporal data.
-From the perspective of exploratory techniques described in section \ref{sec:exploratoryTechniques},
+From the perspective of exploratory techniques,
 this tool is based on `map iteration' method (section \ref{sec:mapIteration}).
 Since the technique is generally applicable, also GRASS users who are not working with
 spatio-temporal data can make use of this tool.
