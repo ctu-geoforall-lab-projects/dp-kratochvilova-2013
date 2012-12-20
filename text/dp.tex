@@ -227,10 +227,7 @@ One of the first areas which needed to handle temporal data were banking systems
 where storing temporal information about financial transactions is crucial.
 This encouraged the DBMS (\emph{Database Management System}) to explore the possibilities of handling
 temporal data. Simultaneously, a temporal database query language was being developed,
-which resulted in TSQL2%
-\footnote{There was an attempt to incorporate certain parts of this language
-into new SQL standard SQL:1999, however the TSQL2 was later criticized
-\cite{darwen2005}.}~\cite{snodgrass1995}.
+which resulted in TSQL2~\cite{snodgrass1995}.
 Recently, a new set of language extensions for temporal data support became a part of
 SQL:2011~\cite{kulkarni2012}.
 
@@ -1615,6 +1612,9 @@ or help to generally explore spatio-temporal data.
     \item[\ms]for a comparison of two raster maps of the same area from different time period.
 \end{description}
 
+\noindent Also, GUI (automatically generated dialogs) for temporal modules
+was improved as part of this work.
+
 \section{\at}
 \label{sec:animationTool}
 As described in section \ref{sec:mapAnimation},
@@ -2079,7 +2079,6 @@ which frame to display according to the result of the temporal sampling explaine
 The timer interval represents the temporal granularity of the datasets.
 Therefore, each map is displayed exactly at the right moment.
 
-When the map is repeated, internally there is no redraw.
 
 
 
@@ -2105,8 +2104,8 @@ The \at always checks the user input and in the case it recognizes an incompatib
 
 \subsubsection{3D view animation}
 \label{sec:3dViewAnimation}
-Images for 3D view animation must be first rendered by module \module{m.nviz.image}~\cite{grassUserMan}.
-The rendering is more time-consuming than loading raster maps for the 2D view,
+Images for 3D view animation must be first rendered (to a file) by the module \module{m.nviz.image}~\cite{grassUserMan}.
+This rendering is more time-consuming than loading raster maps for the 2D view,
 however this does not affect the speed of the animation itself.
 
 3D view animation requires to specify additional input data.
@@ -2118,8 +2117,8 @@ After parsing this file, a command for \module{m.nviz.image}
 is created.
 Additionally, the user chooses which parameter to animate.
 Typically, it is either \emph{elevation\_map} or \emph{color\_map}
-(see the difference between figures~\ref{fig:color_map} and~\ref{fig:elevation_map}),
-although we can animate points or lines, too.
+(see the difference between figures~\ref{fig:color_map} and~\ref{fig:elevation_map}).
+Moreover, we can animate points or lines, too.
 
 \subsection{Future development}
 Future development will be focused on the following topics:
@@ -2280,7 +2279,7 @@ g.gui.mapswipe first=lsat5_1987.rgb second=lsat7_2002.rgb
 \end{lstlisting}
 \end{small}
 
-Also, a small video tutorial is available on GRASS-Wiki page~\cite{mapswipeWiki}.
+Also, an easy-to-follow video tutorial is available on GRASS-Wiki page~\cite{mapswipeWiki}.
 
 \subsection{Implementation}
 The essential and most problematic part of the implementation was the part responsible
@@ -2497,16 +2496,16 @@ Next development will focus on the following points:
   \item support for datasets with `mixed' time (time instances and intervals together in one dataset)
   \item user settings\dash colors, date formatting
 \end{itemize}
-In the future, such tool could be integrated into any application processing temporal data
+In the future, such tool could be integrated into any wxGUI application processing temporal data
 and then, it could be used as a control widget.
 
 
 \section{GUI for temporal modules}
-Although the \tf is fully working from command line, it is not yet introduced in the GRASS wxGUI.
+Although the \tf is fully working from command line, until now it was not introduced in the GRASS wxGUI.
 This means that automatically generated GUI dialogs (refer to \ref{sec:grasswxgui})
-for all temporal modules work only partially because the widget for the selection of GRASS elements
-(like raster, 3D raster, vector, region, etc.) is not able to display the new temporal elements
-(space time datasets). As a~consequence, user has to type the name of the dataset manually
+for all temporal modules worked only partially because the widget for the selection of GRASS elements
+(like raster, 3D raster, vector, region, etc.) was not able to display the new temporal elements
+(space time datasets). As a~consequence, user had to type the name of the dataset manually
 instead of selecting the available dataset from a list.
 
 To support the selection of temporal elements in the GUI, four new elements were
