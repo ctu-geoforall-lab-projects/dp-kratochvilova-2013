@@ -1002,7 +1002,7 @@ The price of ArcGIS itself (which is not publicly available) is not included.
 \subsubsection{STEMgis}
 STEMgis (Discovery Software) is a temporal GIS which provides the tools to manage, visualize
 and analyze undergoing changes.
-It can be used for environmental, coastal, marine, health, crime, sales and marketing,
+According to the producer, it can be used for environmental, coastal, marine, health, crime, sales and marketing,
 agriculture and forestry applications.
 It consists from three parts: STEMgis Manager (data management), 
 STEMgis Viewer (multidimensional visualization and analysis),
@@ -1705,8 +1705,8 @@ to explore spatio-temporal data.
 ffmpeg -r 10 -i input_%02d.png -sameq -vcodec mpeg4 output.avi
     \end{lstlisting}
     \end{footnotesize}
-      where \emph{r} stands for frame rate (frames per second),
-      \emph{i} for input files (requires sequential numbering of files which is ensured by the \at) and
+      where parameter \emph{r} specifies frame rate (frames per second),
+      \emph{i} input files (requires sequential numbering of files which is ensured by the \at) and
       \emph{vcodec} determines the video encoding.
       The export dialog provides the user with the current frame rate, so that he or she can then create
       a video with the same frame rate%
@@ -1745,7 +1745,7 @@ The \at accepts space time raster dataset as an input. By the means of the \tf, 
 Apart from that, also multiple raster maps are accepted directly.
 
 However, the main difference between displaying a set of maps and a space time dataset is
-that the duration of each key frame is given by the given time stamp information.
+that the duration of each key frame (represented by a map) is given by the given time stamp information.
 This is useful when data are collected in irregular intervals.
 Then, the key frames do not change e.g.\ every second but at a given moment the frame stays visible for a longer time.
 To achieve similar behavior it is necessary to add the frame multiple times, see figure~\ref{fig:temporalDifference}.
