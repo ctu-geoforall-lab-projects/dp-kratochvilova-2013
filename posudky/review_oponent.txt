@@ -1,0 +1,97 @@
+Review Master’s thesis Visualization of Spatio-Temporal Data in GRASS GIS
+
+
+0.  Introduction:
+Mixing "I" and "We" should be avoided.
+
+1.  Spatio-temporal data:
+1.1 Efforts to integrate time with space
+
+The last statement "Since these issues have not been completely solved until today we can expect
+that research efforts in this field will continue." needs citation or must be justified by the author.
+
+As a starting point, May Yuan stated in "Challenges and Critical Issues for Temporal {GIS} Research and Technologies" 2009: "that most temporal GIS technology developed are still in the research phase or have an emphasis on mapping." 
+
+1.2 Spatio-temporal data models
+
+1.2.1 The snapshot model
+
+The term "field-based spatio-temporal data model" is not introduced, only stated. Galton and Goodchild wrote several papers about the distinction between field-based and object-based world views. I would avoid the term "field-based" here, since the snapshot model is not restricted to field based data.
+
+Also the ESTDM model was designed to avoid redundant data storage and to capture the change of states for raster data. Since the ESTDM model is introduced later i would avoid to note the Base state with Amendments here which is also only vector oriented. It can be noted in the space time composite model.
+
+1.3 Visualization
+Using the term "events" here is confusing for me, but this may be related to the fact that i am not familiar with the "means of graphic sign system
+".
+
+1.4 Existing software
+
+"studying, modifying and sharing the software are often illegal" 
+I would avoid this statement, since this is handled by the country specific license agreements and law. 
+To study or to modify the software is not illegal, except when you need to crack the protection/encryption of the software to study or modify it (in Germany for example). Proprietary software is not evil, its lacking freedom.
+
+2. GRASS GIS
+
+The concept of maps in GRASS should be clarified. Since many other GIS software are using the term "layer" instead of map.
+
+2.4 Temporal GRASS GIS framework
+
+Be consistent in the naming of the framework: "Temporal GRASS GIS framework" or "GRASS GIS Temporal Framework"?
+
+Make clear that the new tools are only available in the latest development version of GRASS 7, maybe you can provide a svn revision.
+
+2.4.1 Implementation
+
+I would like to modify this part a bit, due the lack of documentation of the temporal framework caused by me:
+
+The temporal framework uses the snapshot approach to handle spatio-temporal fields. The design is based on the field based view of geographical data (see Galton and Goodchild).
+The snapshot approach was extended so that each time stamped spatial field (raster, vector, 3D raster) can have a different spatial and temporal extent. It supports the computation of spatio-temporal relationships between time stamped spatial
+fields to allow the investigation of spatio-temporal interactions between them.
+
+2.4.2 Basic concepts
+
+The left closed, right open time interval was chosen to easily detect gaps between time stamped maps.
+
+In table 2.3 the temporal relationship follow/precedes is missing, since "meet" can be either follow or precede.
+
+Regarding temporal sampling: Space time datasets can only be sampled by their own granularity using t.*.list. This works for all space time datasets, since its an abstract concept independent from the map type.
+
+SORRY: My draft paper is not very clear about the naming of temporal relationships: the TGRASS overlap statement includes "Allens" overlaps and overlapped.
+
+2.4.3 Functionality
+
+Please note that the GRASS GIS Temporal Framework is still in development.
+
+It is a good idea to introduce the different space time datasets more detailed with full name: space time raster/3D raster/vector datasets.
+These datasets are used as input and output for the temporal modules to simplify the handling of massive time series data.
+SQL is used to specify temporal queries in many modules that can be combined with spatial and attribute queries (t.rast/rast3d/vect.extract).
+
+The ntcdf output can directly be used in ParaView to visualize space time voxel cubes as time series.
+
+3. Results
+
+3.1 Animation Tool
+
+A new tool "was" developed.
+
+
+3.1.4 Implementation
+
+Why makes the use of NumPy the code less readable?
+
+How are space time raster datasets with invalid temporal topology handled?
+
+Suggestion about the rendering:
+
+RAM is an issue in the implemented animation approach, since i want to animate space time raster datasets with thousands of maps.
+With the current approach thousands of maps with maybe high resolution (monitor dependent) are hold in main memory using tens of gigabytes. I would suggest a file cache approach so that only a specific amount of maps is hold in the RAM. Maps are reloaded from the file system when needed. Special attention must be given to the slider feature in this case.
+d.rast and d.vect can be used to create the bitmaps (PPM support can surely be implemented, but i would prefer PNG since there are small and quickly written) which are loaded into the animation tool right after a single bitmap was generated (parallel processing) until the buffer if full. Hence rendering can be done in background but the animation tool can already be used. 
+
+3.3 Timeline Tool
+
+The timeline tool supports only the visualization of a 3D extent (t, x, y) but be aware that maps in space time vector and 3D raster datasets have 4D extents (t,x,y,z). Can this be handled or is the z dimension ignored?
+
+3.3.2 Implementation
+
+No need to excuse using a development version of matplot.
+
